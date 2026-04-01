@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/friendlinq.com/static/css/main.32788429.css",
-    "main.js": "/friendlinq.com/static/js/main.8a9cde4e.js",
+    "main.js": "/friendlinq.com/static/js/main.c8e789ff.js",
     "static/css/897.cdc847ec.chunk.css": "/friendlinq.com/static/css/897.cdc847ec.chunk.css",
     "static/js/897.aced591f.chunk.js": "/friendlinq.com/static/js/897.aced591f.chunk.js",
     "static/css/356.c7b705de.chunk.css": "/friendlinq.com/static/css/356.c7b705de.chunk.css",
@@ -54,7 +54,7 @@
     "static/js/635.9a604e07.chunk.js": "/friendlinq.com/static/js/635.9a604e07.chunk.js",
     "index.html": "/friendlinq.com/index.html",
     "main.32788429.css.map": "/friendlinq.com/static/css/main.32788429.css.map",
-    "main.8a9cde4e.js.map": "/friendlinq.com/static/js/main.8a9cde4e.js.map",
+    "main.c8e789ff.js.map": "/friendlinq.com/static/js/main.c8e789ff.js.map",
     "897.cdc847ec.chunk.css.map": "/friendlinq.com/static/css/897.cdc847ec.chunk.css.map",
     "897.aced591f.chunk.js.map": "/friendlinq.com/static/js/897.aced591f.chunk.js.map",
     "356.c7b705de.chunk.css.map": "/friendlinq.com/static/css/356.c7b705de.chunk.css.map",
@@ -108,6 +108,6 @@
   },
   "entrypoints": [
     "static/css/main.32788429.css",
-    "static/js/main.8a9cde4e.js"
+    "static/js/main.c8e789ff.js"
   ]
 }
