@@ -5,8 +5,9 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from './reducers/auth_reducer';
 import friendReducer from './reducers/friend_reducer';
 
-// Placeholder reducers for chatReducer, groupReducer
-const chatReducer = (state = {}, action) => state;
+import chatReducer from './reducers/chat_reducer';
+
+// Placeholder reducer for groupReducer
 const groupReducer = (state = {}, action) => state;
 
 const AppReducers = combineReducers({

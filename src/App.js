@@ -13,9 +13,10 @@ import UserProfile from './pages/UserProfile';
 import FriendsPage from './pages/Friends';
 import AddFriendPage from './pages/AddFriend';
 import CommentsPage from './pages/Comments';
+import ChatListPage from './pages/ChatList';
+import ChatPage from './pages/Chat';
 const PhotosPage = () => <div><h1>Photos</h1></div>;
 const NotificationsPage = () => <div><h1>Notifications</h1></div>;
-const MessagesPage = () => <div><h1>Messages</h1></div>;
 const CallPage = () => <div><h1>Call</h1></div>;
 const FavoritesPage = () => <div><h1>Favorites</h1></div>;
 const SettingsPage = () => <div><h1>Settings</h1></div>;
@@ -59,7 +60,8 @@ function App() {
                   <Route path="/photos" element={<PhotosPage />} />
                   <Route path="/add-friend" element={<AddFriendPage />} />
                   <Route path="/notifications" element={<NotificationsPage />} />
-                  <Route path="/messages" element={<MessagesPage />} />
+                  <Route path="/messages" element={<ChatListPage />} />
+                  <Route path="/chat/:userId" element={<ChatPage />} />
                   <Route path="/friends" element={<FriendsPage />} />
                   <Route path="/call" element={<CallPage />} />
                   <Route path="/favorites" element={<FavoritesPage />} />
