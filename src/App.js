@@ -12,6 +12,7 @@ import EditProfile from './pages/EditProfile';
 import UserProfile from './pages/UserProfile';
 import FriendsPage from './pages/Friends';
 import AddFriendPage from './pages/AddFriend';
+import CommentsPage from './pages/Comments';
 const PhotosPage = () => <div><h1>Photos</h1></div>;
 const NotificationsPage = () => <div><h1>Notifications</h1></div>;
 const MessagesPage = () => <div><h1>Messages</h1></div>;
@@ -65,6 +66,7 @@ function App() {
                   <Route path="/profile" element={<MyProfile />} />
                   <Route path="/edit-profile" element={<EditProfile />} />
                   <Route path="/user/:userId" element={<UserProfile />} />
+                  <Route path="/comments/:postId" element={<CommentsPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/support" element={<SupportPage />} />
                   <Route path="*" element={<Navigate to="/home" replace />} />

@@ -4,12 +4,15 @@ import { nodeApi, dotnetApi } from '../api/axios';
 import { GET_ALL_USERS_POST, GET_PUBLIC_POST } from '../api/config';
 import PostCard from '../components/posts/PostCard';
 import { AiOutlineCamera, AiOutlineVideoCamera } from 'react-icons/ai';
+import { AiOutlineClose } from 'react-icons/ai';
+import { createPost, notifyFriends } from '../actions/post_actions';
 
 const LIMIT = 20;
 
 export default function Home() {
   const profile = useSelector((s) => s.authReducer.getProfileData);
   const token = useSelector((s) => s.authReducer.login_access_token);
+  const userType = useSelector((s) => s.authReducer.userType);
 
   const [posts, setPosts] = useState([]);
   const [skip, setSkip] = useState(0);
@@ -18,7 +21,11 @@ export default function Home() {
   const [feedType, setFeedType] = useState('community'); // 'community' (PublicPost) or 'friends'
   const [postText, setPostText] = useState('');
   const [privacyForPost, setPrivacyForPost] = useState('Public'); // 'Public' or 'Friend_Only'
+  const [mediaFile, setMediaFile] = useState(null);
+  const [mediaPreview, setMediaPreview] = useState(null);
+  const [posting, setPosting] = useState(false);
 
+  const fileInputRef = useRef(null);
   const observerRef = useRef(null);
   const sentinelRef = useRef(null);
   const loadingRef = useRef(false);
@@ -116,6 +123,63 @@ export default function Home() {
     );
   };
 
+  // ── Media picker ─────────────────────────────────────────
+  const handleMediaSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setMediaFile(file);
+    setMediaPreview(URL.createObjectURL(file));
+  };
+
+  const clearMedia = () => {
+    setMediaFile(null);
+    if (mediaPreview) URL.revokeObjectURL(mediaPreview);
+    setMediaPreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  // ── Submit post ─────────────────────────────────────────
+  const handleCreatePost = async () => {
+    if (!postText.trim() && !mediaFile) return;
+    setPosting(true);
+    try {
+      // Map privacy to postType: "0" = Friends Only, "1" = Public, "2" = Dating
+      let postType = '1';
+      if (privacyForPost === 'Friend_Only') postType = '0';
+      if (userType === 'dating') postType = '2';
+
+      const res = await createPost({
+        postTitle: postText.trim(),
+        postContent: postText.trim(),
+        postType,
+        mediaFile: mediaFile || null,
+        isdating: userType === 'dating' ? '1' : '0',
+      });
+
+      if (res?.statusCode === 200) {
+        setPostText('');
+        clearMedia();
+        // Refresh feed
+        setPosts([]);
+        setSkip(0);
+        setTotal(0);
+        fetchPosts(0, false);
+
+        // Notify friends in background
+        const newPostId = res.data?.postData?._id || res.data?._id;
+        if (newPostId) {
+          notifyFriends(token, newPostId, profile?.fullName || '');
+        }
+      } else {
+        alert(res?.message || 'Failed to create post');
+      }
+    } catch (err) {
+      alert('Error creating post');
+    } finally {
+      setPosting(false);
+    }
+  };
+
   // ── Toggle feed ──────────────────────────────────────────
   const toggleFeed = () => {
     setFeedType((f) => (f === 'community' ? 'friends' : 'community'));
@@ -146,11 +210,12 @@ export default function Home() {
             <button
               style={{
                 ...styles.postBtn,
-                color: postText ? '#e84393' : '#aaa',
+                color: (postText || mediaFile) ? '#e84393' : '#aaa',
               }}
-              disabled={!postText}
+              disabled={(!postText && !mediaFile) || posting}
+              onClick={handleCreatePost}
             >
-              Post
+              {posting ? 'Posting...' : 'Post'}
             </button>
           </div>
 
@@ -180,14 +245,37 @@ export default function Home() {
             </label>
           </div>
 
+          {/* Media preview */}
+          {mediaPreview && (
+            <div style={styles.mediaPreviewWrap}>
+              {mediaFile?.type?.startsWith('video') ? (
+                <video src={mediaPreview} controls style={styles.mediaPreview} />
+              ) : (
+                <img src={mediaPreview} alt="Preview" style={styles.mediaPreview} />
+              )}
+              <button onClick={clearMedia} style={styles.clearMediaBtn}>
+                <AiOutlineClose size={16} />
+              </button>
+            </div>
+          )}
+
+          {/* Hidden file input */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            accept="image/*,video/*"
+            onChange={handleMediaSelect}
+            style={{ display: 'none' }}
+          />
+
           {/* Photo / Video / See Friends Posts action bar */}
           <div style={styles.actionBar}>
             <div style={styles.actionBarLeft}>
-              <button style={styles.mediaBtn}>
+              <button style={styles.mediaBtn} onClick={() => { fileInputRef.current.accept = 'image/*'; fileInputRef.current.click(); }}>
                 <AiOutlineCamera size={18} />
                 <span style={{ marginLeft: 4 }}>Photo</span>
               </button>
-              <button style={styles.mediaBtn}>
+              <button style={styles.mediaBtn} onClick={() => { fileInputRef.current.accept = 'video/*'; fileInputRef.current.click(); }}>
                 <AiOutlineVideoCamera size={18} color="#1a6b3a" />
                 <span style={{ marginLeft: 4 }}>Video</span>
               </button>
@@ -347,5 +435,33 @@ const styles = {
     padding: 40,
     color: '#888',
     fontSize: 15,
+  },
+  mediaPreviewWrap: {
+    position: 'relative',
+    margin: '8px 0',
+    borderRadius: 8,
+    overflow: 'hidden',
+    border: '1px solid #eee',
+  },
+  mediaPreview: {
+    width: '100%',
+    maxHeight: 300,
+    objectFit: 'cover',
+    display: 'block',
+  },
+  clearMediaBtn: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    background: 'rgba(0,0,0,0.6)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '50%',
+    width: 28,
+    height: 28,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
   },
 };

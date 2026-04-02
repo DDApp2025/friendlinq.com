@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { nodeApi } from '../../api/axios';
 import { MY_POST_LIKE, MY_POST_DISLIKE } from '../../api/config';
 import {
@@ -25,6 +26,7 @@ function timeAgo(dateStr) {
 
 export default function PostCard({ post, onUpdate }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const author = post?.postAuthor || post?.Author || {};
   const authorName = author?.fullName || 'Unknown';
@@ -201,8 +203,11 @@ export default function PostCard({ post, onUpdate }) {
           </span>
         </button>
 
-        <button style={styles.actionBtn}>
+        <button style={styles.actionBtn} onClick={() => navigate(`/comments/${post._id}`)}>
           <AiOutlineComment size={22} color="#888" />
+          <span style={{ marginLeft: 6, color: '#888', fontWeight: 600, fontSize: 13 }}>
+            {post.Comments?.length || post.totalComment || 0}
+          </span>
         </button>
 
         <button style={styles.actionBtn}>
