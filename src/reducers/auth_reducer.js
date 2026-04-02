@@ -4,7 +4,7 @@ const CALL_STATUS_DISCONNECTED = 0;
 
 const initialState = {
   email: "",
-  login_access_token: "",
+  login_access_token: localStorage.getItem('accessUserToken') || "",
   userType: "normal",
   getProfileData: {},
   getMyPosts: [],

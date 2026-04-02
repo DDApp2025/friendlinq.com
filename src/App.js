@@ -7,6 +7,9 @@ import LoginPage from './pages/Login';
 import HomePage from './pages/Home';
 import SignUpCommon from './pages/SignUpCommon';
 import ChooseUserType from './pages/ChooseUserType';
+import MyProfile from './pages/MyProfile';
+import EditProfile from './pages/EditProfile';
+import UserProfile from './pages/UserProfile';
 const PhotosPage = () => <div><h1>Photos</h1></div>;
 const AddFriendPage = () => <div><h1>Add Friend</h1></div>;
 const NotificationsPage = () => <div><h1>Notifications</h1></div>;
@@ -14,7 +17,6 @@ const MessagesPage = () => <div><h1>Messages</h1></div>;
 const FriendsPage = () => <div><h1>Friends</h1></div>;
 const CallPage = () => <div><h1>Call</h1></div>;
 const FavoritesPage = () => <div><h1>Favorites</h1></div>;
-const ProfilePage = () => <div><h1>My Profile</h1></div>;
 const SettingsPage = () => <div><h1>Settings</h1></div>;
 const SupportPage = () => <div><h1>Support</h1></div>;
 
@@ -60,7 +62,9 @@ function App() {
                   <Route path="/friends" element={<FriendsPage />} />
                   <Route path="/call" element={<CallPage />} />
                   <Route path="/favorites" element={<FavoritesPage />} />
-                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/profile" element={<MyProfile />} />
+                  <Route path="/edit-profile" element={<EditProfile />} />
+                  <Route path="/user/:userId" element={<UserProfile />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/support" element={<SupportPage />} />
                   <Route path="*" element={<Navigate to="/home" replace />} />

@@ -1,6 +1,7 @@
 import { nodeApi } from '../api/axios';
 import { LOGIN, LOGOUT, GET_PROFILE, SIGN_UP, BASE_URL, MAKE_FRIEND_WITH_USER, BASE_URL_3, BASE_URL_5, UPDATE_USER_TYPE } from '../api/config';
 import * as actionTypes from './actions_types';
+import normalizeImg from '../utils/normalizeImg';
 
 export const LoginAttempt = (email, password) => {
   return async (dispatch) => {
@@ -32,13 +33,7 @@ export const LoginAttempt = (email, password) => {
 
         // Store full profile data immediately from login response
         const profileData = { ...customerData };
-        if (profileData.imageURL && typeof profileData.imageURL === 'object') {
-          profileData.imageURL = profileData.imageURL.thumbnail
-            ? 'https://natural.friendlinq.com/' + profileData.imageURL.thumbnail
-            : '';
-        } else if (profileData.imageURL && typeof profileData.imageURL === 'string' && !profileData.imageURL.startsWith('http')) {
-          profileData.imageURL = 'https://natural.friendlinq.com/' + profileData.imageURL;
-        }
+        profileData.imageURL = normalizeImg(profileData.imageURL);
 
         dispatch({
           type: actionTypes.GET_PROFILE_SUCCESS,
@@ -170,14 +165,7 @@ export const getProfileAttempt = () => {
 
       if (res.data?.statusCode === 200) {
         const profileData = res.data.data?.customerData || {};
-        // imageURL comes as an object { thumbnail, original } — store the full URL
-        if (profileData.imageURL && typeof profileData.imageURL === 'object') {
-          profileData.imageURL = profileData.imageURL.thumbnail
-            ? 'https://natural.friendlinq.com/' + profileData.imageURL.thumbnail
-            : '';
-        } else if (profileData.imageURL && !profileData.imageURL.startsWith('http')) {
-          profileData.imageURL = 'https://natural.friendlinq.com/' + profileData.imageURL;
-        }
+        profileData.imageURL = normalizeImg(profileData.imageURL);
 
         dispatch({
           type: actionTypes.GET_PROFILE_SUCCESS,

@@ -7,15 +7,12 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store';
 import reportWebVitals from './reportWebVitals';
 
-// Temporary debug — expose store to browser console
-window.STORE = store;
-console.log('Redux store state:', JSON.stringify(store.getState(), null, 2));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'100vh',fontSize:16,color:'#888'}}>Loading...</div>} persistor={persistor}>
         <App />
       </PersistGate>
     </Provider>

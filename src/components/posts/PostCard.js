@@ -7,6 +7,7 @@ import {
   AiOutlineComment, AiOutlineShareAlt,
 } from 'react-icons/ai';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import normalizeImg from '../../utils/normalizeImg';
 
 const BASE_IMAGE = 'https://natural.friendlinq.com';
 
@@ -29,16 +30,12 @@ export default function PostCard({ post, onUpdate }) {
   const authorName = author?.fullName || 'Unknown';
   const isOnline = author?.isOnline === 1;
 
-  const profileThumb = author?.imageURL?.thumbnail
-    ? BASE_IMAGE + '/' + author.imageURL.thumbnail
-    : null;
+  const profileThumb = normalizeImg(author?.imageURL) || null;
 
-  const postImage = post?.imageURL?.original
-    ? BASE_IMAGE + '/' + post.imageURL.original
-    : null;
+  const postImage = normalizeImg(post?.imageURL) || null;
 
   const postVideo = post?.videoURL
-    ? (post.videoURL.startsWith('http') ? post.videoURL : BASE_IMAGE + '/' + post.videoURL)
+    ? normalizeImg(post.videoURL)
     : null;
 
   const handleLike = async () => {
