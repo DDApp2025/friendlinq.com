@@ -14,7 +14,7 @@ export const createPost = async ({ postTitle, postContent, postType, mediaFile, 
     const fd = new FormData();
     fd.append('postTitle', postTitle || '');
     fd.append('postContent', postContent || '');
-    fd.append('postType', postType); // "0" Friends, "1" Public, "2" Dating
+    fd.append('postType', postType); // "Public" or "Friend_Only"
     fd.append('isdating', isdating || '0');
 
     if (mediaFile) {

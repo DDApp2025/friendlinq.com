@@ -143,10 +143,8 @@ export default function Home() {
     if (!postText.trim() && !mediaFile) return;
     setPosting(true);
     try {
-      // Map privacy to postType: "0" = Friends Only, "1" = Public, "2" = Dating
-      let postType = '1';
-      if (privacyForPost === 'Friend_Only') postType = '0';
-      if (userType === 'dating') postType = '2';
+      // RN app uses exact strings: "Public" or "Friend_Only"
+      const postType = privacyForPost; // already "Public" or "Friend_Only"
 
       const res = await createPost({
         postTitle: postText.trim(),
