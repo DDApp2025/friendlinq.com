@@ -3,10 +3,9 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { thunk } from 'redux-thunk';
 import storage from 'redux-persist/lib/storage';
 import authReducer from './reducers/auth_reducer';
+import friendReducer from './reducers/friend_reducer';
 
-// Placeholder reducers for friendReducer, chatReducer, groupReducer
-// These will be replaced with real reducers in future sessions
-const friendReducer = (state = {}, action) => state;
+// Placeholder reducers for chatReducer, groupReducer
 const chatReducer = (state = {}, action) => state;
 const groupReducer = (state = {}, action) => state;
 
