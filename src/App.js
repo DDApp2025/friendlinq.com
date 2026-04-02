@@ -1,0 +1,77 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
+import AppLayout from './components/layout/AppLayout';
+import LoginPage from './pages/Login';
+import HomePage from './pages/Home';
+import SignUpCommon from './pages/SignUpCommon';
+import ChooseUserType from './pages/ChooseUserType';
+const PhotosPage = () => <div><h1>Photos</h1></div>;
+const AddFriendPage = () => <div><h1>Add Friend</h1></div>;
+const NotificationsPage = () => <div><h1>Notifications</h1></div>;
+const MessagesPage = () => <div><h1>Messages</h1></div>;
+const FriendsPage = () => <div><h1>Friends</h1></div>;
+const CallPage = () => <div><h1>Call</h1></div>;
+const FavoritesPage = () => <div><h1>Favorites</h1></div>;
+const ProfilePage = () => <div><h1>My Profile</h1></div>;
+const SettingsPage = () => <div><h1>Settings</h1></div>;
+const SupportPage = () => <div><h1>Support</h1></div>;
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <SignUpCommon />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/register/user-type"
+          element={
+            <ProtectedRoute>
+              <ChooseUserType />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/*"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <Routes>
+                  <Route path="/home" element={<HomePage />} />
+                  <Route path="/photos" element={<PhotosPage />} />
+                  <Route path="/add-friend" element={<AddFriendPage />} />
+                  <Route path="/notifications" element={<NotificationsPage />} />
+                  <Route path="/messages" element={<MessagesPage />} />
+                  <Route path="/friends" element={<FriendsPage />} />
+                  <Route path="/call" element={<CallPage />} />
+                  <Route path="/favorites" element={<FavoritesPage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/settings" element={<SettingsPage />} />
+                  <Route path="/support" element={<SupportPage />} />
+                  <Route path="*" element={<Navigate to="/home" replace />} />
+                </Routes>
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
