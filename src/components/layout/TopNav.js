@@ -91,7 +91,7 @@ const TopNav = ({ onMenuToggle }) => {
           <MdMenu size={28} color="#fff" />
         </button>
         <div style={styles.logoWrap} onClick={() => navigate('/home')}>
-          <span style={styles.logoIcon}>&#8734;</span>
+          <img src="/logo-icon.png" alt="FriendLinq" style={styles.logoImg} />
           <span style={styles.logoText}>FriendLinq</span>
         </div>
       </div>
@@ -273,11 +273,10 @@ const styles = {
     gap: 6,
     cursor: 'pointer',
   },
-  logoIcon: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#90ee90',
-    lineHeight: 1,
+  logoImg: {
+    height: 32,
+    width: 'auto',
+    objectFit: 'contain',
   },
   logoText: {
     fontSize: 20,

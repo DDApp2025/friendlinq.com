@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import { nodeApi, dotnetApi } from '../api/axios';
 import { GET_ALL_USERS_POST, GET_PUBLIC_POST } from '../api/config';
 import PostCard from '../components/posts/PostCard';
-import { AiOutlineCamera, AiOutlineVideoCamera } from 'react-icons/ai';
-import { AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineCamera, AiOutlineVideoCamera, AiOutlineClose } from 'react-icons/ai';
+import { MdVideocam } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import { createPost, notifyFriends } from '../actions/post_actions';
 
 const LIMIT = 20;
@@ -24,6 +25,7 @@ export default function Home() {
   const [mediaFile, setMediaFile] = useState(null);
   const [mediaPreview, setMediaPreview] = useState(null);
   const [posting, setPosting] = useState(false);
+  const navigate = useNavigate();
 
   const fileInputRef = useRef(null);
   const observerRef = useRef(null);
@@ -277,6 +279,7 @@ export default function Home() {
                 <AiOutlineVideoCamera size={18} color="#1a6b3a" />
                 <span style={{ marginLeft: 4 }}>Video</span>
               </button>
+              {/* Go Live button — hidden for now, route still works at /live/:channelName?host=1 */}
             </div>
             <button onClick={toggleFeed} style={styles.feedToggleBtn}>
               {feedType === 'community' ? 'See Friends Posts' : 'Feed'}

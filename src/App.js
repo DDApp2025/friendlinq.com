@@ -30,6 +30,7 @@ import Settings from './pages/Settings';
 import Support from './pages/Support';
 import { ChooseTutorial, TutorialViewer } from './pages/Tutorials';
 import CallPage from './pages/Call';
+import LiveStream from './pages/LiveStream';
 const FavoritesPage = () => <div><h1>Favorites</h1></div>;
 
 function App() {
@@ -99,6 +100,7 @@ function App() {
                   <Route path="/friends" element={<FriendsPage />} />
                   <Route path="/groups" element={<GroupsPage />} />
                   <Route path="/call" element={<CallPage />} />
+                  <Route path="/live/:channelName" element={<LiveStream />} />
                   <Route path="/favorites" element={<FavoritesPage />} />
                   <Route path="/profile" element={<MyProfile />} />
                   <Route path="/edit-profile" element={<EditProfile />} />

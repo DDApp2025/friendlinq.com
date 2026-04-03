@@ -108,7 +108,9 @@ function getNavTarget(n) {
     return '/home'; // groups not yet built
   }
   if (type.includes('live') || type.includes('stream')) {
-    return '/home';
+    const callId = n.callId || n.data?.callId || n.senderId || n.fromUserId;
+    const hostId = n.senderId || n.fromUserId;
+    return callId ? `/live/${callId}?hostId=${hostId || ''}` : '/home';
   }
   return null;
 }

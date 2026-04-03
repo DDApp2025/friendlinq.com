@@ -1,0 +1,169 @@
+.ls-container {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  /* NO flex — use absolute positioning for children so video area always fills viewport */
+}
+
+.ls-video-area {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.ls-video-player {
+  /* Explicit pixel-free full coverage — Agora needs a sized container */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Agora injects a wrapper div then a <video> — force both to fill */
+.ls-video-player > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.ls-video-player video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.ls-waiting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+  gap: 12px;
+}
+
+.ls-loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 20;
+}
+
+.ls-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ls-spin 0.8s linear infinite;
+}
+
+@keyframes ls-spin {
+  to { transform: rotate(360deg); }
+}
+
+.ls-error-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ff4444;
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 20;
+}
+
+/* Overlay */
+.ls-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.ls-top-bar {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  pointer-events: auto;
+}
+
+.ls-live-badge {
+  background: rgba(255, 0, 0, 0.7);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  animation: ls-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ls-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.ls-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 24px;
+  pointer-events: auto;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+}
+
+.ls-ctrl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(34, 34, 34, 0.6);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ls-ctrl-btn:hover {
+  background: rgba(34, 34, 34, 0.9);
+}
+
+.ls-end-btn {
+  background: #e53935;
+  width: 56px;
+  height: 56px;
+}
+
+.ls-end-btn:hover {
+  background: #c62828;
+}
+
+.ls-btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  background: #1976d2;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.ls-btn:hover {
+  background: #1565c0;
+}

@@ -70,21 +70,9 @@ function Login() {
   return (
     <div style={styles.container}>
       <div style={styles.scrollContent}>
-        {/* App Icon */}
+        {/* App Logo */}
         <div style={styles.iconWrapper}>
-          <div style={styles.iconCircle}>
-            <div style={styles.iconSquare}>
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                <path
-                  d="M8 20C8 14 12 10 17 10C20 10 22 11.5 23 13C24 11.5 26 10 29 10C34 10 38 14 38 20C38 26 34 30 29 30C26 30 24 28.5 23 27C22 28.5 20 30 17 30C12 30 8 26 8 20Z"
-                  stroke="white"
-                  strokeWidth="2.5"
-                  fill="none"
-                />
-                <path d="M2 20C2 14 6 10 11 10" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-              </svg>
-            </div>
-          </div>
+          <img src="/logo-app.jpeg" alt="FriendLinq" style={styles.logoImage} />
         </div>
 
         {/* App Name */}
@@ -100,6 +88,7 @@ function Login() {
               onChange={(e) => { setEmail(e.target.value); setError(''); }}
               placeholder="Email"
               autoCapitalize="none"
+              autoFocus
               style={styles.input}
             />
           </div>
@@ -209,24 +198,12 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
   },
-  iconCircle: {
+  logoImage: {
     width: 120,
     height: 120,
-    borderRadius: '50%',
-    backgroundColor: 'white',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: 24,
+    objectFit: 'cover',
     boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  },
-  iconSquare: {
-    width: 80,
-    height: 80,
-    borderRadius: 16,
-    backgroundColor: '#1a6b3a',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   appName: {
     fontSize: 22,
