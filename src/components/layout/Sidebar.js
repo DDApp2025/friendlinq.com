@@ -16,6 +16,7 @@ import {
   MdEdit,
   MdCollections,
   MdStorefront,
+  MdSchool,
 } from 'react-icons/md';
 
 const menuItems = [
@@ -32,6 +33,7 @@ const menuItems = [
 ];
 
 const bottomItems = [
+  { label: 'Tutorials', path: '/choose-tutorial', icon: MdSchool },
   { label: 'Settings', path: '/settings', icon: MdSettings },
   { label: 'Support', path: '/support', icon: MdHeadsetMic },
 ];

@@ -26,10 +26,11 @@ import PrivatePortfolio from './pages/PrivatePortfolio';
 import Marketplace from './pages/Marketplace';
 import MarketplaceDetail from './pages/MarketplaceDetail';
 import Subscription from './pages/Subscription';
+import Settings from './pages/Settings';
+import Support from './pages/Support';
+import { ChooseTutorial, TutorialViewer } from './pages/Tutorials';
 const CallPage = () => <div><h1>Call</h1></div>;
 const FavoritesPage = () => <div><h1>Favorites</h1></div>;
-const SettingsPage = () => <div><h1>Settings</h1></div>;
-const SupportPage = () => <div><h1>Support</h1></div>;
 
 function App() {
   return (
@@ -110,8 +111,10 @@ function App() {
                   <Route path="/marketplace" element={<Marketplace />} />
                   <Route path="/marketplace/:itemId" element={<MarketplaceDetail />} />
                   <Route path="/subscription" element={<Subscription />} />
-                  <Route path="/settings" element={<SettingsPage />} />
-                  <Route path="/support" element={<SupportPage />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/support" element={<Support />} />
+                  <Route path="/choose-tutorial" element={<ChooseTutorial />} />
+                  <Route path="/tutorials" element={<TutorialViewer />} />
                   <Route path="*" element={<Navigate to="/home" replace />} />
                 </Routes>
               </AppLayout>
