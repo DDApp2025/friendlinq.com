@@ -124,10 +124,10 @@ export default function MyProfile() {
           </div>
         )}
 
-        {/* Portfolio link */}
+        {/* Photo Library link */}
         <div style={styles.section}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-            <h3 style={{ ...styles.sectionTitle, marginBottom: 0, borderBottom: 'none', paddingBottom: 0 }}>Portfolio</h3>
+            <h3 style={{ ...styles.sectionTitle, marginBottom: 0, borderBottom: 'none', paddingBottom: 0 }}>Photo Library</h3>
             <button
               onClick={() => navigate('/portfolio')}
               style={{ background: 'none', border: 'none', color: '#1a6b3a', fontSize: 14, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
@@ -140,7 +140,7 @@ export default function MyProfile() {
         {/* Top 4 Portfolio Images */}
         {topImages.length > 0 && (
           <div style={styles.section}>
-            <h3 style={styles.sectionTitle}>Featured Photos</h3>
+            <h3 style={styles.sectionTitle}>Photo Library</h3>
             <div style={styles.grid4}>
               {topImages.slice(0, 4).map((img, i) => {
                 const imgUrl = normalizeImg(img.imageURL || img);
