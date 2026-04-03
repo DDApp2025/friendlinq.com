@@ -1,5 +1,5 @@
 import { nodeApi } from '../api/axios';
-import { LOGIN, LOGOUT, GET_PROFILE, SIGN_UP, BASE_URL, MAKE_FRIEND_WITH_USER, BASE_URL_3, BASE_URL_5, UPDATE_USER_TYPE } from '../api/config';
+import { LOGIN, LOGOUT, GET_PROFILE, SIGN_UP, BASE_URL, MAKE_FRIEND_WITH_USER, BASE_URL_3, BASE_URL_5, UPDATE_USER_TYPE, FORGOT_PASSWORD, VERIFY_OTP, RESET_PASSWORD, CHANGE_PASSWORD } from '../api/config';
 import * as actionTypes from './actions_types';
 import normalizeImg from '../utils/normalizeImg';
 
@@ -154,6 +154,103 @@ export const updateUserType = (token, userId, userType) => {
 
 export const setUserType = (userType) => {
   return { type: actionTypes.USER_TYPE, userType };
+};
+
+export const ForgotPasswordAttempt = (params) => {
+  return async (dispatch) => {
+    dispatch({ type: actionTypes.FORGOT_PASSWORD_ATTEMPT });
+    try {
+      const formData = new FormData();
+      formData.append('email', params.email);
+
+      const res = await nodeApi.post(FORGOT_PASSWORD, formData);
+
+      if (res.data?.statusCode === 200) {
+        dispatch({ type: actionTypes.FORGOT_PASSWORD_SUCCESS });
+        return { success: true, message: res.data.message };
+      } else {
+        dispatch({ type: actionTypes.FORGOT_PASSWORD_FAIL });
+        return { success: false, message: res.data?.message || 'Failed to send OTP' };
+      }
+    } catch (error) {
+      dispatch({ type: actionTypes.FORGOT_PASSWORD_FAIL });
+      return { success: false, message: error?.response?.data?.message || 'Network error' };
+    }
+  };
+};
+
+export const VerifyOtpAttempt = (params) => {
+  return async (dispatch) => {
+    dispatch({ type: actionTypes.VERIFY_OTP_ATTEMPT });
+    try {
+      const formData = new FormData();
+      formData.append('email', params.email);
+      formData.append('otp', params.otp);
+      formData.append('isForgotPassword', params.isForgotPassword);
+
+      const res = await nodeApi.post(VERIFY_OTP, formData);
+
+      if (res.data?.statusCode === 200) {
+        const resetToken = res.data.data?.passwordResetToken;
+        dispatch({ type: actionTypes.VERIFY_OTP_SUCCESS, resetPasswordToken: resetToken });
+        return { success: true };
+      } else {
+        dispatch({ type: actionTypes.VERIFY_OTP_FAIL });
+        return { success: false, message: res.data?.message || 'Invalid OTP' };
+      }
+    } catch (error) {
+      dispatch({ type: actionTypes.VERIFY_OTP_FAIL });
+      return { success: false, message: error?.response?.data?.message || 'Network error' };
+    }
+  };
+};
+
+export const ResetPasswordAttempt = (params) => {
+  return async (dispatch) => {
+    dispatch({ type: actionTypes.RESET_PASSWORD_ATTEMPT });
+    try {
+      const formData = new FormData();
+      formData.append('passwordResetToken', params.passwordResetToken);
+      formData.append('newPassword', params.newPassword);
+
+      const res = await nodeApi.post(RESET_PASSWORD, formData);
+
+      if (res.data?.statusCode === 200) {
+        dispatch({ type: actionTypes.RESET_PASSWORD_SUCCESS });
+        return { success: true, message: res.data.message };
+      } else {
+        dispatch({ type: actionTypes.RESET_PASSWORD_FAIL });
+        return { success: false, message: res.data?.message || 'Failed to reset password' };
+      }
+    } catch (error) {
+      dispatch({ type: actionTypes.RESET_PASSWORD_FAIL });
+      return { success: false, message: error?.response?.data?.message || 'Network error' };
+    }
+  };
+};
+
+export const ChangePasswordAttempt = (params) => {
+  return async (dispatch) => {
+    dispatch({ type: actionTypes.CHANGE_PASSWORD_ATTEMPT });
+    try {
+      const formData = new FormData();
+      formData.append('oldPassword', params.oldPassword);
+      formData.append('newPassword', params.newPassword);
+
+      const res = await nodeApi.post(CHANGE_PASSWORD, formData);
+
+      if (res.data?.statusCode === 200) {
+        dispatch({ type: actionTypes.CHANGE_PASSWORD_SUCCESS });
+        return { success: true, message: res.data.message };
+      } else {
+        dispatch({ type: actionTypes.CHANGE_PASSWORD_FAIL });
+        return { success: false, message: res.data?.message || 'Failed to change password' };
+      }
+    } catch (error) {
+      dispatch({ type: actionTypes.CHANGE_PASSWORD_FAIL });
+      return { success: false, message: error?.response?.data?.message || 'Network error' };
+    }
+  };
 };
 
 export const getProfileAttempt = () => {

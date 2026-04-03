@@ -18,7 +18,7 @@ const tabs = [
   { key: 'addfriend', icon: MdPersonAdd, label: 'Add Friend', path: '/add-friend' },
   { key: 'notifications', icon: MdNotificationsActive, label: 'Notifications', path: '/notifications', badgeKey: 'notificationCount' },
   { key: 'messages', icon: MdChat, label: 'Messages', path: '/messages', badgeKey: 'chatnotificationCount' },
-  { key: 'friends', icon: MdGroup, label: 'Friends', path: '/friends' },
+  { key: 'groups', icon: MdGroup, label: 'Groups', path: '/groups' },
   { key: 'call', icon: MdCall, label: 'Call', path: '/call' },
   { key: 'favorites', icon: MdStar, label: 'Favorites', path: '/favorites' },
 ];

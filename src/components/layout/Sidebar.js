@@ -24,6 +24,7 @@ const menuItems = [
   { label: 'Notifications', path: '/notifications', icon: MdNotificationsActive },
   { label: 'Messages', path: '/messages', icon: MdChat },
   { label: 'Friends', path: '/friends', icon: MdGroup },
+  { label: 'Groups', path: '/groups', icon: MdGroup },
   { label: 'Call', path: '/call', icon: MdCall },
   { label: 'Favorites', path: '/favorites', icon: MdStar },
 ];

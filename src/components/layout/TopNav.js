@@ -25,6 +25,7 @@ const navLinks = [
   { label: 'Notifications', path: '/notifications', icon: MdNotificationsActive, badgeKey: 'notificationCount' },
   { label: 'Messages', path: '/messages', icon: MdChat, badgeKey: 'chatnotificationCount' },
   { label: 'Friends', path: '/friends', icon: MdGroup },
+  { label: 'Groups', path: '/groups', icon: MdGroup },
   { label: 'Call', path: '/call', icon: MdCall },
   { label: 'Favorites', path: '/favorites', icon: MdStar },
 ];

@@ -16,6 +16,11 @@ import CommentsPage from './pages/Comments';
 import ChatListPage from './pages/ChatList';
 import ChatPage from './pages/Chat';
 import NotificationsPage from './pages/Notifications';
+import GroupsPage from './pages/Groups';
+import ForgotPassword from './pages/ForgotPassword';
+import VerifyOtp from './pages/VerifyOtp';
+import ResetPassword from './pages/ResetPassword';
+import ChangePassword from './pages/ChangePassword';
 const PhotosPage = () => <div><h1>Photos</h1></div>;
 const CallPage = () => <div><h1>Call</h1></div>;
 const FavoritesPage = () => <div><h1>Favorites</h1></div>;
@@ -43,6 +48,30 @@ function App() {
           }
         />
         <Route
+          path="/forgot-password"
+          element={
+            <PublicRoute>
+              <ForgotPassword />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/verify-otp"
+          element={
+            <PublicRoute>
+              <VerifyOtp />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/reset-password"
+          element={
+            <PublicRoute>
+              <ResetPassword />
+            </PublicRoute>
+          }
+        />
+        <Route
           path="/register/user-type"
           element={
             <ProtectedRoute>
@@ -63,12 +92,14 @@ function App() {
                   <Route path="/messages" element={<ChatListPage />} />
                   <Route path="/chat/:userId" element={<ChatPage />} />
                   <Route path="/friends" element={<FriendsPage />} />
+                  <Route path="/groups" element={<GroupsPage />} />
                   <Route path="/call" element={<CallPage />} />
                   <Route path="/favorites" element={<FavoritesPage />} />
                   <Route path="/profile" element={<MyProfile />} />
                   <Route path="/edit-profile" element={<EditProfile />} />
                   <Route path="/user/:userId" element={<UserProfile />} />
                   <Route path="/comments/:postId" element={<CommentsPage />} />
+                  <Route path="/change-password" element={<ChangePassword />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/support" element={<SupportPage />} />
                   <Route path="*" element={<Navigate to="/home" replace />} />
