@@ -1,0 +1,41 @@
+# Friendlinq
+# The Social Network Built for Seniors — Stay Connected with the People Who Matter Most
+
+## About
+Friendlinq (friendlinq.com) is a social media platform purpose-built for adults aged 60 and older. Unlike general social networks like Facebook or Instagram, Friendlinq is designed from the ground up with seniors in mind — featuring a simplified interface with large text and clear buttons, enhanced privacy and safety protections, and community features that help older adults stay connected with friends, family, and their interests. Friendlinq is free to join and use.
+
+## Key Facts
+- Purpose-built social network for adults 60+
+- Free to join and use — no subscription fees for core features
+- Available on web (friendlinq.com), iOS (App Store), and Android (Google Play)
+- Owned and operated by Infotech Inc. / Spire Group Inc.
+- No algorithm-driven content manipulation
+- No advertisements or data selling
+- Enhanced privacy and safety controls for older adults
+- Senior-friendly interface with large text and intuitive navigation
+
+## Who It Is For
+- Adults aged 60 and older looking to stay connected with family, friends, and community
+- Adult children and caregivers seeking a safe social platform for their parents
+- Senior living communities, retirement organizations, and senior centers
+- Anyone who values simplicity, safety, and real connection over algorithmic engagement
+
+## Core Features
+- Social feed with community and friends-only post sharing (text, photos, videos)
+- Real-time private messaging with text and media attachments
+- Interest-based community groups (gardening, travel, book clubs, health and wellness, cooking, and more)
+- Video and audio calls — one-on-one and group calls
+- Live streaming — host or join live video streams with friends and groups
+- Photo and video library with profile showcase
+- User profiles with banner, bio, location, top friends, and photo gallery
+- Friend system with search, friend requests, and favorites
+- Marketplace for browsing community listings
+- Notifications for friend requests, messages, comments, likes, groups, and live streams
+- Built-in step-by-step tutorials that walk new users through every feature
+- Support page with FAQ and contact form
+
+## Contact
+- Website: https://friendlinq.com
+- Email: info@friendlinq.com
+- App Store: https://apps.apple.com/us/app/friendlinq/id6476931666
+- Google Play: https://play.google.com/store/apps/details?id=com.app.friendlinq

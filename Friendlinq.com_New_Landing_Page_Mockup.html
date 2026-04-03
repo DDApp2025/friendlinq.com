@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Friendlinq Landing Page Mockup</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #1c1e21; }
+
+.topnav { background: #1a6b3a; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.topnav-logo { display: flex; align-items: center; gap: 10px; }
+.topnav-logo .icon { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; }
+.topnav-logo .name { color: #fff; font-size: 22px; font-weight: 600; letter-spacing: -0.5px; }
+.topnav-login { display: flex; gap: 8px; align-items: center; }
+.topnav-login input { padding: 7px 12px; border-radius: 5px; border: none; font-size: 13px; width: 150px; background: rgba(255,255,255,0.92); color: #333; }
+.topnav-login input::placeholder { color: #888; }
+.topnav-login .btn-login { background: #4a9e6e; color: #fff; padding: 7px 18px; border-radius: 5px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; white-space: nowrap; }
+.topnav-login .btn-login:hover { background: #3d8a5e; }
+.topnav-login .forgot { color: rgba(255,255,255,0.7); font-size: 11px; cursor: pointer; white-space: nowrap; }
+.topnav-login .forgot:hover { color: #fff; text-decoration: underline; }
+
+.hero { max-width: 980px; margin: 0 auto; padding: 56px 32px 48px; display: flex; gap: 48px; align-items: flex-start; }
+
+.hero-left { flex: 1; min-width: 0; padding-top: 8px; }
+.hero-left h1 { font-size: 28px; font-weight: 700; line-height: 1.25; color: #1c1e21; margin-bottom: 12px; }
+.hero-left .subtitle { font-size: 18px; color: #4b4f56; line-height: 1.55; margin-bottom: 36px; }
+
+.feature { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 24px; }
+.feature-icon { min-width: 48px; height: 48px; background: #e8f5ee; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.feature-icon svg { width: 22px; height: 22px; stroke: #1a6b3a; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.feature-title { font-size: 16px; font-weight: 600; color: #1c1e21; margin-bottom: 3px; }
+.feature-desc { font-size: 14px; color: #606770; line-height: 1.5; }
+
+.hero-right { flex: 0 0 360px; }
+.signup-card { background: #fff; border-radius: 10px; padding: 28px 24px 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+.signup-card h2 { font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 4px; color: #1c1e21; }
+.signup-card .sub { font-size: 14px; color: #606770; text-align: center; margin-bottom: 20px; }
+.signup-card input { width: 100%; padding: 12px 14px; border-radius: 6px; border: 1px solid #dddfe2; font-size: 15px; margin-bottom: 10px; background: #f5f6f7; color: #1c1e21; }
+.signup-card input::placeholder { color: #90949c; }
+.signup-card input:focus { outline: none; border-color: #1a6b3a; background: #fff; }
+.signup-card .divider { border: none; border-top: 1px solid #dddfe2; margin: 16px 0; }
+.btn-signup { width: 100%; background: #1a6b3a; color: #fff; padding: 13px; border-radius: 6px; font-size: 17px; font-weight: 700; text-align: center; cursor: pointer; border: none; margin-bottom: 12px; }
+.btn-signup:hover { background: #155930; }
+.signup-card .legal { font-size: 11px; color: #90949c; text-align: center; line-height: 1.5; }
+.signup-card .legal a { color: #1a6b3a; text-decoration: none; }
+
+.app-badges { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
+.badge { background: #111; color: #fff; padding: 8px 16px; border-radius: 7px; text-align: center; cursor: pointer; line-height: 1.2; }
+.badge .small { font-size: 9px; display: block; opacity: 0.7; margin-bottom: 1px; }
+.badge .big { font-size: 13px; font-weight: 600; }
+
+.stats-bar { background: #fff; border-top: 1px solid #e4e6eb; border-bottom: 1px solid #e4e6eb; padding: 28px 32px; }
+.stats-inner { max-width: 980px; margin: 0 auto; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+.stat { text-align: center; }
+.stat .label { font-size: 13px; color: #606770; margin-bottom: 3px; }
+.stat .value { font-size: 20px; font-weight: 700; color: #1a6b3a; }
+
+.features-detail { max-width: 980px; margin: 0 auto; padding: 48px 32px; }
+.features-detail h2 { font-size: 24px; font-weight: 700; text-align: center; margin-bottom: 8px; color: #1c1e21; }
+.features-detail .sub { font-size: 15px; color: #606770; text-align: center; margin-bottom: 36px; }
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.fcard { background: #fff; border-radius: 10px; padding: 24px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border: 1px solid #e4e6eb; text-align: center; }
+.fcard-icon { width: 56px; height: 56px; background: #e8f5ee; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+.fcard-icon svg { width: 26px; height: 26px; stroke: #1a6b3a; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fcard h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; color: #1c1e21; }
+.fcard p { font-size: 13px; color: #606770; line-height: 1.5; }
+
+.faq-section { background: #fff; border-top: 1px solid #e4e6eb; padding: 48px 32px; }
+.faq-inner { max-width: 720px; margin: 0 auto; }
+.faq-inner h2 { font-size: 24px; font-weight: 700; text-align: center; margin-bottom: 28px; color: #1c1e21; }
+.faq-item { border: 1px solid #e4e6eb; border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
+.faq-q { padding: 16px 20px; font-weight: 600; font-size: 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: #1c1e21; background: #fafbfc; }
+.faq-q:hover { background: #f0f2f5; }
+.faq-q .arrow { font-size: 18px; color: #606770; transition: transform 0.2s; }
+.faq-a { padding: 0 20px 16px; font-size: 14px; color: #606770; line-height: 1.6; display: none; }
+.faq-item.open .faq-a { display: block; }
+.faq-item.open .arrow { transform: rotate(180deg); }
+
+.cta-bar { background: #1a6b3a; padding: 40px 32px; text-align: center; }
+.cta-bar h2 { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.cta-bar p { font-size: 15px; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+.btn-cta { display: inline-block; background: #fff; color: #1a6b3a; padding: 14px 40px; border-radius: 6px; font-size: 17px; font-weight: 700; cursor: pointer; border: none; }
+.btn-cta:hover { background: #e8f5ee; }
+
+footer { background: #1c1e21; padding: 28px 32px; }
+.footer-inner { max-width: 980px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-logo { display: flex; align-items: center; gap: 8px; }
+.footer-logo .icon { width: 28px; height: 28px; border-radius: 6px; object-fit: cover; }
+.footer-logo .name { color: #fff; font-size: 15px; font-weight: 600; }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-links a { color: rgba(255,255,255,0.6); font-size: 13px; text-decoration: none; }
+.footer-links a:hover { color: #fff; }
+.footer-copy { color: rgba(255,255,255,0.35); font-size: 11px; }
+
+@media (max-width: 768px) {
+  .hero { flex-direction: column; padding: 32px 20px; gap: 32px; }
+  .hero-right { flex: none; width: 100%; }
+  .topnav-login { display: none; }
+  .features-grid { grid-template-columns: 1fr; }
+  .stats-inner { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-logo">
+    <img class="icon" src="public/logo-app.jpeg" alt="Friendlinq logo">
+    <span class="name">Friendlinq</span>
+  </div>
+  <div class="topnav-login">
+    <input type="text" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button class="btn-login">Log in</button>
+    <span class="forgot">Forgot password?</span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <h1>Stay connected with the people who matter most.</h1>
+    <p class="subtitle">Friendlinq is the social network designed for adults who value simplicity, safety, and real connection. Easy to use, private by design, and completely free.</p>
+
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div>
+        <div class="feature-title">Connect with friends and family</div>
+        <div class="feature-desc">Share updates, photos, and messages with the people you care about — family, old friends, neighbors.</div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      </div>
+      <div>
+        <div class="feature-title">Join community groups</div>
+        <div class="feature-desc">Gardening, travel, book clubs, cooking, health and wellness — find people who share your passions.</div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+      </div>
+      <div>
+        <div class="feature-title">Video calls and live streams</div>
+        <div class="feature-desc">See loved ones face-to-face with one-tap video calling. Host or join live streams with friends and groups.</div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div>
+        <div class="feature-title">Safe and private by design</div>
+        <div class="feature-desc">No ads. No data selling. No algorithm tricks. Built from the ground up to protect your privacy online.</div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <div>
+        <div class="feature-title">Designed for comfort, not complexity</div>
+        <div class="feature-desc">Large text, clear buttons, simple navigation. If you can browse the web and send email, you can use Friendlinq.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="hero-right">
+    <div class="signup-card">
+      <h2>Join Friendlinq</h2>
+      <p class="sub">It's free and always will be.</p>
+      <input type="text" placeholder="First name">
+      <input type="text" placeholder="Last name">
+      <input type="email" placeholder="Email address">
+      <input type="password" placeholder="Create a password">
+      <hr class="divider">
+      <button class="btn-signup">Sign up</button>
+      <p style="font-size: 14px; text-align: center; margin-bottom: 12px; color: #606770;">Already have an account? <a href="/login" style="color: #1a6b3a; font-weight: 600; text-decoration: none;">Log in</a></p>
+      <p class="legal">By signing up you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 18px;">
+      <div style="width: 150px; height: 50px; overflow: hidden; border-radius: 8px; background: #000; display: flex; align-items: center; justify-content: center;">
+        <a href="https://apps.apple.com/us/app/friendlinq/id6476931666" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+          <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" style="width: 100%; height: auto;">
+        </a>
+      </div>
+      <div style="width: 150px; height: 50px; overflow: hidden; border-radius: 8px; background: #000; display: flex; align-items: center; justify-content: center;">
+        <a href="https://play.google.com/store/apps/details?id=com.app.friendlinq" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+          <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" style="width: 130%; height: auto;">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="label">Built for</div>
+      <div class="value">Real people</div>
+    </div>
+    <div class="stat">
+      <div class="label">Cost to join</div>
+      <div class="value">Always free</div>
+    </div>
+    <div class="stat">
+      <div class="label">Your personal data</div>
+      <div class="value">Never sold</div>
+    </div>
+    <div class="stat">
+      <div class="label">Available on</div>
+      <div class="value">Web, iOS, Android</div>
+    </div>
+  </div>
+</section>
+
+<section class="features-detail">
+  <h2>Everything you need to stay connected</h2>
+  <p class="sub">Friendlinq gives you the tools to keep your social life thriving — without the confusion.</p>
+  <div class="features-grid">
+    <div class="fcard">
+      <div class="fcard-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h3>Messaging</h3>
+      <p>Private conversations with friends and family. Send text, photos, and voice messages.</p>
+    </div>
+    <div class="fcard">
+      <div class="fcard-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </div>
+      <h3>Photo sharing</h3>
+      <p>Upload and share photos with friends. Create albums for trips, family, hobbies.</p>
+    </div>
+    <div class="fcard">
+      <div class="fcard-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>Groups</h3>
+      <p>Join or create groups around your interests. Meet people who love what you love.</p>
+    </div>
+    <div class="fcard">
+      <div class="fcard-icon">
+        <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+      </div>
+      <h3>Video calls</h3>
+      <p>One-on-one or group video calls. See faces, not just text. Works on phone, tablet, or computer.</p>
+    </div>
+    <div class="fcard">
+      <div class="fcard-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <h3>Events</h3>
+      <p>Discover local activities, community events, and virtual get-togethers near you.</p>
+    </div>
+    <div class="fcard">
+      <div class="fcard-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <h3>Your profile</h3>
+      <p>Share your story. Add a photo, bio, and interests so friends old and new can find you.</p>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section">
+  <div class="faq-inner">
+    <h2>Frequently asked questions</h2>
+
+    <div class="faq-item open">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span>What is Friendlinq?</span>
+        <span class="arrow">&#9662;</span>
+      </div>
+      <div class="faq-a">Friendlinq is a social network designed for adults who want a simpler, safer way to stay connected. Unlike Facebook or Instagram, Friendlinq features a clean interface, enhanced privacy protections, and community features that help you stay in touch with friends and family and engage with people who share your interests. It is completely free to join and use.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span>How is Friendlinq different from Facebook?</span>
+        <span class="arrow">&#9662;</span>
+      </div>
+      <div class="faq-a">Friendlinq is built from the ground up for people who want simplicity. That means cleaner navigation, larger text, no algorithm-driven content manipulation, no advertisements, and privacy controls designed to actually protect you. Facebook is a general social network built around engagement metrics — Friendlinq is built around you.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span>Is Friendlinq really free?</span>
+        <span class="arrow">&#9662;</span>
+      </div>
+      <div class="faq-a">Yes, completely. There are no subscription fees, no hidden charges, and no premium tiers required to access core features including messaging, community groups, photo sharing, video calls, and event discovery.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span>Do I need to be tech-savvy to use Friendlinq?</span>
+        <span class="arrow">&#9662;</span>
+      </div>
+      <div class="faq-a">Not at all. Friendlinq uses large, clear buttons, simple navigation, and straightforward language. There's a guided tutorial that walks you through every feature step by step. If you can browse the internet and send an email, you can use Friendlinq.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span>Is Friendlinq safe?</span>
+        <span class="arrow">&#9662;</span>
+      </div>
+      <div class="faq-a">Yes. Friendlinq is built with your safety as a top priority. The platform includes enhanced privacy controls, community moderation, and protection from scams and spam. Your personal data is never sold to advertisers or third parties.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span>Can my family members join?</span>
+        <span class="arrow">&#9662;</span>
+      </div>
+      <div class="faq-a">Absolutely. Friendlinq is open to adults of all ages. Invite your family, friends, and anyone you want to stay connected with. The more people you care about who join, the better the experience.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span>What can I do on Friendlinq?</span>
+        <span class="arrow">&#9662;</span>
+      </div>
+      <div class="faq-a">You can connect with friends and family, join interest-based community groups (gardening, travel, book clubs, and more), share photos and updates, send private messages, make video and audio calls, host or join live streams, discover local events, and browse the marketplace — all through an interface designed for simplicity and comfort.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span>How do I sign up?</span>
+        <span class="arrow">&#9662;</span>
+      </div>
+      <div class="faq-a">Just fill out the sign-up form at the top of this page with your name, email address, and a password. It takes less than a minute. Once registered, you can immediately start connecting with others and exploring community groups.</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta-bar">
+  <h2>Ready to stay connected?</h2>
+  <p>Join Friendlinq today. It takes less than a minute and it's completely free.</p>
+  <button class="btn-cta" onclick="window.scrollTo({top:0,behavior:'smooth'})">Sign up now</button>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img class="icon" src="public/logo-app.jpeg" alt="Friendlinq logo">
+      <span class="name">Friendlinq</span>
+    </div>
+    <div class="footer-links">
+      <a href="#">About</a>
+      <a href="#">Features</a>
+      <a href="#">Safety</a>
+      <a href="#">FAQ</a>
+      <a href="#">Support</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy policy</a>
+      <a href="#">Terms of service</a>
+    </div>
+    <span class="footer-copy">&copy; 2026 Spire Group Inc. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
