@@ -129,7 +129,7 @@ export default function MyProfile() {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
             <h3 style={{ ...styles.sectionTitle, marginBottom: 0, borderBottom: 'none', paddingBottom: 0 }}>Photo Library</h3>
             <button
-              onClick={() => navigate('/portfolio')}
+              onClick={() => navigate('/photos')}
               style={{ background: 'none', border: 'none', color: '#1a6b3a', fontSize: 14, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
             >
               <MdCollections size={16} /> Manage

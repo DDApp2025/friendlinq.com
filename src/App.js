@@ -25,7 +25,6 @@ import Portfolio from './pages/Portfolio';
 import PrivatePortfolio from './pages/PrivatePortfolio';
 import Marketplace from './pages/Marketplace';
 import MarketplaceDetail from './pages/MarketplaceDetail';
-const PhotosPage = () => <div><h1>Photos</h1></div>;
 const CallPage = () => <div><h1>Call</h1></div>;
 const FavoritesPage = () => <div><h1>Favorites</h1></div>;
 const SettingsPage = () => <div><h1>Settings</h1></div>;
@@ -90,7 +89,7 @@ function App() {
               <AppLayout>
                 <Routes>
                   <Route path="/home" element={<HomePage />} />
-                  <Route path="/photos" element={<PhotosPage />} />
+                  <Route path="/photos" element={<Portfolio />} />
                   <Route path="/add-friend" element={<AddFriendPage />} />
                   <Route path="/notifications" element={<NotificationsPage />} />
                   <Route path="/messages" element={<ChatListPage />} />

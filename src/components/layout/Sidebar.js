@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
   MdHouse,
-  MdWallpaper,
   MdPersonAdd,
   MdNotificationsActive,
   MdChat,
@@ -21,13 +20,12 @@ import {
 
 const menuItems = [
   { label: 'Home', path: '/home', icon: MdHouse },
-  { label: 'Photos', path: '/photos', icon: MdWallpaper },
+  { label: 'Photo Library', path: '/photos', icon: MdCollections },
   { label: 'Add Friend', path: '/add-friend', icon: MdPersonAdd },
   { label: 'Notifications', path: '/notifications', icon: MdNotificationsActive },
   { label: 'Messages', path: '/messages', icon: MdChat },
   { label: 'Friends', path: '/friends', icon: MdGroup },
   { label: 'Groups', path: '/groups', icon: MdGroup },
-  { label: 'Photo Library', path: '/portfolio', icon: MdCollections },
   { label: 'Marketplace', path: '/marketplace', icon: MdStorefront },
   { label: 'Call', path: '/call', icon: MdCall },
   { label: 'Favorites', path: '/favorites', icon: MdStar },
