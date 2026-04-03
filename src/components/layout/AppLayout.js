@@ -1,12 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import TopNav from './TopNav';
 import BottomNav from './BottomNav';
 import Sidebar from './Sidebar';
+import { getNotifications } from '../../actions/notification_actions';
+import * as actionTypes from '../../actions/actions_types';
 
 const AppLayout = ({ children }) => {
+  const dispatch = useDispatch();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 900);
+
+  // Fetch notification count on mount
+  useEffect(() => {
+    (async () => {
+      const res = await getNotifications(0, 1);
+      if (res?.statusCode === 200) {
+        dispatch({
+          type: actionTypes.GET_NOTIFICATION_SUCCESS,
+          getNotificationData: res.data,
+        });
+      }
+    })();
+  }, [dispatch]);
 
   useEffect(() => {
     const handleResize = () => {

@@ -129,6 +129,21 @@ const TopNav = ({ onMenuToggle }) => {
           <MdVideocam size={24} color="#fff" />
         </button>
 
+        <button
+          style={styles.iconBtn}
+          aria-label="Notifications"
+          onClick={() => navigate('/notifications')}
+        >
+          <div style={styles.bellWrap}>
+            <MdNotificationsActive size={24} color="#fff" />
+            {auth.notificationCount ? (
+              <span style={styles.bellBadge}>
+                {auth.notificationCount > 99 ? '99+' : auth.notificationCount}
+              </span>
+            ) : null}
+          </div>
+        </button>
+
         <div ref={dropdownRef} style={styles.profileWrap}>
           <div
             style={styles.avatarWrap}
@@ -317,6 +332,27 @@ const styles = {
     padding: 4,
     display: 'flex',
     alignItems: 'center',
+  },
+  bellWrap: {
+    position: 'relative',
+    display: 'inline-flex',
+  },
+  bellBadge: {
+    position: 'absolute',
+    top: -6,
+    right: -10,
+    backgroundColor: 'red',
+    color: '#fff',
+    fontSize: 11,
+    fontWeight: 'bold',
+    minWidth: 18,
+    height: 18,
+    borderRadius: 9,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '0 4px',
+    lineHeight: 1,
   },
   profileWrap: {
     position: 'relative',
