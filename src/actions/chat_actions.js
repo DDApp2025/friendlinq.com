@@ -13,7 +13,7 @@ import * as T from './actions_types';
 export const getChatList = (token) => {
   return async (dispatch) => {
     try {
-      const res = await dotnetApi.post('/Client' + GET_CHAT_NOTIFICATION_END_POINT, {
+      const res = await dotnetApi.post(GET_CHAT_NOTIFICATION_END_POINT, {
         authorization: token,
       });
       const code = res.data?.StatusCode ?? res.data?.statusCode;
@@ -33,7 +33,7 @@ export const getChatList = (token) => {
 export const getChatCount = (token) => {
   return async (dispatch) => {
     try {
-      const res = await dotnetApi.post('/Client' + READ_TAB_COUNTER_NOTIFICATION_END_POINT, {
+      const res = await dotnetApi.post(READ_TAB_COUNTER_NOTIFICATION_END_POINT, {
         authorization: token,
       });
       const code = res.data?.StatusCode ?? res.data?.statusCode;
@@ -121,7 +121,7 @@ export const sendMediaMessage = (senderId, receiverId, file) => {
 export const markChatRead = (token, otherUserId) => {
   return async () => {
     try {
-      const res = await dotnetApi.post('/Client' + READ_CHAT_NOTIFICATION_END_POINT, {
+      const res = await dotnetApi.post(READ_CHAT_NOTIFICATION_END_POINT, {
         authorization: token,
         senderId: otherUserId,
         dateTime: new Date().toISOString(),
