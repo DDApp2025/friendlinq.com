@@ -88,7 +88,9 @@ export const saveProfileData = (fields) => {
 export const getUserProfile = (userId) => {
   return async () => {
     try {
-      const res = await nodeApi.get(GET_USER_PROFILE, { params: { userId } });
+      const fd = new FormData();
+      fd.append('userId', userId);
+      const res = await nodeApi.post(GET_USER_PROFILE, fd);
       if (res.data?.statusCode === 200) {
         const userData = res.data.data?.customerData || res.data.data || {};
         userData.imageURL = normalizeImg(userData.imageURL);

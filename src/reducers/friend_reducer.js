@@ -3,6 +3,7 @@ import * as T from '../actions/actions_types';
 const initialState = {
   friendsList: [],
   friendsTotal: 0,
+  topFourFriendList: [],
   incomingRequests: [],
   sentRequests: [],
   searchResults: [],
@@ -20,6 +21,7 @@ const friendReducer = (state = initialState, action) => {
         loading: false,
         friendsList: action.payload.list,
         friendsTotal: action.payload.total,
+        topFourFriendList: action.payload.topFourFriendList || state.topFourFriendList,
       };
     case T.GET_FRIEND_LIST_FAIL:
       return { ...state, loading: false };

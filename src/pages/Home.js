@@ -69,6 +69,10 @@ export default function Home() {
           return p;
         });
 
+        // Filter by dating mode — same as RN friend_reducer.js:638
+        const isDatingFilter = userType === 'dating' ? '1' : '0';
+        newPosts = newPosts.filter((p) => (p.isdating || '0') === isDatingFilter);
+
         const totalCount = data?.data?.totalMyPost ?? data?.Data?.totalMyPost ?? 0;
         setTotal(totalCount);
 
@@ -85,16 +89,16 @@ export default function Home() {
       loadingRef.current = false;
       setLoading(false);
     }
-  }, [feedType, token]);
+  }, [feedType, token, userType]);
 
-  // Initial load & feed toggle
+  // Initial load & feed toggle & userType change
   useEffect(() => {
     setPosts([]);
     setSkip(0);
     setTotal(0);
     fetchPosts(0, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [feedType]);
+  }, [feedType, userType]);
 
   // ── Infinite scroll via IntersectionObserver ──────────────
   useEffect(() => {
@@ -123,6 +127,11 @@ export default function Home() {
     setPosts((prev) =>
       prev.map((p) => (p._id === updatedPost._id ? updatedPost : p))
     );
+  };
+
+  // ── Remove a deleted post from feed ─────────────────────
+  const handlePostDelete = (postId) => {
+    setPosts((prev) => prev.filter((p) => p._id !== postId));
   };
 
   // ── Media picker ─────────────────────────────────────────
@@ -287,12 +296,31 @@ export default function Home() {
           </div>
         </div>
 
+        {/* ── App Store Badges ──────────────────────────────── */}
+        <div style={styles.badgeBanner}>
+          <a href="https://apps.apple.com/us/app/friendlinq/id6476931666" target="_blank" rel="noopener noreferrer">
+            <img
+              src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83"
+              alt="Download on the App Store"
+              style={styles.badgeImg}
+            />
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.app.friendlinq" target="_blank" rel="noopener noreferrer">
+            <img
+              src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+              alt="Get it on Google Play"
+              style={styles.badgeImgPlay}
+            />
+          </a>
+        </div>
+
         {/* ── Feed ──────────────────────────────────────────── */}
         {posts.map((post, idx) => (
           <PostCard
             key={post._id || idx}
             post={post}
             onUpdate={handlePostUpdate}
+            onDelete={handlePostDelete}
           />
         ))}
 
@@ -436,6 +464,23 @@ const styles = {
     padding: 40,
     color: '#888',
     fontSize: 15,
+  },
+  badgeBanner: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    marginBottom: 12,
+    padding: '8px 0',
+  },
+  badgeImg: {
+    height: 40,
+    width: 'auto',
+  },
+  badgeImgPlay: {
+    height: 58,
+    width: 'auto',
+    marginTop: -2,
   },
   mediaPreviewWrap: {
     position: 'relative',

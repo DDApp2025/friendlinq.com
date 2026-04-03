@@ -44,11 +44,9 @@ const Sidebar = ({ open, onClose }) => {
   const auth = useSelector((state) => state.authReducer);
   const profile = auth.getProfileData || {};
   const imageURL = profile.imageURL || '';
-  const firstName = profile.firstName || '';
-  const lastName = profile.lastName || '';
-  const fullName = `${firstName} ${lastName}`.trim() || 'User';
+  const fullName = profile.fullName || profile.email || 'User';
   const email = profile.email || '';
-  const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  const initials = fullName.split(' ').map((w) => w.charAt(0)).slice(0, 2).join('').toUpperCase();
 
   const handleNav = (path) => {
     navigate(path);

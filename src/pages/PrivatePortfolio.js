@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { dotnetApi } from '../api/axios';
+import { BASE_URL_5 } from '../api/config';
 import normalizeImg from '../utils/normalizeImg';
 import { MdClose, MdArrowBack, MdPlayArrow, MdLock } from 'react-icons/md';
 
@@ -103,7 +104,7 @@ export default function PrivatePortfolio() {
       formData.append('authorization', token);
       formData.append('File[0]', file);
       // .NET upload uses direct fetch since it's multipart with auth in body
-      const res = await fetch('https://unpokedfolks.com/api/Customer/UploadPrivatePortfolio', {
+      const res = await fetch(BASE_URL_5 + '/Customer/UploadPrivatePortfolio', {
         method: 'POST',
         body: formData,
       });

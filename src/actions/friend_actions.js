@@ -39,8 +39,9 @@ export const getFriendList = (skip = 0, limit = 20) => {
           res.data.data?.totalFriend ??
           res.data.data?.totalMyFriend ??
           list.length;
-        dispatch({ type: T.GET_FRIEND_LIST_SUCCESS, payload: { list, total } });
-        return { success: true, data: list, total };
+        const topFourFriendList = res.data.data?.topFourFriendList || [];
+        dispatch({ type: T.GET_FRIEND_LIST_SUCCESS, payload: { list, total, topFourFriendList } });
+        return { success: true, data: list, total, topFourFriendList };
       }
       dispatch({ type: T.GET_FRIEND_LIST_FAIL });
       return { success: false };
@@ -199,12 +200,14 @@ export const searchUsers = (query) => {
   return async (dispatch) => {
     dispatch({ type: T.SEARCH_USER_ATTEMPT });
     try {
-      const res = await nodeApi.get(GET_USERS, {
-        params: { search: query },
-      });
+      const fd = new FormData();
+      fd.append('searchText', query);
+      fd.append('skip', 0);
+      fd.append('limit', 100);
+      const res = await nodeApi.post(GET_USERS, fd);
       if (res.data?.statusCode === 200) {
         const list = normalizeList(
-          res.data.data?.userData || res.data.data?.users || res.data.data || []
+          res.data.data?.customerData || res.data.data?.userData || res.data.data?.users || res.data.data || []
         );
         dispatch({ type: T.SEARCH_USER_SUCCESS, payload: list });
         return { success: true, data: list };

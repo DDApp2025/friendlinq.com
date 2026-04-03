@@ -31,7 +31,7 @@ import Support from './pages/Support';
 import { ChooseTutorial, TutorialViewer } from './pages/Tutorials';
 import CallPage from './pages/Call';
 import LiveStream from './pages/LiveStream';
-const FavoritesPage = () => <div><h1>Favorites</h1></div>;
+import FavoritesPage from './pages/Favorites';
 
 function App() {
   return (

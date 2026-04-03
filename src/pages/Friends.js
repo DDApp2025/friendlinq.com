@@ -9,7 +9,9 @@ import {
   rejectFriendRequest,
   unfriend,
 } from '../actions/friend_actions';
-import { MdPersonAdd, MdPersonRemove, MdCheck, MdClose } from 'react-icons/md';
+import { MdPersonAdd, MdPersonRemove, MdCheck, MdClose, MdStar, MdStarBorder } from 'react-icons/md';
+import { nodeApi } from '../api/axios';
+import { UPDATE_TOP_FRIENDS } from '../api/config';
 import normalizeImg from '../utils/normalizeImg';
 
 const TABS = [
@@ -27,7 +29,13 @@ export default function Friends() {
   );
 
   const [tab, setTab] = useState('friends');
-  const [actionId, setActionId] = useState(null); // track which item has a pending action
+  const [actionId, setActionId] = useState(null);
+
+  const myId = useSelector((s) => s.authReducer.getProfileData?._id);
+  const topFourFriendList = useSelector((s) => s.friendReducer.topFourFriendList) || [];
+
+  // Derive favorite IDs from Redux topFourFriendList
+  const favoriteIds = topFourFriendList.map((f) => f.friendId || f._id).filter(Boolean);
 
   // ── Load data when tab changes ────────────────────────────
   const loadTab = useCallback(() => {
@@ -39,6 +47,55 @@ export default function Friends() {
   useEffect(() => {
     loadTab();
   }, [loadTab]);
+
+  // ── Toggle favorite ──────────────────────────────────────
+  const toggleFavorite = async (friend) => {
+    const fId = friend._id || friend.friendId;
+    const isFav = favoriteIds.includes(fId);
+
+    let newFavIds;
+    if (isFav) {
+      newFavIds = favoriteIds.filter((id) => id !== fId);
+    } else {
+      if (favoriteIds.length >= 4) {
+        alert('You can select up to 4 favorite friends');
+        return;
+      }
+      newFavIds = [...favoriteIds, fId];
+    }
+
+    // Build the friendList array that the API expects
+    const friendListPayload = newFavIds.map((id) => {
+      const f = friendsList.find((fr) => (fr._id || fr.friendId) === id);
+      const fName = f?.fullName || '';
+      const rawImg = f?.imageURL;
+      const fImg = typeof rawImg === 'object' ? (rawImg?.thumbnail || '') : (rawImg || '');
+      return {
+        userId: myId,
+        friendId: id,
+        friendName: fName,
+        friendImage: fImg,
+        usertype: '0',
+      };
+    });
+
+    setActionId(fId);
+    try {
+      const fd = new FormData();
+      fd.append('friendList', JSON.stringify(friendListPayload));
+      const res = await nodeApi.post(UPDATE_TOP_FRIENDS, fd);
+      if (res.data?.statusCode === 200) {
+        // Re-fetch friend list to get updated topFourFriendList from server
+        dispatch(getFriendList(0, 100));
+      } else {
+        alert('Failed to update favorites');
+      }
+    } catch {
+      alert('Failed to update favorites');
+    } finally {
+      setActionId(null);
+    }
+  };
 
   // ── Actions ───────────────────────────────────────────────
   const handleAccept = async (friendId) => {
@@ -131,14 +188,25 @@ export default function Friends() {
 
                   <div style={styles.rowRight}>
                     {tab === 'friends' && (
-                      <button
-                        style={styles.btnDanger}
-                        onClick={() => handleUnfriend(id)}
-                        disabled={busy}
-                      >
-                        <MdPersonRemove size={16} />
-                        <span>{busy ? '...' : 'Unfriend'}</span>
-                      </button>
+                      <>
+                        <button
+                          style={styles.favBtn}
+                          onClick={() => toggleFavorite(item)}
+                          title={favoriteIds.includes(id) ? 'Remove from favorites' : 'Add to favorites'}
+                        >
+                          {favoriteIds.includes(id)
+                            ? <MdStar size={22} color="#f0c040" />
+                            : <MdStarBorder size={22} color="#999" />}
+                        </button>
+                        <button
+                          style={styles.btnDanger}
+                          onClick={() => handleUnfriend(id)}
+                          disabled={busy}
+                        >
+                          <MdPersonRemove size={16} />
+                          <span>{busy ? '...' : 'Unfriend'}</span>
+                        </button>
+                      </>
                     )}
                     {tab === 'incoming' && (
                       <>
@@ -325,6 +393,14 @@ const styles = {
     fontSize: 13,
     fontWeight: 600,
     cursor: 'pointer',
+  },
+  favBtn: {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    padding: 4,
+    display: 'flex',
+    alignItems: 'center',
   },
   pendingLabel: {
     fontSize: 13,
