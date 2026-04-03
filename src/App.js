@@ -25,6 +25,7 @@ import Portfolio from './pages/Portfolio';
 import PrivatePortfolio from './pages/PrivatePortfolio';
 import Marketplace from './pages/Marketplace';
 import MarketplaceDetail from './pages/MarketplaceDetail';
+import Subscription from './pages/Subscription';
 const CallPage = () => <div><h1>Call</h1></div>;
 const FavoritesPage = () => <div><h1>Favorites</h1></div>;
 const SettingsPage = () => <div><h1>Settings</h1></div>;
@@ -108,6 +109,7 @@ function App() {
                   <Route path="/private-portfolio/:friendId" element={<PrivatePortfolio />} />
                   <Route path="/marketplace" element={<Marketplace />} />
                   <Route path="/marketplace/:itemId" element={<MarketplaceDetail />} />
+                  <Route path="/subscription" element={<Subscription />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/support" element={<SupportPage />} />
                   <Route path="*" element={<Navigate to="/home" replace />} />
