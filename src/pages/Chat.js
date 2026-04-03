@@ -77,9 +77,11 @@ export default function Chat() {
     SOCKET.emit('login', { userId: myId });
 
     const handleNewMessage = (data) => {
-      // Only add messages relevant to this conversation
-      const msgSenderId = data?.senderId || data?.sender_id || data?.from;
-      const msgReceiverId = data?.receiverId || data?.receiver_id || data?.to;
+      // senderId can be an object { _id: '...' } or a plain string
+      const rawSender = data?.senderId;
+      const msgSenderId = typeof rawSender === 'object' ? rawSender?._id : (rawSender || data?.sender_id || data?.from);
+      const rawReceiver = data?.receiverId;
+      const msgReceiverId = typeof rawReceiver === 'object' ? rawReceiver?._id : (rawReceiver || data?.receiver_id || data?.to);
 
       const isForThisChat =
         (msgSenderId === receiverId && msgReceiverId === myId) ||
@@ -132,7 +134,7 @@ export default function Chat() {
           _id: Date.now().toString(),
           senderId: myId,
           receiverId: receiverId,
-          message: trimmed,
+          textMessage: trimmed,
           createdAt: new Date().toISOString(),
           ...(res.data || {}),
         };
@@ -169,7 +171,8 @@ export default function Chat() {
 
   // ── Helpers ────────────────────────────────────────────
   const isMine = (msg) => {
-    const sid = msg.senderId || msg.sender_id || msg.from;
+    // senderId can be an object with _id (from Node API) or a plain string
+    const sid = typeof msg.senderId === 'object' ? msg.senderId?._id : (msg.senderId || msg.sender_id || msg.from);
     return sid === myId;
   };
 
@@ -236,8 +239,8 @@ export default function Chat() {
                 {mediaUrl && (
                   <img src={mediaUrl} alt="media" style={styles.msgMedia} />
                 )}
-                {(msg.message || msg.text || msg.content) && (
-                  <span style={styles.msgText}>{msg.message || msg.text || msg.content}</span>
+                {(msg.textMessage || msg.message || msg.text || msg.content) && (
+                  <span style={styles.msgText}>{msg.textMessage || msg.message || msg.text || msg.content}</span>
                 )}
                 <span
                   style={{

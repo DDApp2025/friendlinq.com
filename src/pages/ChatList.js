@@ -29,20 +29,16 @@ export default function ChatList() {
   }, [fetchChats, dispatch, token]);
 
   const openChat = (chat) => {
-    // Determine the other user from the chat item
-    const myId = profile?._id || profile?.id;
-    const isMe = (id) => id === myId;
-
-    // .NET chat list may have different field names — try common patterns
-    const otherUserId = chat.Aborad_id || chat.aborad_id || chat.userId || chat.friendId || '';
-    const otherUserName = chat.Aborad_Name || chat.aborad_Name || chat.fullName || chat.userName || 'User';
-    const otherUserImage = chat.Aborad_Image || chat.aborad_Image || chat.imageURL || chat.profileImage || '';
+    // .NET GetChatList response fields: friendId, senderId, name, imageURL.thumbnail, count, LastMessage
+    const otherUserId = chat.friendId || chat.senderId || chat.Aborad_id || chat.aborad_id || '';
+    const otherUserName = chat.name || chat.Aborad_Name || chat.aborad_Name || chat.fullName || 'User';
+    const rawImg = chat.imageURL?.thumbnail || chat.imageURL || chat.Aborad_Image || chat.aborad_Image || '';
 
     navigate(`/chat/${otherUserId}`, {
       state: {
         userId: otherUserId,
         userName: otherUserName,
-        userImage: otherUserImage,
+        userImage: rawImg,
       },
     });
   };
@@ -78,15 +74,16 @@ export default function ChatList() {
         )}
 
         {chats.map((chat, idx) => {
-          const img = normalizeImg(chat.Aborad_Image || chat.aborad_Image || chat.imageURL || chat.profileImage || '');
-          const name = chat.Aborad_Name || chat.aborad_Name || chat.fullName || chat.userName || 'User';
+          const rawImg = chat.imageURL?.thumbnail || chat.imageURL || chat.Aborad_Image || chat.aborad_Image || '';
+          const img = normalizeImg(rawImg);
+          const name = chat.name || chat.Aborad_Name || chat.aborad_Name || chat.fullName || 'User';
           const lastMsg = chat.LastMessage || chat.lastMessage || chat.message || '';
           const time = chat.LastMessageDate || chat.lastMessageDate || chat.createdAt || '';
-          const unread = chat.UnReadCount || chat.unReadCount || chat.unreadCount || 0;
+          const unread = chat.count || chat.UnReadCount || chat.unReadCount || chat.unreadCount || 0;
 
           return (
             <button
-              key={chat.Aborad_id || chat.aborad_id || chat.userId || idx}
+              key={chat.friendId || chat.senderId || chat.Aborad_id || idx}
               style={styles.chatItem}
               onClick={() => openChat(chat)}
             >

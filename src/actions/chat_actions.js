@@ -49,19 +49,15 @@ export const getChatCount = (token) => {
   };
 };
 
-// ── Get messages (Node — FormData) ────────────────────────
+// ── Get messages (Node — GET with query params, mirrors RN) ──
 export const getChatMessages = (senderId, receiverId, skip = 0, limit = 50) => {
   return async (dispatch) => {
     dispatch({ type: T.GET_TEXT_MESSAGE_ATTEMPT });
     try {
-      const fd = new FormData();
-      fd.append('senderId', senderId);
-      fd.append('receiverId', receiverId);
-      fd.append('skip', skip);
-      fd.append('limit', limit);
-      const res = await nodeApi.post(GET_TEXT_MESSAGE, fd);
+      const url = GET_TEXT_MESSAGE + '?receiverId=' + receiverId + '&skip=' + skip + '&limit=' + limit;
+      const res = await nodeApi.get(url);
       if (res.data?.statusCode === 200) {
-        const messages = res.data.data?.messages || res.data.data?.chatMessages || res.data.data || [];
+        const messages = res.data.data?.chatData || res.data.data?.messages || res.data.data?.chatMessages || res.data.data || [];
         dispatch({ type: T.GET_TEXT_MESSAGE_SUCCESS, getMessagesData: messages });
         return { success: true, data: messages };
       }
@@ -81,9 +77,8 @@ export const sendMessage = (senderId, receiverId, message) => {
     dispatch({ type: T.SEND_TEXT_MESSAGE_ATTEMPT });
     try {
       const fd = new FormData();
-      fd.append('senderId', senderId);
       fd.append('receiverId', receiverId);
-      fd.append('message', message);
+      fd.append('textMessage', message);
       const res = await nodeApi.post(SEND_TEXT_MESSAGE, fd);
       if (res.data?.statusCode === 200) {
         dispatch({ type: T.SEND_TEXT_MESSAGE_SUCCESS });
@@ -105,7 +100,6 @@ export const sendMediaMessage = (senderId, receiverId, file) => {
     dispatch({ type: T.CHAT_MEDIA_MESSAGE_ATTEMPT });
     try {
       const fd = new FormData();
-      fd.append('senderId', senderId);
       fd.append('receiverId', receiverId);
       fd.append('file', file);
       const res = await nodeApi.post(CHAT_MEDIA_MESSAGE, fd);
@@ -129,7 +123,8 @@ export const markChatRead = (token, otherUserId) => {
     try {
       const res = await dotnetApi.post('/Client' + READ_CHAT_NOTIFICATION_END_POINT, {
         authorization: token,
-        Aborad_id: otherUserId,
+        senderId: otherUserId,
+        dateTime: new Date().toISOString(),
       });
       const code = res.data?.StatusCode ?? res.data?.statusCode;
       return { success: code === 200 };
