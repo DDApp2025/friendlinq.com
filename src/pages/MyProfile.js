@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getProfileAttempt } from '../actions/auth_actions';
 import { getFriendsList } from '../actions/profile_actions';
-import { MdEdit, MdLocationOn, MdEmail, MdPeople } from 'react-icons/md';
+import { MdEdit, MdLocationOn, MdEmail, MdPeople, MdCollections } from 'react-icons/md';
 import normalizeImg from '../utils/normalizeImg';
 
 export default function MyProfile() {
@@ -124,10 +124,23 @@ export default function MyProfile() {
           </div>
         )}
 
+        {/* Portfolio link */}
+        <div style={styles.section}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+            <h3 style={{ ...styles.sectionTitle, marginBottom: 0, borderBottom: 'none', paddingBottom: 0 }}>Portfolio</h3>
+            <button
+              onClick={() => navigate('/portfolio')}
+              style={{ background: 'none', border: 'none', color: '#1a6b3a', fontSize: 14, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
+            >
+              <MdCollections size={16} /> Manage
+            </button>
+          </div>
+        </div>
+
         {/* Top 4 Portfolio Images */}
         {topImages.length > 0 && (
           <div style={styles.section}>
-            <h3 style={styles.sectionTitle}>Portfolio</h3>
+            <h3 style={styles.sectionTitle}>Featured Photos</h3>
             <div style={styles.grid4}>
               {topImages.slice(0, 4).map((img, i) => {
                 const imgUrl = normalizeImg(img.imageURL || img);

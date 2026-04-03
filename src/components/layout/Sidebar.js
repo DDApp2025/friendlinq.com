@@ -15,6 +15,8 @@ import {
   MdLogout,
   MdClose,
   MdEdit,
+  MdCollections,
+  MdStorefront,
 } from 'react-icons/md';
 
 const menuItems = [
@@ -25,6 +27,8 @@ const menuItems = [
   { label: 'Messages', path: '/messages', icon: MdChat },
   { label: 'Friends', path: '/friends', icon: MdGroup },
   { label: 'Groups', path: '/groups', icon: MdGroup },
+  { label: 'Portfolio', path: '/portfolio', icon: MdCollections },
+  { label: 'Marketplace', path: '/marketplace', icon: MdStorefront },
   { label: 'Call', path: '/call', icon: MdCall },
   { label: 'Favorites', path: '/favorites', icon: MdStar },
 ];

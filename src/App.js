@@ -21,6 +21,10 @@ import ForgotPassword from './pages/ForgotPassword';
 import VerifyOtp from './pages/VerifyOtp';
 import ResetPassword from './pages/ResetPassword';
 import ChangePassword from './pages/ChangePassword';
+import Portfolio from './pages/Portfolio';
+import PrivatePortfolio from './pages/PrivatePortfolio';
+import Marketplace from './pages/Marketplace';
+import MarketplaceDetail from './pages/MarketplaceDetail';
 const PhotosPage = () => <div><h1>Photos</h1></div>;
 const CallPage = () => <div><h1>Call</h1></div>;
 const FavoritesPage = () => <div><h1>Favorites</h1></div>;
@@ -100,6 +104,11 @@ function App() {
                   <Route path="/user/:userId" element={<UserProfile />} />
                   <Route path="/comments/:postId" element={<CommentsPage />} />
                   <Route path="/change-password" element={<ChangePassword />} />
+                  <Route path="/portfolio" element={<Portfolio />} />
+                  <Route path="/private-portfolio" element={<PrivatePortfolio />} />
+                  <Route path="/private-portfolio/:friendId" element={<PrivatePortfolio />} />
+                  <Route path="/marketplace" element={<Marketplace />} />
+                  <Route path="/marketplace/:itemId" element={<MarketplaceDetail />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/support" element={<SupportPage />} />
                   <Route path="*" element={<Navigate to="/home" replace />} />
