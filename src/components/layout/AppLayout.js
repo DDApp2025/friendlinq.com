@@ -5,6 +5,7 @@ import BottomNav from './BottomNav';
 import Sidebar from './Sidebar';
 import { getNotifications } from '../../actions/notification_actions';
 import * as actionTypes from '../../actions/actions_types';
+import IncomingCallOverlay from '../IncomingCallOverlay';
 
 const AppLayout = ({ children }) => {
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ const AppLayout = ({ children }) => {
         {children}
       </main>
       {isMobile && <BottomNav />}
+      <IncomingCallOverlay />
     </>
   );
 };

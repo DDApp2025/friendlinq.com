@@ -29,7 +29,7 @@ import Subscription from './pages/Subscription';
 import Settings from './pages/Settings';
 import Support from './pages/Support';
 import { ChooseTutorial, TutorialViewer } from './pages/Tutorials';
-const CallPage = () => <div><h1>Call</h1></div>;
+import CallPage from './pages/Call';
 const FavoritesPage = () => <div><h1>Favorites</h1></div>;
 
 function App() {
