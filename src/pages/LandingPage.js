@@ -108,7 +108,7 @@ export default function LandingPage() {
       {/* ── Top Nav ── */}
       <nav style={styles.topnav} aria-label="Primary navigation">
         <div style={styles.topnavLogo}>
-          <img src={`${process.env.PUBLIC_URL}/logo-app.jpeg`} alt="Friendlinq logo" style={styles.logoIcon} />
+          <img src={`${process.env.PUBLIC_URL}/logo-app.jpeg`} alt="Friendlinq logo — simple safe social network" style={styles.logoIcon} />
           <span style={styles.logoName}>Friendlinq</span>
         </div>
         {/* Desktop login fields */}
@@ -192,12 +192,12 @@ export default function LandingPage() {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginTop: 18 }}>
             <div style={styles.badgeWrap}>
               <a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer" style={styles.badgeLink}>
-                <img src={APP_STORE_BADGE} alt="Download on the App Store" style={{ width: '100%', height: 'auto' }} />
+                <img src={APP_STORE_BADGE} alt="Download Friendlinq on the App Store" style={{ width: '100%', height: 'auto' }} />
               </a>
             </div>
             <div style={styles.badgeWrap}>
               <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" style={styles.badgeLink}>
-                <img src={PLAY_STORE_BADGE} alt="Get it on Google Play" style={{ width: '130%', height: 'auto' }} />
+                <img src={PLAY_STORE_BADGE} alt="Get Friendlinq on Google Play" style={{ width: '130%', height: 'auto' }} />
               </a>
             </div>
           </div>
@@ -299,7 +299,7 @@ export default function LandingPage() {
       <footer style={styles.footer} role="contentinfo">
         <div style={styles.footerInner} className="landing-footer-inner">
           <div style={styles.footerLogo}>
-            <img src={`${process.env.PUBLIC_URL}/logo-app.jpeg`} alt="Friendlinq logo" style={styles.footerLogoIcon} />
+            <img src={`${process.env.PUBLIC_URL}/logo-app.jpeg`} alt="Friendlinq logo — simple safe social network" style={styles.footerLogoIcon} />
             <span style={styles.footerLogoName}>Friendlinq</span>
           </div>
           <div style={styles.footerLinks}>

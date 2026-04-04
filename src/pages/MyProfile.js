@@ -55,7 +55,7 @@ export default function MyProfile() {
         {/* Banner */}
         <div style={styles.bannerWrap}>
           {bannerURL ? (
-            <img src={bannerURL} alt="Banner" style={styles.bannerImg} onError={(e) => { e.target.style.display = 'none'; }} />
+            <img src={bannerURL} alt="Profile banner image" style={styles.bannerImg} onError={(e) => { e.target.style.display = 'none'; }} />
           ) : (
             <div style={styles.bannerPlaceholder} />
           )}
@@ -69,7 +69,7 @@ export default function MyProfile() {
         {/* Profile photo overlapping banner */}
         <div style={styles.avatarWrap}>
           {imageURL ? (
-            <img src={imageURL} alt="Profile" style={styles.avatar} />
+            <img src={imageURL} alt="Your profile photo" style={styles.avatar} />
           ) : (
             <div style={styles.avatarFallback}>{initials}</div>
           )}
@@ -147,7 +147,7 @@ export default function MyProfile() {
                 return (
                   <div key={i} style={styles.gridItem}>
                     {imgUrl ? (
-                      <img src={imgUrl} alt="Portfolio" style={styles.gridImg} onError={(e) => { e.target.style.display = 'none'; }} />
+                      <img src={imgUrl} alt="Photo from your portfolio" style={styles.gridImg} onError={(e) => { e.target.style.display = 'none'; }} />
                     ) : (
                       <div style={styles.gridImgPlaceholder}>?</div>
                     )}

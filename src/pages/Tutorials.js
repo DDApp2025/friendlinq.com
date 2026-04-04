@@ -130,7 +130,7 @@ function ChooseTutorial() {
       <div style={styles.content}>
         <img
           src="/logo192.png"
-          alt="Logo"
+          alt="Friendlinq logo"
           style={styles.logo}
           onError={(e) => { e.target.style.display = 'none'; }}
         />
@@ -169,7 +169,7 @@ function TutorialViewer() {
         <div style={{ textAlign: 'center' }}>
           <img
             src="/logo192.png"
-            alt="Logo"
+            alt="Friendlinq logo"
             style={styles.logo}
             onError={(e) => { e.target.style.display = 'none'; }}
           />

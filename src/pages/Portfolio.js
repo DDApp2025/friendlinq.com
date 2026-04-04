@@ -250,9 +250,9 @@ export default function Portfolio() {
                     onClick={() => setPreviewIndex(index)}
                   >
                     {isVid && thumbUrl ? (
-                      <img src={thumbUrl} alt="Video thumb" style={styles.cellImg} />
+                      <img src={thumbUrl} alt="Video thumbnail" style={styles.cellImg} />
                     ) : (
-                      <img src={imgUrl} alt="Portfolio" style={styles.cellImg} />
+                      <img src={imgUrl} alt="Portfolio photo" style={styles.cellImg} />
                     )}
                     {isVid && (
                       <div style={styles.playOverlay}>

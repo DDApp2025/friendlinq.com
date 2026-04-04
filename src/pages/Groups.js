@@ -445,7 +445,7 @@ export default function Groups() {
           </button>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1 }}>
             {activeGroup.groupIcon ? (
-              <img src={IMG_BASE + '/' + activeGroup.groupIcon} alt="" style={{ width: 36, height: 36, borderRadius: 18 }} onError={(e) => { e.target.style.display = 'none'; }} />
+              <img src={IMG_BASE + '/' + activeGroup.groupIcon} alt={activeGroup.groupName || 'Group icon'} style={{ width: 36, height: 36, borderRadius: 18 }} onError={(e) => { e.target.style.display = 'none'; }} />
             ) : (
               <div style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: '#eee', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <MdGroup size={20} color="#999" />
@@ -484,7 +484,7 @@ export default function Groups() {
           </div>
           {postImagePreview && (
             <div style={{ position: 'relative', marginTop: 8 }}>
-              <img src={postImagePreview} alt="" style={{ maxHeight: 120, borderRadius: 8 }} />
+              <img src={postImagePreview} alt="Post image preview" style={{ maxHeight: 120, borderRadius: 8 }} />
               <button
                 style={{ position: 'absolute', top: 0, right: 0, background: 'rgba(0,0,0,0.5)', border: 'none', borderRadius: '50%', cursor: 'pointer', padding: 2 }}
                 onClick={() => { setPostImage(null); setPostImagePreview(''); }}
@@ -531,7 +531,7 @@ export default function Groups() {
               <div key={p._id || i} style={s.postCard}>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
                   {authorImg ? (
-                    <img src={authorImg} alt="" style={{ width: 36, height: 36, borderRadius: 18, objectFit: 'cover' }} />
+                    <img src={authorImg} alt={author.fullName || 'Post author'} style={{ width: 36, height: 36, borderRadius: 18, objectFit: 'cover' }} />
                   ) : (
                     <div style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: '#eee', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 'bold', color: '#999' }}>
                       {(author.fullName || '?')[0]}
@@ -544,7 +544,7 @@ export default function Groups() {
                 </div>
                 {p.postContent && <div style={{ fontSize: 14, marginBottom: 8, whiteSpace: 'pre-wrap' }}>{p.postContent}</div>}
                 {postImg && (
-                  <img src={postImg} alt="" style={{ width: '100%', maxHeight: 400, objectFit: 'cover', borderRadius: 8 }} />
+                  <img src={postImg} alt="Group post image" style={{ width: '100%', maxHeight: 400, objectFit: 'cover', borderRadius: 8 }} />
                 )}
               </div>
             );
@@ -577,7 +577,7 @@ export default function Groups() {
             return (
               <div key={member._id || i} style={s.groupRow}>
                 {img ? (
-                  <img src={img} alt="" style={s.groupIcon} />
+                  <img src={img} alt={member.fullName || 'Group member'} style={s.groupIcon} />
                 ) : (
                   <div style={s.groupIconFallback}>
                     {(member.fullName || '?')[0]}

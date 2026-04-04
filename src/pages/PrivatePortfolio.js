@@ -223,7 +223,7 @@ export default function PrivatePortfolio() {
               return (
                 <div key={item._id || index} style={styles.gridCell}>
                   <div style={styles.cellInner} onClick={() => setPreviewIndex(index)}>
-                    <img src={imgUrl} alt="Private portfolio" style={styles.cellImg} />
+                    <img src={imgUrl} alt="Private portfolio photo" style={styles.cellImg} />
                     {isVid && (
                       <div style={styles.playOverlay}>
                         <MdPlayArrow size={36} color="#fff" />

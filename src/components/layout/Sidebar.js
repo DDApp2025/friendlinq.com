@@ -82,7 +82,7 @@ const Sidebar = ({ open, onClose }) => {
           </button>
           <div style={styles.profileRow}>
             {imageURL ? (
-              <img src={imageURL} alt="Profile" style={styles.avatar} />
+              <img src={imageURL} alt="Your profile photo" style={styles.avatar} />
             ) : (
               <div style={styles.avatarFallback}>{initials || '?'}</div>
             )}

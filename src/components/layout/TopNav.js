@@ -91,7 +91,7 @@ const TopNav = ({ onMenuToggle }) => {
           <MdMenu size={28} color="#fff" />
         </button>
         <div style={styles.logoWrap} onClick={() => navigate('/home')}>
-          <img src="/logo-icon.png" alt="Friendlinq logo" style={styles.logoImg} />
+          <img src="/logo-icon.png" alt="Friendlinq logo — simple safe social network" style={styles.logoImg} />
           <span style={styles.logoText}>Friendlinq</span>
         </div>
       </div>
@@ -153,7 +153,7 @@ const TopNav = ({ onMenuToggle }) => {
             {imageURL ? (
               <img
                 src={imageURL}
-                alt="Profile"
+                alt="Your profile photo"
                 style={styles.avatar}
               />
             ) : (
@@ -170,7 +170,7 @@ const TopNav = ({ onMenuToggle }) => {
               <div style={styles.dropdownHeader}>
                 <div style={styles.dropdownAvatarWrap}>
                   {imageURL ? (
-                    <img src={imageURL} alt="Profile" style={styles.dropdownAvatar} />
+                    <img src={imageURL} alt="Your profile photo" style={styles.dropdownAvatar} />
                   ) : (
                     <div style={styles.dropdownAvatarFallback}>
                       {initials || '?'}

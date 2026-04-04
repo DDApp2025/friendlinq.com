@@ -203,7 +203,7 @@ export default function Home() {
           <div style={styles.composerRow}>
             <div style={styles.composerPicWrap}>
               {profilePic ? (
-                <img src={profilePic} alt="Profile" style={styles.composerPic} />
+                <img src={profilePic} alt="Your profile photo" style={styles.composerPic} />
               ) : (
                 <div style={styles.composerPicPlaceholder}>
                   {(profile?.fullName || '?').charAt(0).toUpperCase()}
@@ -261,7 +261,7 @@ export default function Home() {
               {mediaFile?.type?.startsWith('video') ? (
                 <video src={mediaPreview} controls style={styles.mediaPreview} />
               ) : (
-                <img src={mediaPreview} alt="Preview" style={styles.mediaPreview} />
+                <img src={mediaPreview} alt="Media attachment preview" style={styles.mediaPreview} />
               )}
               <button onClick={clearMedia} style={styles.clearMediaBtn}>
                 <AiOutlineClose size={16} />
@@ -302,14 +302,14 @@ export default function Home() {
           <a href="https://apps.apple.com/us/app/friendlinq/id6476931666" target="_blank" rel="noopener noreferrer">
             <img
               src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83"
-              alt="Download on the App Store"
+              alt="Download Friendlinq on the App Store"
               style={styles.badgeImg}
             />
           </a>
           <a href="https://play.google.com/store/apps/details?id=com.app.friendlinq" target="_blank" rel="noopener noreferrer">
             <img
               src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-              alt="Get it on Google Play"
+              alt="Get Friendlinq on Google Play"
               style={styles.badgeImgPlay}
             />
           </a>

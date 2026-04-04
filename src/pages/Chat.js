@@ -237,7 +237,7 @@ export default function Chat() {
                 }}
               >
                 {mediaUrl && (
-                  <img src={mediaUrl} alt="media" style={styles.msgMedia} />
+                  <img src={mediaUrl} alt="Shared media" style={styles.msgMedia} />
                 )}
                 {(msg.textMessage || msg.message || msg.text || msg.content) && (
                   <span style={styles.msgText}>{msg.textMessage || msg.message || msg.text || msg.content}</span>
@@ -260,7 +260,7 @@ export default function Chat() {
       {/* Media preview */}
       {mediaPreview && (
         <div style={styles.mediaPreviewBar}>
-          <img src={mediaPreview} alt="Preview" style={styles.mediaThumb} />
+          <img src={mediaPreview} alt="Media attachment preview" style={styles.mediaThumb} />
           <span style={styles.mediaFileName}>{mediaFile?.name}</span>
           <button onClick={clearMedia} style={styles.clearMediaBtn}>
             <MdClose size={18} />

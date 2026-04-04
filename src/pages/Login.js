@@ -81,7 +81,7 @@ function Login() {
       <div style={styles.scrollContent}>
         {/* App Logo */}
         <div style={styles.iconWrapper}>
-          <img src="/logo-app.jpeg" alt="Friendlinq logo" style={styles.logoImage} />
+          <img src="/logo-app.jpeg" alt="Friendlinq logo — simple safe social network" style={styles.logoImage} />
         </div>
 
         {/* App Name */}

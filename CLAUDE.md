@@ -561,6 +561,74 @@ Each Helmet block includes:
 
 ---
 
+## Session Log — Section 9: Image Alt Text, OG Image & Favicon Audit
+
+**Date:** 2026-04-03
+
+### What was done:
+
+#### Step 9.1: Alt Text Audit & Fixes
+Audited all `<img>` tags across the codebase and improved alt text for SEO and accessibility:
+
+**Public pages (priority):**
+- **LandingPage.js** — Logo images: `"Friendlinq logo"` → `"Friendlinq logo — simple safe social network"`; App Store badge: added "Friendlinq" to alt text; Google Play badge: added "Friendlinq" to alt text
+- **Login.js** — Logo: `"Friendlinq logo"` → `"Friendlinq logo — simple safe social network"`
+
+**Authenticated pages:**
+- **Home.js** — Profile photo: `"Profile"` → `"Your profile photo"`; Media preview: `"Preview"` → `"Media attachment preview"`; App Store/Play badges: added "Friendlinq" to alt text
+- **TopNav.js** — Logo: `"Friendlinq logo"` → `"Friendlinq logo — simple safe social network"`; Avatar: `"Profile"` → `"Your profile photo"` (both main and dropdown)
+- **Sidebar.js** — Avatar: `"Profile"` → `"Your profile photo"`
+- **MyProfile.js** — Banner: `"Banner"` → `"Profile banner image"`; Avatar: `"Profile"` → `"Your profile photo"`; Portfolio: `"Portfolio"` → `"Photo from your portfolio"`
+- **UserProfile.js** — Banner: `"Banner"` → `"Profile banner image"`; Avatar: `"Profile"` → `"User profile photo"`; Portfolio: `"Portfolio"` → `"Portfolio photo"`
+- **EditProfile.js** — Banner: `"Banner"` → `"Banner preview"`; Avatar: `"Profile"` → `"Profile photo preview"`
+- **Portfolio.js** — `"Video thumb"` → `"Video thumbnail"`; `"Portfolio"` → `"Portfolio photo"`
+- **PrivatePortfolio.js** — `"Private portfolio"` → `"Private portfolio photo"`
+- **Groups.js** — 5 images updated: group icon uses `activeGroup.groupName`, post preview: `"Post image preview"`, author avatars use `author.fullName`, post images: `"Group post image"`, member avatars use `member.fullName`
+- **Chat.js** — `"media"` → `"Shared media"`; `"Preview"` → `"Media attachment preview"`
+- **Tutorials.js** — `"Logo"` → `"Friendlinq logo"` (both instances)
+
+**Images left with empty alt="" (intentional — decorative, adjacent to text labels):**
+- PostCard.js profile thumbnails (author name displayed next to image)
+- Comments.js author/input profile pics (decorative)
+- Call.js background images (purely decorative)
+- IncomingCallOverlay.js caller avatar (decorative overlay)
+
+#### Step 9.2: OG Image
+- **`public/og-image.jpg` does NOT exist** — noted as manual action item for Albert (see below)
+
+#### Step 9.3: Favicon Audit
+- **`public/favicon.ico`** — EXISTS (binary, cannot visually verify — may be CRA default)
+- **`public/logo192.png`** — EXISTS but is **DEFAULT CRA React atom logo** (blue atom icon) — NEEDS REPLACEMENT
+- **`public/logo512.png`** — EXISTS but is **DEFAULT CRA React atom logo** (blue atom icon) — NEEDS REPLACEMENT
+
+#### Step 9.4: manifest.json
+- Already fixed in Session 8 — verified correct: name, short_name, theme_color, background_color all set to Friendlinq brand values
+
+### Manual action items for Albert:
+1. **Create `public/og-image.jpg`** (1200×630 px) — Friendlinq logo + tagline on clean green/white background. Will deploy to `https://friendlinq.com/og-image.jpg`
+2. **Replace `public/logo192.png`** (192×192 px) — Currently default CRA React atom logo. Replace with Friendlinq branded icon
+3. **Replace `public/logo512.png`** (512×512 px) — Currently default CRA React atom logo. Replace with Friendlinq branded icon
+4. **Verify `public/favicon.ico`** — May also be CRA default. Replace with Friendlinq branded favicon if so
+
+### Files changed:
+- `src/pages/LandingPage.js` — Updated 4 img alt texts
+- `src/pages/Login.js` — Updated 1 img alt text
+- `src/pages/Home.js` — Updated 4 img alt texts
+- `src/pages/MyProfile.js` — Updated 3 img alt texts
+- `src/pages/UserProfile.js` — Updated 3 img alt texts
+- `src/pages/EditProfile.js` — Updated 2 img alt texts
+- `src/pages/Portfolio.js` — Updated 2 img alt texts
+- `src/pages/PrivatePortfolio.js` — Updated 1 img alt text
+- `src/pages/Groups.js` — Updated 5 img alt texts
+- `src/pages/Chat.js` — Updated 2 img alt texts
+- `src/pages/Tutorials.js` — Updated 2 img alt texts
+- `src/components/layout/TopNav.js` — Updated 3 img alt texts
+- `src/components/layout/Sidebar.js` — Updated 1 img alt text
+
+### Build status: PASSES
+
+---
+
 ## Section Tracking
 
 | Section | Description | Status |
@@ -573,7 +641,7 @@ Each Helmet block includes:
 | 5 | Semantic HTML, Accessibility, Noscript Fallback | **COMPLETE** |
 | 6 | React SEO: Dynamic meta tags per route | **COMPLETE** |
 | 7 | GitHub Pages & Deployment Configuration | **COMPLETE** |
-| 8 | Image Alt Text + OG Image + Favicon Audit | Not Started |
+| 8 | Image Alt Text + OG Image + Favicon Audit | **COMPLETE** |
 | 9 | Content Architecture: FAQ + Safety Pages | Not Started |
 | 10 | AI Optimization (AIO), llms.txt, Entity Strategy | Not Started |
 | 11 | Analytics Setup: GA4, Search Console, Bing | Not Started |

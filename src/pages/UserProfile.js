@@ -119,7 +119,7 @@ export default function UserProfile() {
         {/* Banner */}
         <div style={styles.bannerWrap}>
           {bannerURL ? (
-            <img src={bannerURL} alt="Banner" style={styles.bannerImg} onError={(e) => { e.target.style.display = 'none'; }} />
+            <img src={bannerURL} alt="Profile banner image" style={styles.bannerImg} onError={(e) => { e.target.style.display = 'none'; }} />
           ) : (
             <div style={styles.bannerPlaceholder} />
           )}
@@ -129,7 +129,7 @@ export default function UserProfile() {
         <div style={styles.avatarWrap}>
           <div style={styles.avatarContainer}>
             {imageURL ? (
-              <img src={imageURL} alt="Profile" style={styles.avatar} />
+              <img src={imageURL} alt="User profile photo" style={styles.avatar} />
             ) : (
               <div style={styles.avatarFallback}>{initials}</div>
             )}
@@ -239,7 +239,7 @@ export default function UserProfile() {
                 return (
                   <div key={i} style={styles.gridItem}>
                     {imgUrl ? (
-                      <img src={imgUrl} alt="Portfolio" style={styles.gridImg} />
+                      <img src={imgUrl} alt="Portfolio photo" style={styles.gridImg} />
                     ) : (
                       <div style={styles.gridImgPlaceholder}>?</div>
                     )}

@@ -106,7 +106,7 @@ export default function EditProfile() {
         {/* Banner upload */}
         <div style={styles.bannerWrap} onClick={() => bannerInputRef.current?.click()}>
           {bannerPreview ? (
-            <img src={bannerPreview} alt="Banner" style={styles.bannerImg} onError={(e) => { e.target.style.display = 'none'; }} />
+            <img src={bannerPreview} alt="Banner preview" style={styles.bannerImg} onError={(e) => { e.target.style.display = 'none'; }} />
           ) : (
             <div style={styles.bannerPlaceholder} />
           )}
@@ -121,7 +121,7 @@ export default function EditProfile() {
         <div style={styles.avatarSection}>
           <div style={styles.avatarWrap} onClick={() => picInputRef.current?.click()}>
             {avatarPreview ? (
-              <img src={avatarPreview} alt="Profile" style={styles.avatar} />
+              <img src={avatarPreview} alt="Profile photo preview" style={styles.avatar} />
             ) : (
               <div style={styles.avatarFallback}>{initials}</div>
             )}
