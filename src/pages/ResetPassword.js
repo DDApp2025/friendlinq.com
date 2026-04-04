@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ResetPasswordAttempt } from '../actions/auth_actions';
 
 function ResetPassword() {
@@ -55,6 +56,14 @@ function ResetPassword() {
 
   return (
     <div style={styles.container}>
+      <Helmet>
+        <title>Reset Password | Friendlinq</title>
+        <meta name="description" content="Set a new password for your Friendlinq account." />
+        <link rel="canonical" href="https://friendlinq.com/reset-password" />
+        <meta property="og:title" content="Reset Password | Friendlinq" />
+        <meta property="og:description" content="Set a new password for your Friendlinq account." />
+        <meta property="og:url" content="https://friendlinq.com/reset-password" />
+      </Helmet>
       <div style={styles.content}>
         {/* Header */}
         <div style={styles.header}>

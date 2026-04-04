@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { VerifyOtpAttempt } from '../actions/auth_actions';
 
 function VerifyOtp() {
@@ -46,6 +47,14 @@ function VerifyOtp() {
 
   return (
     <div style={styles.container}>
+      <Helmet>
+        <title>Verify OTP | Friendlinq</title>
+        <meta name="description" content="Enter your verification code to confirm your Friendlinq account." />
+        <link rel="canonical" href="https://friendlinq.com/verify-otp" />
+        <meta property="og:title" content="Verify OTP | Friendlinq" />
+        <meta property="og:description" content="Enter your verification code to confirm your Friendlinq account." />
+        <meta property="og:url" content="https://friendlinq.com/verify-otp" />
+      </Helmet>
       <div style={styles.content}>
         {/* Header */}
         <div style={styles.header}>

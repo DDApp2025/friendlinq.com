@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const APP_STORE_URL = 'https://apps.apple.com/us/app/friendlinq/id6476931666';
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.app.friendlinq';
@@ -95,6 +96,14 @@ export default function LandingPage() {
 
   return (
     <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", background: '#f0f2f5', color: '#1c1e21', minHeight: '100vh' }}>
+      <Helmet>
+        <title>Friendlinq | The Social Network Built for Real Connection</title>
+        <meta name="description" content="Simple, safe social media. Connect with friends, join groups, share photos, video call, and discover events. Free to join — no ads, no data selling." />
+        <link rel="canonical" href="https://friendlinq.com/" />
+        <meta property="og:title" content="Friendlinq | The Social Network Built for Real Connection" />
+        <meta property="og:description" content="Simple, safe social media. Connect with friends, join groups, share photos, video call, and discover events. Free to join — no ads, no data selling." />
+        <meta property="og:url" content="https://friendlinq.com/" />
+      </Helmet>
 
       {/* ── Top Nav ── */}
       <nav style={styles.topnav} aria-label="Primary navigation">

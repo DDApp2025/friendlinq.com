@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { LoginAttempt } from '../actions/auth_actions';
 
 function Login() {
@@ -69,6 +70,14 @@ function Login() {
 
   return (
     <div style={styles.container}>
+      <Helmet>
+        <title>Log In | Friendlinq</title>
+        <meta name="description" content="Log in to your Friendlinq account. The simple, safe social network built for real connection." />
+        <link rel="canonical" href="https://friendlinq.com/login" />
+        <meta property="og:title" content="Log In | Friendlinq" />
+        <meta property="og:description" content="Log in to your Friendlinq account. The simple, safe social network built for real connection." />
+        <meta property="og:url" content="https://friendlinq.com/login" />
+      </Helmet>
       <div style={styles.scrollContent}>
         {/* App Logo */}
         <div style={styles.iconWrapper}>

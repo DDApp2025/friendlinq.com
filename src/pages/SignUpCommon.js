@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Helmet } from 'react-helmet-async';
 import { SignUpAttempt, LoginAttempt, getProfileAttempt, makeUserFriendWithAdmin } from '../actions/auth_actions';
 
 function SignUpCommon() {
@@ -109,6 +110,14 @@ function SignUpCommon() {
 
   return (
     <div style={styles.container}>
+      <Helmet>
+        <title>Sign Up | Join Friendlinq Free</title>
+        <meta name="description" content="Create your free Friendlinq account. Connect with friends, join groups, share photos, and enjoy a simpler social network — no ads, no data selling." />
+        <link rel="canonical" href="https://friendlinq.com/register" />
+        <meta property="og:title" content="Sign Up | Join Friendlinq Free" />
+        <meta property="og:description" content="Create your free Friendlinq account. Connect with friends, join groups, share photos, and enjoy a simpler social network." />
+        <meta property="og:url" content="https://friendlinq.com/register" />
+      </Helmet>
       <div style={styles.scrollContent}>
         {/* Logo */}
         <div style={styles.iconWrapper}>

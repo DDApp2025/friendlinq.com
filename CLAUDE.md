@@ -481,6 +481,49 @@ Disallow:
 
 ---
 
+## Session Log — Section 7: React SEO — Dynamic Meta Tags Per Route
+
+**Date:** 2026-04-03
+
+### What was done:
+
+#### Step 7.1: Install react-helmet-async & Wrap App
+- **Installed `react-helmet-async`** via npm
+- **Modified `src/index.js`** — Wrapped the app in `<HelmetProvider>` around the Provider/PersistGate tree
+
+#### Step 7.2–7.4: Route-Specific Helmet Tags
+Added `<Helmet>` to each public page component with unique title, description, canonical URL, and OG tags:
+
+| Route | Component | Title |
+|-------|-----------|-------|
+| `/` | LandingPage.js | Friendlinq \| The Social Network Built for Real Connection |
+| `/login` | Login.js | Log In \| Friendlinq |
+| `/register` | SignUpCommon.js | Sign Up \| Join Friendlinq Free |
+| `/forgot-password` | ForgotPassword.js | Forgot Password \| Friendlinq |
+| `/verify-otp` | VerifyOtp.js | Verify OTP \| Friendlinq |
+| `/reset-password` | ResetPassword.js | Reset Password \| Friendlinq |
+
+Each Helmet block includes:
+- `<title>` — Unique per page
+- `<meta name="description">` — Unique 150–160 char description per page
+- `<link rel="canonical">` — Matching `https://friendlinq.com/[route]`
+- `<meta property="og:title">` — Matches page title
+- `<meta property="og:description">` — Matches meta description
+- `<meta property="og:url">` — Matches canonical URL
+
+### Files changed:
+- `src/index.js` — Added HelmetProvider wrapper
+- `src/pages/LandingPage.js` — Added Helmet with SEO meta tags
+- `src/pages/Login.js` — Added Helmet with SEO meta tags
+- `src/pages/SignUpCommon.js` — Added Helmet with SEO meta tags
+- `src/pages/ForgotPassword.js` — Added Helmet with SEO meta tags
+- `src/pages/VerifyOtp.js` — Added Helmet with SEO meta tags
+- `src/pages/ResetPassword.js` — Added Helmet with SEO meta tags
+
+### Build status: PASSES
+
+---
+
 ## Section Tracking
 
 | Section | Description | Status |
@@ -491,7 +534,7 @@ Disallow:
 | 3 | Meta Tags, Open Graph, Twitter Cards | **COMPLETE** (was Section 4 in spec) |
 | 4 | JSON-LD Structured Data | **COMPLETE** |
 | 5 | Semantic HTML, Accessibility, Noscript Fallback | **COMPLETE** |
-| 6 | React SEO: Dynamic meta tags per route | Not Started |
+| 6 | React SEO: Dynamic meta tags per route | **COMPLETE** |
 | 7 | GitHub Pages & Deployment Configuration | Not Started |
 | 8 | Image Alt Text + OG Image + Favicon Audit | Not Started |
 | 9 | Content Architecture: FAQ + Safety Pages | Not Started |
