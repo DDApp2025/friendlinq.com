@@ -408,6 +408,27 @@ Disallow:
 
 ---
 
+## Session Log — Section 5: JSON-LD Structured Data
+
+**Date:** 2026-04-03
+
+### What was done:
+1. **Modified `public/index.html`** — Added 7 JSON-LD structured data blocks to `<head>`:
+   - **Organization** — Friendlinq name, URL, logo, description, email, sameAs social links
+   - **WebSite** — Site name, URL, description, SearchAction for sitelinks search box
+   - **WebApplication** — App description, category (SocialNetworkingApplication), free pricing, 10-item featureList
+   - **FAQPage** — 8 questions with full answers pulled from LandingPage.js FAQ content
+   - **BreadcrumbList** — Home, Sign Up, Log In (current public pages)
+   - **SoftwareApplication (iOS)** — App Store install link, free pricing
+   - **SoftwareApplication (Android)** — Google Play install link, free pricing
+
+### Files changed:
+- `public/index.html` — Added 7 JSON-LD `<script type="application/ld+json">` blocks
+
+### Build status: PASSES
+
+---
+
 ## Section Tracking
 
 | Section | Description | Status |
@@ -416,7 +437,7 @@ Disallow:
 | 1 | Deep Audit | **COMPLETE** |
 | 2 | Public Landing Page | **COMPLETE** |
 | 3 | Meta Tags, Open Graph, Twitter Cards | **COMPLETE** (was Section 4 in spec) |
-| 4 | JSON-LD Structured Data | Not Started |
+| 4 | JSON-LD Structured Data | **COMPLETE** |
 | 5 | Semantic HTML, Accessibility, Noscript Fallback | Not Started |
 | 6 | React SEO: Dynamic meta tags per route | Not Started |
 | 7 | GitHub Pages & Deployment Configuration | Not Started |
