@@ -39,6 +39,8 @@ import FAQ from './pages/FAQ';
 import Safety from './pages/Safety';
 import PublicSupport from './pages/PublicSupport';
 import Contact from './pages/Contact';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
 function App() {
   return (
@@ -98,6 +100,8 @@ function App() {
         <Route path="/safety" element={<Safety />} />
         <Route path="/support" element={<PublicSupport />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
         <Route
           path="/register/user-type"
           element={
