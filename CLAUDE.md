@@ -384,6 +384,30 @@ Disallow:
 
 ---
 
+## Session Log — Section 4: Meta Tags, Open Graph & Twitter Cards
+
+**Date:** 2026-04-03
+
+### What was done:
+1. **Modified `public/index.html`** — Added all SEO meta tags, Open Graph tags, and Twitter Card tags:
+   - Replaced CRA default description with keyword-rich Friendlinq description
+   - Added `keywords`, `robots`, `author`, `application-name`, `apple-mobile-web-app-title` meta tags
+   - Added `<link rel="canonical">` pointing to `https://friendlinq.com/`
+   - Added 10 Open Graph tags (type, url, title, description, image, image dimensions, image alt, site_name, locale)
+   - Added 5 Twitter Card tags (card, title, description, image, image:alt)
+   - Fixed `theme-color` from `#000000` to `#1a6b3a` (brand green)
+   - Fixed `<title>` from "FriendLinq" to "Friendlinq | The Social Network Built for Real Connection"
+
+### Files changed:
+- `public/index.html` — Updated with all meta/OG/Twitter tags
+
+### Manual action item for Albert:
+- **Create `og-image.jpg`** (1200x630 px) showing the Friendlinq logo and tagline, and place it in `public/` so it deploys to `https://friendlinq.com/og-image.jpg`
+
+### Build status: PASSES
+
+---
+
 ## Section Tracking
 
 | Section | Description | Status |
@@ -391,7 +415,7 @@ Disallow:
 | 0 | Context & Direction | Included |
 | 1 | Deep Audit | **COMPLETE** |
 | 2 | Public Landing Page | **COMPLETE** |
-| 3 | Meta Tags, Open Graph, Twitter Cards | Not Started |
+| 3 | Meta Tags, Open Graph, Twitter Cards | **COMPLETE** (was Section 4 in spec) |
 | 4 | JSON-LD Structured Data | Not Started |
 | 5 | Semantic HTML, Accessibility, Noscript Fallback | Not Started |
 | 6 | React SEO: Dynamic meta tags per route | Not Started |
