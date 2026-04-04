@@ -10,18 +10,13 @@
     <loc>https://friendlinq.com/login</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://friendlinq.com/register</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
-  <url>
-    <loc>https://friendlinq.com/forgot-password</loc>
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
+  <!-- Add future public pages as they are created: /about, /features, /faq, /safety, /support, /contact, /privacy, /terms -->
 </urlset>

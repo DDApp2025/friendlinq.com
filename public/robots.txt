@@ -1,4 +1,4 @@
-# Friendlinq - The Social Network Built for Seniors
+# Friendlinq - Social Platform for Adults
 # https://friendlinq.com
 
 User-agent: *
