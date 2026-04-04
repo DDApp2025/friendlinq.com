@@ -32,6 +32,7 @@ import { ChooseTutorial, TutorialViewer } from './pages/Tutorials';
 import CallPage from './pages/Call';
 import LiveStream from './pages/LiveStream';
 import FavoritesPage from './pages/Favorites';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
@@ -74,6 +75,14 @@ function App() {
           element={
             <PublicRoute>
               <ResetPassword />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <LandingPage />
             </PublicRoute>
           }
         />

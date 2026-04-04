@@ -1,0 +1,150 @@
+﻿# FRIENDLINQ.COM SEO IMPLEMENTATION — SECTION 0: CONTEXT
+## This file is given to Claude Code at the start of EVERY session.
+
+---
+
+## About Friendlinq
+
+Friendlinq (friendlinq.com) is a social media platform designed for adults who value simplicity, safety, and real connection. It is owned and operated by Albert (Robert Smith) through Infotech Inc. / Spire Group Inc.
+
+### Core Features & Services
+- Social networking and friend connections
+- Messaging and communication tools (text, voice, video via Agora WebRTC)
+- Interest-based community groups (gardening, travel, book clubs, health & wellness, etc.)
+- Event discovery and local activity listings
+- Photo and media sharing with simplified tools
+- Profile creation and friend management
+- Live streaming (host or join via Agora)
+- Marketplace for community listings
+- Simplified, intuitive user interface with large text and clear navigation
+- Enhanced privacy and safety features
+- Free to join and use — no subscription fees for core features
+- Stripe-powered subscription for optional dating/premium mode
+
+### Target Audiences
+- Adults who want a simpler, safer social network
+- People who find Facebook, Instagram, and other platforms too complex or invasive
+- Family members who want to stay connected across generations
+- Community organizations looking for digital social tools
+
+### Value Propositions
+- Purpose-built for simplicity (not a general platform retrofitted)
+- Intuitive interface designed for comfort, not complexity
+- Safety-focused with privacy protections
+- No ads, no data selling, no algorithm manipulation
+- Bridges generational gaps — family members of any age can join
+
+---
+
+## Technical Stack
+
+- **Frontend:** React 19 (Create React App, react-scripts 5.0.1)
+- **Router:** react-router-dom 7.13 — BrowserRouter (path-based)
+- **State:** Redux + Redux Persist + Redux Thunk
+- **Frontend hosting:** GitHub Pages via repo DDApp2025/friendlinq.com
+- **Backend APIs (DO NOT MODIFY):**
+  - Node.js: https://natural.friendlinq.com (posts, chat, portfolio, friends, notifications)
+  - .NET: https://unpokedfolks.com/api (auth, groups, marketplace, payments, settings)
+- **Real-time:** Socket.IO (messaging), Agora WebRTC (video/audio calls, live streams)
+- **Payments:** Stripe (subscription plans)
+- **Build:** `npm run build` → `/build/` directory
+- **Deploy:** `npm run deploy` → runs `gh-pages -d build` → pushes to gh-pages branch
+- **Domain:** friendlinq.com (points to GitHub Pages)
+- **Local project:** `C:\Projects\friendlinq.com`
+
+---
+
+## CRITICAL WARNINGS
+
+### Two Separate Projects — DO NOT CONFUSE
+- `C:\Projects\friendlinq.com` — The WEBSITE (React, GitHub Pages). **ONLY project you touch.**
+- `C:\Projects\friendlinq` — The MOBILE APP (React Native). **DO NOT open, modify, edit, delete, or use in any way.**
+
+### DO NOT modify any backend/AWS/Lightsail files
+
+### DO NOT run `npm run deploy` unless Albert explicitly says to
+
+---
+
+## Brand Rules
+- Use "Friendlinq" (not "FriendLinq" or "friendlinq") in all visible text
+- Contact email: info@friendlinq.com
+- Copyright: © 2026 Spire Group Inc.
+- Tone: Warm, welcoming, accessible, trustworthy, non-technical
+- **DO NOT use age-specific language** — no "seniors", no "60+", no "elderly", no "older adults"
+- Position Friendlinq around values: simplicity, safety, privacy, real connection
+- Never reference competitor platforms negatively
+
+---
+
+## Claude Code Working Rules
+- Always provide COMPLETE files, not snippets or partial changes
+- Project directory: `C:\Projects\friendlinq.com`
+- GitHub repo: DDApp2025/friendlinq.com
+- Downloads go to `C:\Users\quail\Downloads\` — never delete from Downloads, only copy/paste
+- Use Start-Transcript for session logging
+- Read CLAUDE.md for audit findings and prior session logs
+- After completing the section, log what was done in CLAUDE.md
+- **DO NOT git commit or push until Albert gives explicit OK**
+- Once approved: git commit and push to DDApp2025/friendlinq.com
+
+---
+
+## Master Keyword Strategy
+
+### Primary Keywords (titles, H1s, meta descriptions)
+- social media for adults
+- simple social network
+- safe social platform
+- private social network
+- online community for adults
+- easy social media
+- social network for real people
+
+### Secondary Keywords (body copy, H2s, alt text)
+- connect with friends and family online
+- stay connected in retirement
+- safe social media platform
+- easy social media for adults
+- social platform no ads
+- private social network no data selling
+- simple social network for real connection
+
+### Long-Tail Keywords (FAQ, blog, supporting pages)
+- best simple social media app for adults
+- safe online communities for families
+- social media designed for simplicity
+- social network with no ads and no data selling
+- easy to use social network for non-technical people
+- social media alternative to Facebook
+- simple social network for real connection not algorithms
+
+### Question Keywords (AIO/FAQ targets)
+- What is the best simple social media?
+- Is there a social network that doesn't sell your data?
+- Is there a simpler alternative to Facebook?
+- Is Friendlinq free?
+- How is Friendlinq different from Facebook?
+- Do I need to be tech-savvy to use Friendlinq?
+
+---
+
+## Section Tracking Checklist
+
+| Section | Description | Status |
+|---------|-------------|--------|
+| 0 | Context (this file — every session) | — |
+| 1 | Deep audit: read everything, change nothing | COMPLETE |
+| 2 | Public landing page for logged-out users | IN PROGRESS |
+| 3 | Technical SEO files: robots.txt, sitemap.xml, llms.txt | Not Started |
+| 4 | Meta tags, Open Graph, Twitter Cards | Not Started |
+| 5 | JSON-LD Structured Data | Not Started |
+| 6 | Semantic HTML, Accessibility, Noscript Fallback | Not Started |
+| 7 | React SEO: Dynamic meta tags per route | Not Started |
+| 8 | GitHub Pages & Deployment Configuration | Not Started |
+| 9 | Image Alt Text, OG Image, Favicon | Not Started |
+| 10 | Content Architecture: FAQ, Safety, About, Features pages | Not Started |
+| 11 | AI Optimization (AIO), Entity Strategy | Not Started |
+| 12 | Analytics: GA4, Search Console, Bing | Not Started |
+| 13 | Testing, Validation, Deployment Verification | Not Started |
+

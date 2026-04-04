@@ -368,13 +368,29 @@ Disallow:
 
 ---
 
+## Session Log — Section 2: Public Landing Page
+
+**Date:** 2026-04-03
+
+### What was done:
+1. **Created `src/pages/LandingPage.js`** — Full landing page matching HTML mockup (topnav with login, hero with signup card, stats bar, features grid, FAQ accordion, CTA, footer). All FAQ answers always in DOM for crawlers (CSS display toggle, not conditional render).
+2. **Modified `src/App.js`** — Added `/` route: `<PublicRoute><LandingPage /></PublicRoute>` (logged-in users redirect to `/home`)
+
+### Files changed:
+- `src/pages/LandingPage.js` — **NEW**
+- `src/App.js` — Added LandingPage import and `/` route
+
+### Build status: PASSES
+
+---
+
 ## Section Tracking
 
 | Section | Description | Status |
 |---------|-------------|--------|
 | 0 | Context & Direction | Included |
 | 1 | Deep Audit | **COMPLETE** |
-| 2 | Technical SEO Foundation (robots.txt, sitemap.xml, llms.txt) | **COMPLETE** |
+| 2 | Public Landing Page | **COMPLETE** |
 | 3 | Meta Tags, Open Graph, Twitter Cards | Not Started |
 | 4 | JSON-LD Structured Data | Not Started |
 | 5 | Semantic HTML, Accessibility, Noscript Fallback | Not Started |
