@@ -33,6 +33,12 @@ import CallPage from './pages/Call';
 import LiveStream from './pages/LiveStream';
 import FavoritesPage from './pages/Favorites';
 import LandingPage from './pages/LandingPage';
+import About from './pages/About';
+import Features from './pages/Features';
+import FAQ from './pages/FAQ';
+import Safety from './pages/Safety';
+import PublicSupport from './pages/PublicSupport';
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -86,6 +92,12 @@ function App() {
             </PublicRoute>
           }
         />
+        <Route path="/about" element={<About />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/safety" element={<Safety />} />
+        <Route path="/support" element={<PublicSupport />} />
+        <Route path="/contact" element={<Contact />} />
         <Route
           path="/register/user-type"
           element={

@@ -642,7 +642,73 @@ Audited all `<img>` tags across the codebase and improved alt text for SEO and a
 | 6 | React SEO: Dynamic meta tags per route | **COMPLETE** |
 | 7 | GitHub Pages & Deployment Configuration | **COMPLETE** |
 | 8 | Image Alt Text + OG Image + Favicon Audit | **COMPLETE** |
-| 9 | Content Architecture: FAQ + Safety Pages | Not Started |
+| 9 | Content Architecture: FAQ + Safety Pages | **COMPLETE** |
 | 10 | AI Optimization (AIO), llms.txt, Entity Strategy | Not Started |
 | 11 | Analytics Setup: GA4, Search Console, Bing | Not Started |
 | 12 | Testing, Validation, Deployment Verification | Not Started |
+
+---
+
+## Session Log — Section 10: Content Architecture — Public Pages
+
+**Date:** 2026-04-03
+
+### What was done:
+
+#### Step 10.1: About Page (/about)
+- **Created `src/pages/About.js`** — Public route with mission statement, how it works, what makes Friendlinq different (no ads, no data selling, no algorithms), who we are (Spire Group Inc.), contact info, and signup CTA.
+
+#### Step 10.2: Features Page (/features)
+- **Created `src/pages/Features.js`** — Public route with detailed descriptions of 10 features: Messaging, Community Groups, Video/Audio Calls, Live Streaming, Photo/Video Sharing, Social Feed, Profiles, Marketplace, Events, and Notifications. Each with icon and keyword-rich description.
+
+#### Step 10.3: FAQ Page (/faq)
+- **Created `src/pages/FAQ.js`** — Public route with 16 questions organized into 4 categories: Getting Started (4), Features (5), Safety & Privacy (4), Comparison & Compatibility (3). Expandable accordion format with category headers.
+
+#### Step 10.4: Safety Page (/safety)
+- **Created `src/pages/Safety.js`** — Public route covering scam/spam protection, privacy controls (post privacy, private portfolio, friend requests, block/report), community moderation, data handling (what we collect, how we use it, what we do NOT do), reporting instructions, and online safety tips.
+
+#### Step 10.5: Public Support Page (/support)
+- **Created `src/pages/PublicSupport.js`** — Public route with 5 quick-start FAQ items, contact email (info@friendlinq.com), link to full FAQ, app store download badges, and helpful links to other public pages.
+
+#### Step 10.6: Contact Page (/contact)
+- **Created `src/pages/Contact.js`** — Public route with email contact (info@friendlinq.com), links to FAQ and Support, response time expectations, mailing address (Spire Group Inc.), and signup CTA.
+
+#### Step 10.7: Routes Registered
+- **Modified `src/App.js`** — Added 6 new public routes (not wrapped in PublicRoute, so accessible to both logged-in and logged-out users):
+  - `/about` → About.js
+  - `/features` → Features.js
+  - `/faq` → FAQ.js
+  - `/safety` → Safety.js
+  - `/support` → PublicSupport.js (replaces the protected Support route for this path)
+  - `/contact` → Contact.js
+
+#### Step 10.8: Sitemap Updated
+- **Modified `public/sitemap.xml`** — Added all 6 new public URLs with priority 0.7–0.8.
+
+#### Shared Layout Component
+- **Created `src/components/PublicPageLayout.js`** — Shared layout wrapper for all public content pages with consistent top nav (logo + login/signup) and footer (links, app store badges, copyright). Avoids duplicating nav/footer across 6 pages.
+
+### Design notes:
+- All pages use the same visual style as the landing page (brand green #1a6b3a, system fonts, card-based layout)
+- All pages include Helmet with unique title, meta description, canonical URL, and OG tags
+- All pages are responsive (mobile-friendly grid breakpoints)
+- All pages include internal cross-links and signup CTAs for SEO link equity
+- `/privacy` and `/terms` routes do not yet exist — placeholder links remain in footers
+
+### Note on /support route:
+- The public `/support` route (PublicSupport.js) now takes priority over the protected `/support` route (Support.js with feedback form). Authenticated users visiting /support will see the public support page. The authenticated feedback form at Support.js is still available inside the protected catch-all but is effectively unreachable at `/support`.
+
+### Files created:
+- `src/components/PublicPageLayout.js` — **NEW** (shared public page layout)
+- `src/pages/About.js` — **NEW**
+- `src/pages/Features.js` — **NEW**
+- `src/pages/FAQ.js` — **NEW**
+- `src/pages/Safety.js` — **NEW**
+- `src/pages/PublicSupport.js` — **NEW**
+- `src/pages/Contact.js` — **NEW**
+
+### Files modified:
+- `src/App.js` — Added 7 imports + 6 public routes
+- `public/sitemap.xml` — Added 6 new URLs
+
+### Build status: PASSES
