@@ -134,7 +134,7 @@ function ChooseTutorial() {
           style={styles.logo}
           onError={(e) => { e.target.style.display = 'none'; }}
         />
-        <h1 style={styles.welcomeTitle}>Welcome to FriendLinq</h1>
+        <h1 style={styles.welcomeTitle}>Welcome to Friendlinq</h1>
         <p style={styles.welcomeBody}>
           Your all in one platform for{'\n'}connecting and sharing
         </p>

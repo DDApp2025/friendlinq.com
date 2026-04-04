@@ -53,13 +53,13 @@ function Support() {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <h2 style={styles.title}>Request Support</h2>
+        <h1 style={styles.title}>Friendlinq Support</h1>
 
         {successMsg && <div style={styles.successMsg}>{successMsg}</div>}
 
         {/* FAQ Section */}
         <div style={styles.faqSection}>
-          <h3 style={styles.faqTitle}>Frequently Asked Questions</h3>
+          <h2 style={styles.faqTitle}>Frequently Asked Questions</h2>
           <div style={styles.faqItem}>
             <h4 style={styles.faqQ}>How do I add friends?</h4>
             <p style={styles.faqA}>
@@ -93,7 +93,7 @@ function Support() {
         </div>
 
         {/* Contact Form */}
-        <h3 style={{ ...styles.faqTitle, marginTop: 32 }}>Contact Us</h3>
+        <h2 style={{ ...styles.faqTitle, marginTop: 32 }}>Contact Us</h2>
 
         <div style={styles.inputGroup}>
           <input

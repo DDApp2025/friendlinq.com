@@ -141,7 +141,7 @@ function SignUpPhone() {
           </div>
         </div>
 
-        <h1 style={styles.title}>Create Your FriendLinq Account</h1>
+        <h1 style={styles.title}>Create Your Friendlinq Account</h1>
 
         {/* Phone input row */}
         <div style={styles.phoneRow}>

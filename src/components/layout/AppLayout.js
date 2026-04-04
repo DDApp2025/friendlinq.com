@@ -43,7 +43,7 @@ const AppLayout = ({ children }) => {
       <style>{responsiveCSS}</style>
       <TopNav onMenuToggle={() => setSidebarOpen((o) => !o)} />
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <main style={{
+      <main role="main" style={{
         paddingTop: 0,
         paddingBottom: isMobile ? 60 : 0,
         minHeight: 'calc(100vh - 56px)',

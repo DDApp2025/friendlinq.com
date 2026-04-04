@@ -97,7 +97,7 @@ export default function LandingPage() {
     <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", background: '#f0f2f5', color: '#1c1e21', minHeight: '100vh' }}>
 
       {/* ── Top Nav ── */}
-      <nav style={styles.topnav}>
+      <nav style={styles.topnav} aria-label="Primary navigation">
         <div style={styles.topnavLogo}>
           <img src={`${process.env.PUBLIC_URL}/logo-app.jpeg`} alt="Friendlinq logo" style={styles.logoIcon} />
           <span style={styles.logoName}>Friendlinq</span>
@@ -116,7 +116,7 @@ export default function LandingPage() {
       </nav>
 
       {/* ── Hero Section ── */}
-      <section style={styles.hero} className="landing-hero">
+      <section style={styles.hero} className="landing-hero" aria-label="Hero">
         <div style={styles.heroLeft} className="landing-hero-left">
           <h1 style={styles.h1}>Stay connected with the people who matter most.</h1>
           <p style={styles.subtitle}>Friendlinq is the social network designed for adults who value simplicity, safety, and real connection. Easy to use, private by design, and completely free.</p>
@@ -196,7 +196,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Stats Bar ── */}
-      <section style={styles.statsBar}>
+      <section style={styles.statsBar} aria-label="Platform highlights">
         <div style={styles.statsInner} className="landing-stats-inner">
           <div style={styles.stat}>
             <div style={styles.statLabel}>Built for</div>
@@ -218,7 +218,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features Grid ── */}
-      <section style={styles.featuresDetail}>
+      <section style={styles.featuresDetail} aria-label="Features">
         <h2 style={styles.sectionH2}>Everything you need to stay connected</h2>
         <p style={styles.sectionSub}>Friendlinq gives you the tools to keep your social life thriving — without the confusion.</p>
         <div style={styles.featuresGrid} className="landing-features-grid">
@@ -257,7 +257,7 @@ export default function LandingPage() {
 
       {/* ── FAQ Section ── */}
       {/* All FAQ answers are always in the DOM for SEO crawlers (Step 2.9). CSS display toggles visibility. */}
-      <section style={styles.faqSection}>
+      <section style={styles.faqSection} aria-label="Frequently asked questions">
         <div style={styles.faqInner}>
           <h2 style={styles.sectionH2}>Frequently asked questions</h2>
           {faqData.map((item, i) => (
@@ -280,14 +280,14 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA Bar ── */}
-      <section style={styles.ctaBar}>
+      <section style={styles.ctaBar} aria-label="Call to action">
         <h2 style={styles.ctaH2}>Ready to stay connected?</h2>
         <p style={styles.ctaP}>Join Friendlinq today. It takes less than a minute and it's completely free.</p>
         <button style={styles.btnCta} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Sign up now</button>
       </section>
 
       {/* ── Footer ── */}
-      <footer style={styles.footer}>
+      <footer style={styles.footer} role="contentinfo">
         <div style={styles.footerInner} className="landing-footer-inner">
           <div style={styles.footerLogo}>
             <img src={`${process.env.PUBLIC_URL}/logo-app.jpeg`} alt="Friendlinq logo" style={styles.footerLogoIcon} />

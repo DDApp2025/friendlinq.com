@@ -31,7 +31,7 @@ const BottomNav = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav style={styles.container}>
+    <nav style={styles.container} aria-label="Bottom navigation">
       {tabs.map((tab) => {
         const active = isActive(tab.path);
         const Icon = tab.icon;

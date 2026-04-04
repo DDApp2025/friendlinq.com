@@ -72,11 +72,11 @@ function Login() {
       <div style={styles.scrollContent}>
         {/* App Logo */}
         <div style={styles.iconWrapper}>
-          <img src="/logo-app.jpeg" alt="FriendLinq" style={styles.logoImage} />
+          <img src="/logo-app.jpeg" alt="Friendlinq logo" style={styles.logoImage} />
         </div>
 
         {/* App Name */}
-        <h1 style={styles.appName}>FriendLinq</h1>
+        <h1 style={styles.appName}>Log in to Friendlinq</h1>
 
         {/* Login Form */}
         <form onSubmit={handleLogin} style={styles.form}>
@@ -161,7 +161,7 @@ function Login() {
 
         {/* Tagline */}
         <p style={styles.tagline}>
-          Join others finding connections on FriendLinq
+          Join others finding connections on Friendlinq
         </p>
       </div>
 

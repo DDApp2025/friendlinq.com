@@ -429,6 +429,58 @@ Disallow:
 
 ---
 
+## Session Log — Section 6: Semantic HTML, Accessibility & Noscript Fallback
+
+**Date:** 2026-04-03
+
+### What was done:
+
+#### Step 6.1: Rich Noscript Fallback
+- **Modified `public/index.html`** — Replaced minimal "You need to enable JavaScript" noscript with rich, keyword-laden HTML content including:
+  - H1 with brand name and primary keyword
+  - 3 descriptive paragraphs with secondary keywords
+  - Full features list (10 items)
+  - FAQ summary (4 questions with answers)
+  - Links to sign up, log in, App Store, Google Play
+  - Contact email and copyright
+
+#### Step 6.2: Prerender Fallback in Root Div
+- **Modified `public/index.html`** — Added content inside `<div id="root">` that displays before React hydrates, with h1 and loading message. Replaced by React on load.
+
+#### Step 6.3: Heading Hierarchy Fixes
+- **Login.js** — Changed h1 from "FriendLinq" to "Log in to Friendlinq"; fixed alt text and tagline brand name
+- **SignUpCommon.js** — Fixed h1 brand: "FriendLinq" → "Friendlinq"
+- **SignUpPhone.js** — Fixed h1 brand: "FriendLinq" → "Friendlinq"
+- **Home.js** — Added visually hidden h1 "Friendlinq Home Feed"
+- **Support.js** — Changed h2 to h1 "Friendlinq Support"; promoted h3 tags to h2 for proper hierarchy
+- **ChooseUserType.js** — Fixed brand in h1, h2 headings, and button text: "FriendLinq" → "Friendlinq"
+- **Tutorials.js** — Fixed h1 brand: "FriendLinq" → "Friendlinq"
+- **TopNav.js** — Fixed logo alt text and brand text: "FriendLinq" → "Friendlinq"
+
+#### Step 6.4: Semantic Elements & ARIA Attributes
+- **TopNav.js** — Added `role="banner"` to header, `aria-label="Primary navigation"` to nav
+- **BottomNav.js** — Added `aria-label="Bottom navigation"` to nav
+- **AppLayout.js** — Added `role="main"` to main element
+- **LandingPage.js** — Added `aria-label` to nav and all section elements; added `role="contentinfo"` to footer
+
+### Files changed:
+- `public/index.html` — Rich noscript fallback + prerender content in root div
+- `src/pages/Login.js` — h1 text + brand fixes
+- `src/pages/SignUpCommon.js` — h1 brand fix
+- `src/pages/SignUpPhone.js` — h1 brand fix
+- `src/pages/Home.js` — Added visually hidden h1
+- `src/pages/Support.js` — h1 + heading hierarchy fix
+- `src/pages/ChooseUserType.js` — Brand name fixes in headings
+- `src/pages/Tutorials.js` — h1 brand fix
+- `src/components/layout/TopNav.js` — Brand fix + semantic attributes
+- `src/components/layout/BottomNav.js` — ARIA label on nav
+- `src/components/layout/AppLayout.js` — Role attribute on main
+- `src/pages/LandingPage.js` — ARIA labels on sections + semantic roles
+
+### Build status: PASSES
+
+---
+
 ## Section Tracking
 
 | Section | Description | Status |
@@ -438,7 +490,7 @@ Disallow:
 | 2 | Public Landing Page | **COMPLETE** |
 | 3 | Meta Tags, Open Graph, Twitter Cards | **COMPLETE** (was Section 4 in spec) |
 | 4 | JSON-LD Structured Data | **COMPLETE** |
-| 5 | Semantic HTML, Accessibility, Noscript Fallback | Not Started |
+| 5 | Semantic HTML, Accessibility, Noscript Fallback | **COMPLETE** |
 | 6 | React SEO: Dynamic meta tags per route | Not Started |
 | 7 | GitHub Pages & Deployment Configuration | Not Started |
 | 8 | Image Alt Text + OG Image + Favicon Audit | Not Started |

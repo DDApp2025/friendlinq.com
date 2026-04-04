@@ -43,11 +43,11 @@ function ChooseUserType() {
           </div>
         </div>
 
-        <h1 style={styles.pageTitle}>Choose Your FriendLinq Experience</h1>
+        <h1 style={styles.pageTitle}>Choose Your Friendlinq Experience</h1>
 
         <div style={styles.content}>
           {/* Social Media Section */}
-          <h2 style={styles.sectionTitle}>FriendLinq Social Media:</h2>
+          <h2 style={styles.sectionTitle}>Friendlinq Social Media:</h2>
           <p style={styles.body}>
             Connect with friends and make new ones in your area.
           </p>
@@ -59,11 +59,11 @@ function ChooseUserType() {
             disabled={loading}
             style={styles.chooseButton}
           >
-            Join FriendLinq Social Media for Free
+            Join Friendlinq Social Media for Free
           </button>
 
           {/* Dating Section */}
-          <h2 style={{ ...styles.sectionTitle, marginTop: 20 }}>FriendLinq Flirting/Dating:</h2>
+          <h2 style={{ ...styles.sectionTitle, marginTop: 20 }}>Friendlinq Flirting/Dating:</h2>
           <p style={styles.body}>
             Find meaningful connections and potential partners
           </p>

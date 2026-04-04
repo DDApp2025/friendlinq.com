@@ -79,7 +79,7 @@ const TopNav = ({ onMenuToggle }) => {
   };
 
   return (
-    <header style={styles.header}>
+    <header style={styles.header} role="banner">
       {/* Left: hamburger (mobile) + logo */}
       <div style={styles.left}>
         <button
@@ -91,13 +91,13 @@ const TopNav = ({ onMenuToggle }) => {
           <MdMenu size={28} color="#fff" />
         </button>
         <div style={styles.logoWrap} onClick={() => navigate('/home')}>
-          <img src="/logo-icon.png" alt="FriendLinq" style={styles.logoImg} />
-          <span style={styles.logoText}>FriendLinq</span>
+          <img src="/logo-icon.png" alt="Friendlinq logo" style={styles.logoImg} />
+          <span style={styles.logoText}>Friendlinq</span>
         </div>
       </div>
 
       {/* Center: desktop nav links */}
-      <nav style={styles.center} className="topnav-links">
+      <nav style={styles.center} className="topnav-links" aria-label="Primary navigation">
         {navLinks.map((link) => {
           const active = location.pathname === link.path;
           const badgeCount = link.badgeKey ? auth[link.badgeKey] : null;
