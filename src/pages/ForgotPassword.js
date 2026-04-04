@@ -35,7 +35,7 @@ function ForgotPassword() {
     setLoading(false);
 
     if (res.success) {
-      setSuccess('Your FriendLinq password has been sent to your registered email. Please check your email.');
+      setSuccess('Your Friendlinq password has been sent to your registered email. Please check your email.');
       setEmail('');
     } else {
       setError(res.message || 'Something went wrong');
@@ -45,12 +45,18 @@ function ForgotPassword() {
   return (
     <div style={styles.container}>
       <Helmet>
-        <title>Forgot Password | Friendlinq</title>
-        <meta name="description" content="Reset your Friendlinq password. Enter your email to receive a verification code." />
+        <title>Forgot Password | Friendlinq — Ad-Free Social Network</title>
+        <meta name="description" content="Reset your Friendlinq password. Friendlinq is the free, ad-free private social network — a Facebook alternative with no tracking and no data selling." />
         <link rel="canonical" href="https://friendlinq.com/forgot-password" />
-        <meta property="og:title" content="Forgot Password | Friendlinq" />
-        <meta property="og:description" content="Reset your Friendlinq password. Enter your email to receive a verification code." />
+        <meta property="og:title" content="Forgot Password | Friendlinq — Ad-Free Social Network" />
+        <meta property="og:description" content="Reset your Friendlinq password. Friendlinq is the free, ad-free private social network — a Facebook alternative with no tracking." />
         <meta property="og:url" content="https://friendlinq.com/forgot-password" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://friendlinq.com/og-image.jpg" />
+        <meta property="og:site_name" content="Friendlinq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Forgot Password | Friendlinq — Ad-Free Social Network" />
+        <meta name="twitter:description" content="Reset your Friendlinq password. The free, ad-free private social network with no tracking." />
       </Helmet>
       <div style={styles.content}>
         {/* Header */}
@@ -65,7 +71,7 @@ function ForgotPassword() {
         </div>
 
         <p style={styles.description}>
-          Enter the email you used to join FriendLinq below and we'll send you an OTP for resetting your password.
+          Enter the email you used to join Friendlinq below and we'll send you an OTP for resetting your password.
         </p>
 
         <form onSubmit={handleSubmit}>

@@ -39,6 +39,12 @@ export default function PublicSupport() {
         <meta property="og:title" content="Support | Friendlinq — Help and Contact" />
         <meta property="og:description" content="Get help with Friendlinq. Quick answers to common questions, contact information, and app download links." />
         <meta property="og:url" content="https://friendlinq.com/support" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://friendlinq.com/og-image.jpg" />
+        <meta property="og:site_name" content="Friendlinq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Support | Friendlinq — Help and Contact" />
+        <meta name="twitter:description" content="Get help with Friendlinq. Quick answers to common questions, contact information, and app download links." />
       </Helmet>
 
       <div style={styles.container}>

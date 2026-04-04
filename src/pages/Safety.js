@@ -13,6 +13,12 @@ export default function Safety() {
         <meta property="og:title" content="Safety and Privacy | Friendlinq — Your Security Comes First" />
         <meta property="og:description" content="Learn how Friendlinq protects your safety and privacy. No ads, no data selling, community moderation, and scam protection." />
         <meta property="og:url" content="https://friendlinq.com/safety" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://friendlinq.com/og-image.jpg" />
+        <meta property="og:site_name" content="Friendlinq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Safety and Privacy | Friendlinq — Your Security Comes First" />
+        <meta name="twitter:description" content="Learn how Friendlinq protects your safety and privacy. No ads, no data selling, community moderation, and scam protection." />
       </Helmet>
 
       <div style={styles.container}>

@@ -57,12 +57,18 @@ function ResetPassword() {
   return (
     <div style={styles.container}>
       <Helmet>
-        <title>Reset Password | Friendlinq</title>
-        <meta name="description" content="Set a new password for your Friendlinq account." />
+        <title>Reset Password | Friendlinq — Ad-Free Social Network</title>
+        <meta name="description" content="Set a new password for your Friendlinq account. Friendlinq is the free, ad-free private social network — a Facebook alternative with no tracking and no data selling." />
         <link rel="canonical" href="https://friendlinq.com/reset-password" />
-        <meta property="og:title" content="Reset Password | Friendlinq" />
-        <meta property="og:description" content="Set a new password for your Friendlinq account." />
+        <meta property="og:title" content="Reset Password | Friendlinq — Ad-Free Social Network" />
+        <meta property="og:description" content="Set a new password for Friendlinq. The free, ad-free private social network — a Facebook alternative with no tracking and no algorithms." />
         <meta property="og:url" content="https://friendlinq.com/reset-password" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://friendlinq.com/og-image.jpg" />
+        <meta property="og:site_name" content="Friendlinq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Reset Password | Friendlinq — Ad-Free Social Network" />
+        <meta name="twitter:description" content="Set a new password for Friendlinq. The free, ad-free private social network with no tracking." />
       </Helmet>
       <div style={styles.content}>
         {/* Header */}

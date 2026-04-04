@@ -13,6 +13,12 @@ export default function About() {
         <meta property="og:title" content="About Friendlinq | Simple, Safe Social Media for Real Connection" />
         <meta property="og:description" content="Friendlinq is a social network built for adults who value simplicity, safety, and real connection. No ads, no data selling, no algorithms. Learn our mission." />
         <meta property="og:url" content="https://friendlinq.com/about" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://friendlinq.com/og-image.jpg" />
+        <meta property="og:site_name" content="Friendlinq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About Friendlinq | Simple, Safe Social Media for Real Connection" />
+        <meta name="twitter:description" content="Friendlinq is a social network built for adults who value simplicity, safety, and real connection. No ads, no data selling, no algorithms." />
       </Helmet>
 
       <div style={styles.container}>

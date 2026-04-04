@@ -111,12 +111,18 @@ function SignUpCommon() {
   return (
     <div style={styles.container}>
       <Helmet>
-        <title>Sign Up | Join Friendlinq Free</title>
-        <meta name="description" content="Create your free Friendlinq account. Connect with friends, join groups, share photos, and enjoy a simpler social network — no ads, no data selling." />
+        <title>Sign Up Free | Friendlinq — Private Social Network, No Ads</title>
+        <meta name="description" content="Join Friendlinq free — the ad-free social network and Facebook alternative. No tracking, no algorithms. Connect with friends, join groups, video call, and share photos." />
         <link rel="canonical" href="https://friendlinq.com/register" />
-        <meta property="og:title" content="Sign Up | Join Friendlinq Free" />
-        <meta property="og:description" content="Create your free Friendlinq account. Connect with friends, join groups, share photos, and enjoy a simpler social network." />
+        <meta property="og:title" content="Sign Up Free | Friendlinq — Private Social Network, No Ads" />
+        <meta property="og:description" content="Join Friendlinq free — the ad-free, private social network. No tracking, no algorithms, no data selling. Connect with friends and family, join community groups, and make video calls." />
         <meta property="og:url" content="https://friendlinq.com/register" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://friendlinq.com/og-image.jpg" />
+        <meta property="og:site_name" content="Friendlinq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Sign Up Free | Friendlinq — Private Social Network, No Ads" />
+        <meta name="twitter:description" content="Join Friendlinq free — the ad-free social network. No tracking, no algorithms, no data selling. Just real connection." />
       </Helmet>
       <div style={styles.scrollContent}>
         {/* Logo */}

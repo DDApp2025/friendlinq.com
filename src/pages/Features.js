@@ -88,6 +88,12 @@ export default function Features() {
         <meta property="og:title" content="Features | Friendlinq — Messaging, Groups, Video Calls, and More" />
         <meta property="og:description" content="Explore Friendlinq features: messaging, community groups, video calls, live streaming, photo sharing, marketplace, profiles, and events. Simple, safe, and free." />
         <meta property="og:url" content="https://friendlinq.com/features" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://friendlinq.com/og-image.jpg" />
+        <meta property="og:site_name" content="Friendlinq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Features | Friendlinq — Messaging, Groups, Video Calls, and More" />
+        <meta name="twitter:description" content="Explore Friendlinq features: messaging, community groups, video calls, live streaming, photo sharing, marketplace, profiles, and events." />
       </Helmet>
 
       <div style={styles.container}>

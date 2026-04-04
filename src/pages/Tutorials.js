@@ -115,7 +115,7 @@ const tutorialList = [
     icon: <FaHeart size={36} color="red" />,
     items: [
       {
-        subTitle: 'Your Flirting Connection\n\nTo access the FriendLinq Flirting/Dating platform, click the "Heart" icon in the lower right corner of the bottom navigation bar',
+        subTitle: 'Your Flirting Connection\n\nTo access the Friendlinq Flirting/Dating platform, click the "Heart" icon in the lower right corner of the bottom navigation bar',
         text: '• By clicking the "Heart" icon, the app will take you into the Flirting/Dating platform, if you are already a registered user\n\n• If you\'re not registered on the Flirting/Dating platform, clicking the icon will take you to the registration page\n\n• If you\'re a registered user of both platforms, clicking the icon will seamlessly switch you back and forth between the two platforms',
       },
     ],

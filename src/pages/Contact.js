@@ -13,6 +13,12 @@ export default function Contact() {
         <meta property="og:title" content="Contact Friendlinq | Get in Touch" />
         <meta property="og:description" content="Contact the Friendlinq team. Email us at info@friendlinq.com for questions, feedback, support, or partnership inquiries." />
         <meta property="og:url" content="https://friendlinq.com/contact" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://friendlinq.com/og-image.jpg" />
+        <meta property="og:site_name" content="Friendlinq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact Friendlinq | Get in Touch" />
+        <meta name="twitter:description" content="Contact the Friendlinq team. Email us at info@friendlinq.com for questions, feedback, support, or partnership inquiries." />
       </Helmet>
 
       <div style={styles.container}>

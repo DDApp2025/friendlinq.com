@@ -71,12 +71,18 @@ function Login() {
   return (
     <div style={styles.container}>
       <Helmet>
-        <title>Log In | Friendlinq</title>
-        <meta name="description" content="Log in to your Friendlinq account. The simple, safe social network built for real connection." />
+        <title>Log In | Friendlinq — Ad-Free Social Network</title>
+        <meta name="description" content="Log in to Friendlinq, the free ad-free social network and Facebook alternative. No ads, no tracking, no algorithms — just real connection with friends and family." />
         <link rel="canonical" href="https://friendlinq.com/login" />
-        <meta property="og:title" content="Log In | Friendlinq" />
-        <meta property="og:description" content="Log in to your Friendlinq account. The simple, safe social network built for real connection." />
+        <meta property="og:title" content="Log In | Friendlinq — Ad-Free Social Network" />
+        <meta property="og:description" content="Log in to Friendlinq, the free ad-free social network and Facebook alternative. No ads, no tracking, no algorithms — just real connection." />
         <meta property="og:url" content="https://friendlinq.com/login" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://friendlinq.com/og-image.jpg" />
+        <meta property="og:site_name" content="Friendlinq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Log In | Friendlinq — Ad-Free Social Network" />
+        <meta name="twitter:description" content="Log in to Friendlinq, the free ad-free social network. No ads, no tracking, no algorithms — just real connection." />
       </Helmet>
       <div style={styles.scrollContent}>
         {/* App Logo */}

@@ -48,12 +48,18 @@ function VerifyOtp() {
   return (
     <div style={styles.container}>
       <Helmet>
-        <title>Verify OTP | Friendlinq</title>
-        <meta name="description" content="Enter your verification code to confirm your Friendlinq account." />
+        <title>Verify OTP | Friendlinq — Ad-Free Social Network</title>
+        <meta name="description" content="Verify your Friendlinq account with your one-time code. Friendlinq is the free, ad-free private social network — a Facebook alternative with no tracking." />
         <link rel="canonical" href="https://friendlinq.com/verify-otp" />
-        <meta property="og:title" content="Verify OTP | Friendlinq" />
-        <meta property="og:description" content="Enter your verification code to confirm your Friendlinq account." />
+        <meta property="og:title" content="Verify OTP | Friendlinq — Ad-Free Social Network" />
+        <meta property="og:description" content="Verify your Friendlinq account. The free, ad-free private social network — a Facebook alternative with no tracking and no algorithms." />
         <meta property="og:url" content="https://friendlinq.com/verify-otp" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://friendlinq.com/og-image.jpg" />
+        <meta property="og:site_name" content="Friendlinq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Verify OTP | Friendlinq — Ad-Free Social Network" />
+        <meta name="twitter:description" content="Verify your Friendlinq account. The free, ad-free private social network with no tracking." />
       </Helmet>
       <div style={styles.content}>
         {/* Header */}

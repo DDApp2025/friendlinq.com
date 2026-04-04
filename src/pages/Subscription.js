@@ -201,7 +201,7 @@ export default function Subscription() {
     'Download, Copy & Share any post image or video.',
     'Unlimited live Video Calls between Android & iPhone.',
     'Customize your profile with: Banners, Top-Friends, Videos & Photos.',
-    'Unlimited chats, group calls and FriendLinqs.',
+    'Unlimited chats, group calls and Friendlinqs.',
   ];
 
   return (
@@ -241,7 +241,7 @@ export default function Subscription() {
         )}
 
         <h3 style={styles.sectionTitle}>Flirting/Dating Social Media Plan</h3>
-        <p style={styles.subtitle}>The most popular FriendLinq plan</p>
+        <p style={styles.subtitle}>The most popular Friendlinq plan</p>
 
         {/* Plan Selection */}
         <div style={styles.planRadioGroup}>

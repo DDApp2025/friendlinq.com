@@ -97,12 +97,18 @@ export default function LandingPage() {
   return (
     <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", background: '#f0f2f5', color: '#1c1e21', minHeight: '100vh' }}>
       <Helmet>
-        <title>Friendlinq | The Social Network Built for Real Connection</title>
-        <meta name="description" content="Simple, safe social media. Connect with friends, join groups, share photos, video call, and discover events. Free to join — no ads, no data selling." />
+        <title>Friendlinq | Free Ad-Free Social Network — Facebook Alternative</title>
+        <meta name="description" content="Friendlinq is a free, ad-free social network — a Facebook alternative with no data selling. Connect with friends, join groups, video call, share photos. Private and safe." />
         <link rel="canonical" href="https://friendlinq.com/" />
-        <meta property="og:title" content="Friendlinq | The Social Network Built for Real Connection" />
-        <meta property="og:description" content="Simple, safe social media. Connect with friends, join groups, share photos, video call, and discover events. Free to join — no ads, no data selling." />
+        <meta property="og:title" content="Friendlinq | Free Ad-Free Social Network — Facebook Alternative" />
+        <meta property="og:description" content="Friendlinq is the ad-free, private social network alternative. No ads, no tracking, no algorithms. Connect with friends and family, join community groups, make video calls, share photos — all free. Available on web, iOS, and Android." />
         <meta property="og:url" content="https://friendlinq.com/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://friendlinq.com/og-image.jpg" />
+        <meta property="og:site_name" content="Friendlinq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Friendlinq | Free Ad-Free Social Network — Facebook Alternative" />
+        <meta name="twitter:description" content="Free social network. No ads. No data selling. No algorithms. Just real connection. Join Friendlinq." />
       </Helmet>
 
       {/* ── Top Nav ── */}

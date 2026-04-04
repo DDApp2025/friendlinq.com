@@ -110,6 +110,12 @@ export default function FAQ() {
         <meta property="og:title" content="FAQ | Friendlinq — Frequently Asked Questions" />
         <meta property="og:description" content="Find answers about Friendlinq: how to sign up, features, safety, privacy, how it compares to Facebook, and more." />
         <meta property="og:url" content="https://friendlinq.com/faq" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://friendlinq.com/og-image.jpg" />
+        <meta property="og:site_name" content="Friendlinq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="FAQ | Friendlinq — Frequently Asked Questions" />
+        <meta name="twitter:description" content="Find answers about Friendlinq: how to sign up, features, safety, privacy, how it compares to Facebook, and more." />
       </Helmet>
 
       <div style={styles.container}>
