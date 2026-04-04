@@ -1,0 +1,116 @@
+# Friendlinq
+# The Free, Ad-Free Social Network — A Facebook Alternative
+
+> Friendlinq is a free social network for adults who want a simpler, safer way to stay connected. No ads, no data selling, no algorithm manipulation. Available on web, iOS, and Android.
+
+## What is Friendlinq?
+Friendlinq is a social media platform built for adults who value simplicity, safety, and real connection. Unlike mainstream social networks that rely on ads, data harvesting, and algorithm manipulation, Friendlinq provides a clean, intuitive interface with enhanced privacy protections. It is completely free to join and use — there are no subscription fees, no hidden charges, and no premium tiers required for core features.
+
+Friendlinq is developed and operated by Spire Group Inc.
+
+## Key Facts
+- Free social network — no subscription fees, no hidden charges
+- No advertisements — your feed shows content from friends and groups, nothing else
+- No data selling — personal data is never sold to advertisers, data brokers, or third parties
+- No algorithm manipulation — feeds are chronological, not engagement-optimized
+- Available on web (any modern browser), iOS (App Store), and Android (Google Play)
+- Built for simplicity — large text, clear buttons, intuitive navigation
+- Guided tutorial walks new users through every feature step by step
+
+## Core Features
+- **Social feed** — community and friends-only posts with text, photos, and video; chronological order; no algorithm
+- **Messaging** — real-time private conversations with text, photos, and media attachments
+- **Community groups** — join or create groups by interest (gardening, travel, book clubs, cooking, health and wellness, and more)
+- **Video and audio calls** — one-on-one and group calls, works on phone, tablet, and computer; no extra app needed
+- **Live streaming** — host or join live video streams with friends or groups
+- **Photo and video sharing** — upload, organize albums, select profile showcase images, private portfolio visible only to chosen friends
+- **Profiles** — personal profile with photo, banner, bio, and interests
+- **Community marketplace** — browse and discover local listings and community offerings
+- **Events and activities** — discover local events and virtual get-togethers
+- **Notifications** — real-time alerts for friend requests, messages, comments, likes, group activity, and live streams
+- **Friend management** — search, connect, favorites, accept/reject requests
+- **Privacy controls** — post privacy (public/friends-only), private portfolio, block and report users
+- **Community moderation** — active monitoring for spam, scams, and policy violations
+
+## How Friendlinq is Different from Facebook
+Friendlinq is built from the ground up for people who want simplicity, not a general platform retrofitted for ease of use. Key differences:
+- Cleaner navigation with larger text and clear buttons
+- No algorithm-driven content manipulation — your feed is chronological
+- No advertisements of any kind
+- No data selling — your information is never shared with advertisers or data brokers
+- Privacy controls designed to actually protect users, not buried in sub-menus
+- Step-by-step guided tutorial for new users
+
+## Safety and Privacy
+Friendlinq actively monitors for suspicious activity, fake accounts, and spam. Privacy controls include:
+- Per-post privacy settings (community or friends-only)
+- Private photo portfolio visible only to chosen friends
+- Explicit friend request approval for all connections
+- One-tap block and report on any user or content
+- Moderation team reviews reports and takes action promptly
+- Data collected: only what is needed to provide the service (name, email, profile details, content)
+- Data NOT collected or used: no tracking across the web, no behavioral profiling, no ad targeting
+
+## Who Friendlinq is For
+- Adults who want a simpler, safer social network
+- People who find Facebook, Instagram, and other platforms too complex, invasive, or overwhelming
+- Family members who want to stay connected across generations
+- Community organizations looking for digital social tools
+- Anyone looking for social media that respects privacy and doesn't manipulate behavior
+
+## Public Pages
+- Homepage: https://friendlinq.com
+- About: https://friendlinq.com/about
+- Features: https://friendlinq.com/features
+- FAQ: https://friendlinq.com/faq
+- Safety and Privacy: https://friendlinq.com/safety
+- Support: https://friendlinq.com/support
+- Contact: https://friendlinq.com/contact
+- Sign Up: https://friendlinq.com/register
+- Log In: https://friendlinq.com/login
+
+## Frequently Asked Questions
+
+### What is Friendlinq?
+Friendlinq is a free social network designed for adults who want a simpler, safer way to stay connected. It features messaging, community groups, video calls, live streaming, photo sharing, a marketplace, and more — all through an interface built for clarity and comfort. It is completely free to join and use.
+
+### Is Friendlinq free?
+Yes, completely free. There are no subscription fees, no hidden charges, and no premium tiers required to access core features including messaging, community groups, photo sharing, video calls, and event discovery.
+
+### How is Friendlinq different from Facebook?
+Friendlinq is built from the ground up for people who want simplicity. That means cleaner navigation, larger text, no algorithm-driven content manipulation, no advertisements, and privacy controls designed to actually protect you. Facebook is a general social network built around engagement metrics — Friendlinq is built around you.
+
+### Is Friendlinq safe?
+Yes. Friendlinq is built with safety as a top priority. The platform includes enhanced privacy controls, community moderation, and protection from scams and spam. Your personal data is never sold to advertisers or third parties.
+
+### Do I need to be tech-savvy to use Friendlinq?
+Not at all. Friendlinq uses large, clear buttons, simple navigation, and straightforward language. There's a guided tutorial that walks you through every feature step by step. If you can browse the internet and send an email, you can use Friendlinq.
+
+### Can my family members join?
+Absolutely. Friendlinq is open to adults of all ages. Invite your family, friends, and anyone you want to stay connected with.
+
+### What can I do on Friendlinq?
+Connect with friends and family, join interest-based community groups, share photos and updates, send private messages, make video and audio calls, host or join live streams, discover local events, and browse the marketplace — all through an interface designed for simplicity and comfort.
+
+### What devices can I use Friendlinq on?
+Friendlinq is available on the web (any modern browser), iOS (iPhone and iPad via the App Store), and Android (via Google Play). Your account works across all devices.
+
+### Is my data sold to advertisers?
+No. Friendlinq does not sell your data — ever. There are no ads on the platform, and personal information is not shared with advertisers or data brokers.
+
+### How do I sign up?
+Visit https://friendlinq.com/register, enter your name, email address, and a password. It takes less than a minute.
+
+## Contact
+- Website: https://friendlinq.com
+- Email: info@friendlinq.com
+- App Store (iOS): https://apps.apple.com/us/app/friendlinq/id6476931666
+- Google Play (Android): https://play.google.com/store/apps/details?id=com.app.friendlinq
+- Operated by: Spire Group Inc.
+
+## Technical
+- Web application built with React
+- Mobile apps available on iOS and Android
+- Real-time messaging via WebSocket
+- Video and audio calls via WebRTC
+- Hosted and deployed via GitHub Pages

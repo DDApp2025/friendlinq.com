@@ -1,3 +1,61 @@
-# https://www.robotstxt.org/robotstxt.html
+# Friendlinq - Social Platform for Adults
+# https://friendlinq.com
+
 User-agent: *
-Disallow:
+Allow: /
+Allow: /login
+Allow: /register
+
+# Authenticated routes - do not crawl
+Disallow: /home
+Disallow: /profile
+Disallow: /edit-profile
+Disallow: /friends
+Disallow: /add-friend
+Disallow: /messages
+Disallow: /chat/
+Disallow: /notifications
+Disallow: /settings
+Disallow: /call
+Disallow: /live/
+Disallow: /groups
+Disallow: /marketplace
+Disallow: /subscription
+Disallow: /support
+Disallow: /favorites
+Disallow: /photos
+Disallow: /portfolio
+Disallow: /private-portfolio
+Disallow: /comments/
+Disallow: /change-password
+Disallow: /user/
+Disallow: /choose-tutorial
+Disallow: /tutorials
+Disallow: /register/user-type
+
+# AI/LLM Crawlers - Allow for AI search visibility
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://friendlinq.com/sitemap.xml
