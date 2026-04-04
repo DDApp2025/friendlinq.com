@@ -130,6 +130,7 @@ export default function LandingPage() {
         </div>
       </nav>
 
+      <main role="main">
       {/* ── Hero Section ── */}
       <section style={styles.hero} className="landing-hero" aria-label="Hero">
         <div style={styles.heroLeft} className="landing-hero-left">
@@ -300,6 +301,7 @@ export default function LandingPage() {
         <p style={styles.ctaP}>Join Friendlinq today. It takes less than a minute and it's completely free.</p>
         <button style={styles.btnCta} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Sign up now</button>
       </section>
+      </main>
 
       {/* ── Footer ── */}
       <footer style={styles.footer} role="contentinfo">
