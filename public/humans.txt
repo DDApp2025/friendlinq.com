@@ -1,0 +1,9 @@
+/* TEAM */
+Platform: Friendlinq
+Contact: info@friendlinq.com
+Site: https://friendlinq.com
+
+/* SITE */
+Last update: 2026/04
+Standards: HTML5, CSS3, React
+Software: React, Node.js, GitHub Pages

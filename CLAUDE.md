@@ -644,7 +644,7 @@ Audited all `<img>` tags across the codebase and improved alt text for SEO and a
 | 8 | Image Alt Text + OG Image + Favicon Audit | **COMPLETE** |
 | 9 | Content Architecture: FAQ + Safety Pages | **COMPLETE** |
 | 10 | AI Optimization (AIO), llms.txt, Entity Strategy | **COMPLETE** |
-| 11 | Analytics Setup: GA4, Search Console, Bing | Not Started |
+| 11 | Analytics Setup: GA4, Search Console, Bing | **COMPLETE** (placeholders — awaiting IDs from Albert) |
 | 12 | Testing, Validation, Deployment Verification | Not Started |
 
 ---
@@ -775,5 +775,40 @@ Substantially rewrote `public/llms.txt`:
 ### Files modified:
 - `src/pages/About.js` — Added AIO-optimized intro paragraph after H1
 - `public/llms.txt` — Complete rewrite with comprehensive content, all public page links, and 10 FAQ entries
+
+### Build status: PASSES
+
+---
+
+## Session Log — Section 12: Analytics — GA4, Search Console, Bing
+
+**Date:** 2026-04-03
+
+### What was done:
+
+#### Step 12.1: Google Analytics 4 (GA4)
+- **Modified `public/index.html`** — Added commented-out GA4 gtag.js snippet with placeholder `G-XXXXXXXXXX`. Ready to uncomment and replace with actual Measurement ID once Albert provides it.
+
+#### Step 12.2: Google Search Console
+- **Modified `public/index.html`** — Added commented-out `<meta name="google-site-verification">` tag with placeholder `[VERIFICATION_CODE]`. Ready to uncomment once Albert provides the code.
+
+#### Step 12.3: Bing Webmaster Tools
+- **Modified `public/index.html`** — Added commented-out `<meta name="msvalidate.01">` tag with placeholder `[BING_VERIFICATION_CODE]`. Ready to uncomment once Albert provides the code.
+
+#### Step 12.4: Additional Files
+- **Created `public/humans.txt`** — Team and site info (Friendlinq, contact email, standards, software stack).
+- **Note:** `.well-known/security.txt` should be created but may require server-side configuration outside GitHub Pages. Logged as a future manual task.
+
+### Pending items for Albert:
+1. **GA4 Measurement ID** — Create a GA4 property at analytics.google.com and provide the `G-XXXXXXXXXX` ID. Then uncomment the gtag.js script in `public/index.html` and replace the placeholder.
+2. **Google Search Console verification code** — Add the property at search.google.com/search-console, provide the verification meta tag content. Uncomment and replace placeholder in `public/index.html`. Then submit `sitemap.xml` and request indexing.
+3. **Bing Webmaster Tools verification code** — Add the site at bing.com/webmasters, provide the verification meta tag content. Uncomment and replace placeholder in `public/index.html`.
+4. **`.well-known/security.txt`** — May need server-side config or a redirect; not possible with static GitHub Pages alone.
+
+### Files created:
+- `public/humans.txt` — **NEW**
+
+### Files modified:
+- `public/index.html` — Added GA4 placeholder, Google Search Console placeholder, Bing Webmaster Tools placeholder
 
 ### Build status: PASSES
