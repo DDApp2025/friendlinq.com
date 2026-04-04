@@ -2,9 +2,19 @@
 # https://friendlinq.com
 
 User-agent: *
-Allow: /
+
+# Public pages - allow crawling
+Allow: /$
+Allow: /about
+Allow: /features
+Allow: /faq
+Allow: /safety
+Allow: /support
+Allow: /contact
+Allow: /privacy
+Allow: /terms
 Allow: /login
-Allow: /register
+Allow: /register$
 
 # Authenticated routes - do not crawl
 Disallow: /home
@@ -21,7 +31,6 @@ Disallow: /live/
 Disallow: /groups
 Disallow: /marketplace
 Disallow: /subscription
-Disallow: /support
 Disallow: /favorites
 Disallow: /photos
 Disallow: /portfolio
