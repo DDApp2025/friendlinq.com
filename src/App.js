@@ -128,7 +128,7 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <React.Suspense fallback={<div>Loading...</div>}>
+                <React.Suspense fallback={<div style={{padding:'40px',textAlign:'center'}}>Loading...</div>}>
                 <Routes>
                   <Route path="/home" element={<HomePage />} />
                   <Route path="/photos" element={<Portfolio />} />
