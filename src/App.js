@@ -16,21 +16,20 @@ import CommentsPage from './pages/Comments';
 import ChatListPage from './pages/ChatList';
 import ChatPage from './pages/Chat';
 import NotificationsPage from './pages/Notifications';
-import GroupsPage from './pages/Groups';
+// Groups lazy-loaded below
 import ForgotPassword from './pages/ForgotPassword';
 import VerifyOtp from './pages/VerifyOtp';
 import ResetPassword from './pages/ResetPassword';
 import ChangePassword from './pages/ChangePassword';
 import Portfolio from './pages/Portfolio';
 import PrivatePortfolio from './pages/PrivatePortfolio';
-import Marketplace from './pages/Marketplace';
+// Marketplace lazy-loaded below
 import MarketplaceDetail from './pages/MarketplaceDetail';
-import Subscription from './pages/Subscription';
+// Subscription lazy-loaded below
 import Settings from './pages/Settings';
 import Support from './pages/Support';
 import { ChooseTutorial, TutorialViewer } from './pages/Tutorials';
-import CallPage from './pages/Call';
-import LiveStream from './pages/LiveStream';
+// Call and LiveStream lazy-loaded below
 import FavoritesPage from './pages/Favorites';
 import LandingPage from './pages/LandingPage';
 import About from './pages/About';
@@ -41,6 +40,13 @@ import PublicSupport from './pages/PublicSupport';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+
+// Lazy-loaded heavy components — code-split to reduce initial bundle
+const CallPage = React.lazy(() => import('./pages/Call'));
+const LiveStream = React.lazy(() => import('./pages/LiveStream'));
+const GroupsPage = React.lazy(() => import('./pages/Groups'));
+const Marketplace = React.lazy(() => import('./pages/Marketplace'));
+const Subscription = React.lazy(() => import('./pages/Subscription'));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -122,6 +128,7 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
+                <React.Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                   <Route path="/home" element={<HomePage />} />
                   <Route path="/photos" element={<Portfolio />} />
@@ -151,6 +158,7 @@ function App() {
                   <Route path="/tutorials" element={<TutorialViewer />} />
                   <Route path="*" element={<Navigate to="/home" replace />} />
                 </Routes>
+                </React.Suspense>
               </AppLayout>
             </ProtectedRoute>
           }
