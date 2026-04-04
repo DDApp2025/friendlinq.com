@@ -24,6 +24,9 @@ export default function About() {
       <div style={styles.container}>
         <div style={styles.content}>
           <h1 style={styles.h1}>About Friendlinq</h1>
+          <p style={styles.intro}>
+            Friendlinq is a free social network for adults who want a simpler, safer way to stay connected. Available on web, iOS, and Android, Friendlinq offers messaging, community groups, video and audio calls, live streaming, photo and video sharing, and a community marketplace — all with no ads, no data selling, and no algorithm manipulation. It is developed and operated by Spire Group Inc.
+          </p>
 
           <section style={styles.section}>
             <h2 style={styles.h2}>Our mission</h2>
@@ -115,7 +118,8 @@ export default function About() {
 const styles = {
   container: { maxWidth: 800, margin: '0 auto', padding: '40px 24px' },
   content: {},
-  h1: { fontSize: 32, fontWeight: 700, color: '#1c1e21', marginBottom: 32, textAlign: 'center' },
+  h1: { fontSize: 32, fontWeight: 700, color: '#1c1e21', marginBottom: 16, textAlign: 'center' },
+  intro: { fontSize: 16, color: '#4b4f56', lineHeight: 1.7, marginBottom: 36, textAlign: 'center', maxWidth: 700, margin: '0 auto 36px' },
   h2: { fontSize: 22, fontWeight: 700, color: '#1c1e21', marginBottom: 12 },
   h3: { fontSize: 17, fontWeight: 600, color: '#1c1e21', marginBottom: 6 },
   p: { fontSize: 16, color: '#4b4f56', lineHeight: 1.7, marginBottom: 16 },

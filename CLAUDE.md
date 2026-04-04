@@ -643,7 +643,7 @@ Audited all `<img>` tags across the codebase and improved alt text for SEO and a
 | 7 | GitHub Pages & Deployment Configuration | **COMPLETE** |
 | 8 | Image Alt Text + OG Image + Favicon Audit | **COMPLETE** |
 | 9 | Content Architecture: FAQ + Safety Pages | **COMPLETE** |
-| 10 | AI Optimization (AIO), llms.txt, Entity Strategy | Not Started |
+| 10 | AI Optimization (AIO), llms.txt, Entity Strategy | **COMPLETE** |
 | 11 | Analytics Setup: GA4, Search Console, Bing | Not Started |
 | 12 | Testing, Validation, Deployment Verification | Not Started |
 
@@ -710,5 +710,70 @@ Audited all `<img>` tags across the codebase and improved alt text for SEO and a
 ### Files modified:
 - `src/App.js` — Added 7 imports + 6 public routes
 - `public/sitemap.xml` — Added 6 new URLs
+
+### Build status: PASSES
+
+---
+
+## Session Log — Section 11: AI Optimization (AIO) & Entity Strategy
+
+**Date:** 2026-04-03
+
+### What was done:
+
+#### Step 11.1: AIO Content Principles — Review & Improve All Public Pages
+
+Reviewed all 7 public pages (LandingPage, About, Features, FAQ, Safety, PublicSupport, Contact) against AIO principles:
+
+**Findings:**
+- **Inverted pyramid:** Most pages already lead with fact-dense opening paragraphs. About.js was the exception — jumped into "Our mission" philosophy without a direct factual lead.
+- **Fact-dense paragraphs:** All pages contain specific, extractable facts. Good.
+- **Natural-language FAQ blocks:** LandingPage has 8 FAQs, FAQ page has 16 organized by category. Natural question phrasing.
+- **No critical content behind JS only:** Noscript fallback covers key facts. FAQ accordions use CSS `display: none` (not conditional rendering) — content stays in DOM.
+- **Heading hierarchy:** All pages have proper H1 → H2 → H3 hierarchy.
+- **Entity consistency:** All pages use "Friendlinq" consistently.
+
+**Changes made:**
+- **About.js** — Added fact-dense intro paragraph after H1 directly answering "What is Friendlinq?" in a single extractable block: what it is, who it's for, what it offers, differentiators, availability, operator.
+
+#### Step 11.2: Updated llms.txt
+
+Substantially rewrote `public/llms.txt`:
+- Opening summary with direct extractable description
+- "What is Friendlinq?" comprehensive paragraph
+- 7 key facts bullet points
+- 13 detailed core feature descriptions
+- Facebook comparison section
+- Safety and privacy details
+- Target audience descriptions
+- Links to all 9 public URLs
+- 10 complete FAQ Q&A pairs
+- Contact info and app store links
+- Brief technical overview
+
+#### Step 11.3: Entity Optimization Checklist (Manual Tasks for Albert)
+
+1. **Crunchbase** — Create profile (Friendlinq, parent: Spire Group Inc., category: Social Networking)
+2. **LinkedIn** — Create/verify company page with complete info and target keywords
+3. **Brand consistency** — Ensure "Friendlinq" + friendlinq.com + info@friendlinq.com consistent across all directories
+4. **Social accounts to create/verify:**
+   - Facebook: facebook.com/friendlinq
+   - Instagram: instagram.com/friendlinq
+   - LinkedIn: linkedin.com/company/friendlinq
+   - X (Twitter): x.com/friendlinq
+   - YouTube: tutorial videos and demos
+   - Pinterest: visual content
+5. **All social bios** must contain target keywords and link to friendlinq.com
+
+#### Step 11.4: Third-Party Authority Targets (Manual Tasks for Albert)
+
+1. **Reddit** — Genuine participation in r/socialmedia, r/technology, r/privacy, r/digitalminimalism
+2. **Quora** — Answer questions about simple social media, Facebook alternatives, privacy-first platforms
+3. **LinkedIn** — Thought leadership on simplicity, privacy, algorithm-free social networking
+4. **Press/PR** — Pitch to tech/privacy publications, community media, "Facebook alternative" roundups
+
+### Files modified:
+- `src/pages/About.js` — Added AIO-optimized intro paragraph after H1
+- `public/llms.txt` — Complete rewrite with comprehensive content, all public page links, and 10 FAQ entries
 
 ### Build status: PASSES
