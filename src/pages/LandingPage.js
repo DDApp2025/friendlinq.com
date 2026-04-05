@@ -314,7 +314,7 @@ export default function LandingPage() {
             <a href="/about" style={styles.footerLink}>About</a>
             <a href="/features" style={styles.footerLink}>Features</a>
             <Link to="/safety" style={styles.footerLink}>Safety</Link>
-            <Link to="/faq" style={styles.footerLink}>FAQ</Link>
+            <a href="/faq" style={styles.footerLink}>FAQ</a>
             <Link to="/support" style={styles.footerLink}>Support</Link>
             <Link to="/contact" style={styles.footerLink}>Contact</Link>
             <Link to="/privacy" style={styles.footerLink}>Privacy policy</Link>

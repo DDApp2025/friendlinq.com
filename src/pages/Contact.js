@@ -41,7 +41,7 @@ export default function Contact() {
             </div>
             <h2 style={styles.cardTitle}>FAQ</h2>
             <p style={styles.cardDesc}>Find quick answers to the most common questions about Friendlinq.</p>
-            <Link to="/faq" style={styles.cardLink}>Visit the FAQ</Link>
+            <a href="/faq" style={styles.cardLink}>Visit the FAQ</a>
           </div>
 
           <div style={styles.card}>

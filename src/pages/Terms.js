@@ -173,7 +173,7 @@ export default function Terms() {
         <section style={styles.ctaSection}>
           <h2 style={styles.ctaH2}>Have questions?</h2>
           <p style={styles.ctaP}>
-            Email us at <a href="mailto:info@friendlinq.com" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>info@friendlinq.com</a> or visit our <Link to="/faq" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>FAQ</Link> and <Link to="/privacy" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>Privacy Policy</Link> pages.
+            Email us at <a href="mailto:info@friendlinq.com" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>info@friendlinq.com</a> or visit our <a href="/faq" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>FAQ</a> and <Link to="/privacy" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>Privacy Policy</Link> pages.
           </p>
         </section>
 

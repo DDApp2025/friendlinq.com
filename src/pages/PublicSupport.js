@@ -61,7 +61,7 @@ export default function PublicSupport() {
             </div>
           ))}
           <p style={styles.p}>
-            Looking for more? Visit our <Link to="/faq" style={styles.link}>full FAQ page</Link> with answers organized by topic.
+            Looking for more? Visit our <a href="/faq" style={styles.link}>full FAQ page</a> with answers organized by topic.
           </p>
         </section>
 
@@ -107,7 +107,7 @@ export default function PublicSupport() {
         <section style={styles.section}>
           <h2 style={styles.h2}>Helpful links</h2>
           <div style={styles.linkGrid}>
-            <Link to="/faq" style={styles.helpLink}>Full FAQ</Link>
+            <a href="/faq" style={styles.helpLink}>Full FAQ</a>
             <Link to="/safety" style={styles.helpLink}>Safety and Privacy</Link>
             <a href="/features" style={styles.helpLink}>Features</a>
             <a href="/about" style={styles.helpLink}>About Friendlinq</a>

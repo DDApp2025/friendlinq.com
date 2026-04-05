@@ -124,7 +124,7 @@ export default function Safety() {
 
         <section style={styles.ctaSection}>
           <h2 style={styles.ctaH2}>Questions about safety or privacy?</h2>
-          <p style={styles.ctaP}>We're here to help. Email us at <a href="mailto:info@friendlinq.com" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>info@friendlinq.com</a> or visit our <Link to="/faq" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>FAQ page</Link>.</p>
+          <p style={styles.ctaP}>We're here to help. Email us at <a href="mailto:info@friendlinq.com" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>info@friendlinq.com</a> or visit our <a href="/faq" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>FAQ page</a>.</p>
         </section>
       </div>
 
