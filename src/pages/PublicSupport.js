@@ -109,7 +109,7 @@ export default function PublicSupport() {
           <div style={styles.linkGrid}>
             <Link to="/faq" style={styles.helpLink}>Full FAQ</Link>
             <Link to="/safety" style={styles.helpLink}>Safety and Privacy</Link>
-            <Link to="/features" style={styles.helpLink}>Features</Link>
+            <a href="/features" style={styles.helpLink}>Features</a>
             <a href="/about" style={styles.helpLink}>About Friendlinq</a>
           </div>
         </section>
