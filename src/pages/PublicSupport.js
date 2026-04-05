@@ -110,7 +110,7 @@ export default function PublicSupport() {
             <Link to="/faq" style={styles.helpLink}>Full FAQ</Link>
             <Link to="/safety" style={styles.helpLink}>Safety and Privacy</Link>
             <Link to="/features" style={styles.helpLink}>Features</Link>
-            <Link to="/about" style={styles.helpLink}>About Friendlinq</Link>
+            <a href="/about" style={styles.helpLink}>About Friendlinq</a>
           </div>
         </section>
       </div>

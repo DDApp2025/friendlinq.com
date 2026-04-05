@@ -32,7 +32,6 @@ import { ChooseTutorial, TutorialViewer } from './pages/Tutorials';
 // Call and LiveStream lazy-loaded below
 import FavoritesPage from './pages/Favorites';
 import LandingPage from './pages/LandingPage';
-import About from './pages/About';
 import Features from './pages/Features';
 import FAQ from './pages/FAQ';
 import Safety from './pages/Safety';
@@ -107,7 +106,7 @@ function App() {
             </PublicRoute>
           }
         />
-        <Route path="/about" element={<About />} />
+        {/* /about served as static HTML from public/about/index.html */}
         <Route path="/features" element={<Features />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/safety" element={<Safety />} />

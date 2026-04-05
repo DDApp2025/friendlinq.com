@@ -34,7 +34,7 @@ export default function PublicPageLayout({ children }) {
             <span style={styles.footerLogoName}>Friendlinq</span>
           </div>
           <div style={styles.footerLinks}>
-            <Link to="/about" style={styles.footerLink}>About</Link>
+            <a href="/about" style={styles.footerLink}>About</a>
             <Link to="/features" style={styles.footerLink}>Features</Link>
             <Link to="/safety" style={styles.footerLink}>Safety</Link>
             <Link to="/faq" style={styles.footerLink}>FAQ</Link>
