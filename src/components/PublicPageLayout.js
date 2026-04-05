@@ -36,7 +36,7 @@ export default function PublicPageLayout({ children }) {
           <div style={styles.footerLinks}>
             <a href="/about" style={styles.footerLink}>About</a>
             <a href="/features" style={styles.footerLink}>Features</a>
-            <Link to="/safety" style={styles.footerLink}>Safety</Link>
+            <a href="/safety" style={styles.footerLink}>Safety</a>
             <a href="/faq" style={styles.footerLink}>FAQ</a>
             <Link to="/support" style={styles.footerLink}>Support</Link>
             <Link to="/contact" style={styles.footerLink}>Contact</Link>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PublicPageLayout from '../components/PublicPageLayout';
 
@@ -154,7 +153,7 @@ export default function Privacy() {
         <section style={styles.ctaSection}>
           <h2 style={styles.ctaH2}>Have questions about your privacy?</h2>
           <p style={styles.ctaP}>
-            We're happy to answer. Email us at <a href="mailto:info@friendlinq.com" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>info@friendlinq.com</a> or visit our <Link to="/safety" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>Safety page</Link> to learn more about how we protect you.
+            We're happy to answer. Email us at <a href="mailto:info@friendlinq.com" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>info@friendlinq.com</a> or visit our <a href="/safety" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>Safety page</a> to learn more about how we protect you.
           </p>
         </section>
 
