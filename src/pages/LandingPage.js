@@ -192,7 +192,7 @@ export default function LandingPage() {
               Already have an account? <Link to="/login" style={{ color: '#1a6b3a', fontWeight: 600, textDecoration: 'none' }}>Log in</Link>
             </p>
             <p style={styles.legal}>
-              By signing up you agree to our <Link to="/terms" style={{ color: '#1a6b3a', textDecoration: 'none' }}>Terms</Link> and <Link to="/privacy" style={{ color: '#1a6b3a', textDecoration: 'none' }}>Privacy Policy</Link>.
+              By signing up you agree to our <a href="/terms" style={{ color: '#1a6b3a', textDecoration: 'none' }}>Terms</a> and <a href="/privacy" style={{ color: '#1a6b3a', textDecoration: 'none' }}>Privacy Policy</a>.
             </p>
           </div>
           {/* App Store Badges */}
@@ -315,10 +315,10 @@ export default function LandingPage() {
             <a href="/features" style={styles.footerLink}>Features</a>
             <a href="/safety" style={styles.footerLink}>Safety</a>
             <a href="/faq" style={styles.footerLink}>FAQ</a>
-            <Link to="/support" style={styles.footerLink}>Support</Link>
-            <Link to="/contact" style={styles.footerLink}>Contact</Link>
-            <Link to="/privacy" style={styles.footerLink}>Privacy policy</Link>
-            <Link to="/terms" style={styles.footerLink}>Terms of service</Link>
+            <a href="/support" style={styles.footerLink}>Support</a>
+            <a href="/contact" style={styles.footerLink}>Contact</a>
+            <a href="/privacy" style={styles.footerLink}>Privacy policy</a>
+            <a href="/terms" style={styles.footerLink}>Terms of service</a>
           </div>
           <span style={styles.footerCopy}>&copy; 2026 Spire Group Inc. All rights reserved.</span>
         </div>

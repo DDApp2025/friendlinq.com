@@ -92,7 +92,7 @@ export default function About() {
               Have questions, feedback, or just want to say hello? We'd love to hear from you.
             </p>
             <p style={styles.p}>
-              Email us at <a href="mailto:info@friendlinq.com" style={styles.link}>info@friendlinq.com</a> or visit our <Link to="/contact" style={styles.link}>contact page</Link>.
+              Email us at <a href="mailto:info@friendlinq.com" style={styles.link}>info@friendlinq.com</a> or visit our <a href="/contact" style={styles.link}>contact page</a>.
             </p>
           </section>
 

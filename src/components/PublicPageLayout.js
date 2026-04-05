@@ -38,10 +38,10 @@ export default function PublicPageLayout({ children }) {
             <a href="/features" style={styles.footerLink}>Features</a>
             <a href="/safety" style={styles.footerLink}>Safety</a>
             <a href="/faq" style={styles.footerLink}>FAQ</a>
-            <Link to="/support" style={styles.footerLink}>Support</Link>
-            <Link to="/contact" style={styles.footerLink}>Contact</Link>
-            <Link to="/privacy" style={styles.footerLink}>Privacy policy</Link>
-            <Link to="/terms" style={styles.footerLink}>Terms of service</Link>
+            <a href="/support" style={styles.footerLink}>Support</a>
+            <a href="/contact" style={styles.footerLink}>Contact</a>
+            <a href="/privacy" style={styles.footerLink}>Privacy policy</a>
+            <a href="/terms" style={styles.footerLink}>Terms of service</a>
           </div>
           <div style={styles.footerBottom}>
             <div style={styles.footerBadges}>

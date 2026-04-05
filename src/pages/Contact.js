@@ -50,7 +50,7 @@ export default function Contact() {
             </div>
             <h2 style={styles.cardTitle}>Support</h2>
             <p style={styles.cardDesc}>Need help using Friendlinq? Our support page has guides and answers.</p>
-            <Link to="/support" style={styles.cardLink}>Visit Support</Link>
+            <a href="/support" style={styles.cardLink}>Visit Support</a>
           </div>
         </div>
 

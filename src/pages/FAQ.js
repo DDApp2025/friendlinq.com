@@ -120,7 +120,7 @@ export default function FAQ() {
 
       <div style={styles.container}>
         <h1 style={styles.h1}>Frequently asked questions</h1>
-        <p style={styles.intro}>Everything you need to know about Friendlinq. Can't find your answer? <Link to="/contact" style={styles.link}>Contact us</Link> and we'll be happy to help.</p>
+        <p style={styles.intro}>Everything you need to know about Friendlinq. Can't find your answer? <a href="/contact" style={styles.link}>Contact us</a> and we'll be happy to help.</p>
 
         {categories.map((cat, ci) => (
           <section key={ci} style={styles.category}>
@@ -150,7 +150,7 @@ export default function FAQ() {
 
         <section style={styles.ctaSection}>
           <h2 style={styles.ctaH2}>Still have questions?</h2>
-          <p style={styles.ctaP}>We're here to help. Reach out anytime at <a href="mailto:info@friendlinq.com" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>info@friendlinq.com</a> or visit our <Link to="/contact" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>contact page</Link>.</p>
+          <p style={styles.ctaP}>We're here to help. Reach out anytime at <a href="mailto:info@friendlinq.com" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>info@friendlinq.com</a> or visit our <a href="/contact" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}>contact page</a>.</p>
         </section>
       </div>
     </PublicPageLayout>

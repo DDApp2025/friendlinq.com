@@ -32,10 +32,8 @@ import { ChooseTutorial, TutorialViewer } from './pages/Tutorials';
 // Call and LiveStream lazy-loaded below
 import FavoritesPage from './pages/Favorites';
 import LandingPage from './pages/LandingPage';
-import PublicSupport from './pages/PublicSupport';
-import Contact from './pages/Contact';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
+// PublicSupport now served as static HTML from public/support/index.html
+// Contact, Privacy, Terms now served as static HTML from public/[route]/index.html
 
 // Lazy-loaded heavy components — code-split to reduce initial bundle
 const CallPage = React.lazy(() => import('./pages/Call'));
@@ -107,10 +105,10 @@ function App() {
         {/* /features served as static HTML from public/features/index.html */}
         {/* /faq served as static HTML from public/faq/index.html */}
         {/* /safety served as static HTML from public/safety/index.html */}
-        <Route path="/support" element={<PublicSupport />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
+        {/* /support served as static HTML from public/support/index.html */}
+        {/* /contact served as static HTML from public/contact/index.html */}
+        {/* /privacy served as static HTML from public/privacy/index.html */}
+        {/* /terms served as static HTML from public/terms/index.html */}
         <Route
           path="/register/user-type"
           element={

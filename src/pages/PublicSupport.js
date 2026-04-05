@@ -79,7 +79,7 @@ export default function PublicSupport() {
             <p style={styles.contactNote}>We typically respond within 24 hours.</p>
           </div>
           <p style={styles.p}>
-            You can also visit our <Link to="/contact" style={styles.link}>contact page</Link> for more ways to reach us.
+            You can also visit our <a href="/contact" style={styles.link}>contact page</a> for more ways to reach us.
           </p>
         </section>
 
