@@ -14,6 +14,7 @@ import {
 } from 'react-icons/md';
 import { nodeApi, dotnetApi } from '../api/axios';
 import normalizeImg from '../utils/normalizeImg';
+import { firstName } from '../utils/displayName';
 import * as config from '../api/config';
 
 function fmtDate(d) {
@@ -534,11 +535,11 @@ export default function Groups() {
                     <img src={authorImg} alt={author.fullName || 'Post author'} style={{ width: 36, height: 36, borderRadius: 18, objectFit: 'cover' }} />
                   ) : (
                     <div style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: '#eee', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 'bold', color: '#999' }}>
-                      {(author.fullName || '?')[0]}
+                      {firstName(author.fullName)[0]}
                     </div>
                   )}
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: 14, color: '#1a6b3a' }}>{author.fullName || 'User'}</div>
+                    <div style={{ fontWeight: 600, fontSize: 14, color: '#1a6b3a' }}>{firstName(author.fullName)}</div>
                     <div style={{ fontSize: 11, color: '#888' }}>{fmtDate(p.updatedAt || p.createdAt)}</div>
                   </div>
                 </div>
@@ -580,11 +581,11 @@ export default function Groups() {
                   <img src={img} alt={member.fullName || 'Group member'} style={s.groupIcon} />
                 ) : (
                   <div style={s.groupIconFallback}>
-                    {(member.fullName || '?')[0]}
+                    {firstName(member.fullName)[0]}
                   </div>
                 )}
                 <div style={s.groupInfo}>
-                  <div style={s.groupName}>{member.fullName || 'User'}</div>
+                  <div style={s.groupName}>{firstName(member.fullName)}</div>
                   <div style={s.groupDate}>{member.email || ''}</div>
                 </div>
               </div>

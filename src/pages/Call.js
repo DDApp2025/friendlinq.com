@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { nodeApi, dotnetApi } from "../api/axios";
 import SOCKET from "../api/socket";
 import normalizeImg from "../utils/normalizeImg";
+import { firstName } from "../utils/displayName";
 import { GET_GROUP_LIST, GET_FRIENDS_LIST, GET_GROUP_MEMBERS } from "../api/config";
 import {
   agoraClient,
@@ -258,7 +259,7 @@ export default function CallPage() {
     if (!schedDate) return alert("Select a date and time.");
     if (!schedFriends.length) return alert("Select at least 1 friend.");
     const emails = [...schedFriends.map((f) => f.email), myProfile?.email].join(",");
-    const names = [...schedFriends.map((f) => f.fullName), myProfile?.fullName].join(",");
+    const names = [...schedFriends.map((f) => firstName(f.fullName)), firstName(myProfile?.fullName)].join(",");
     const channelId = Date.now().toString() + Math.floor(Math.random() * 100);
     const fd = new FormData();
     fd.append("title", schedTitle); fd.append("emails", emails); fd.append("names", names);
@@ -287,7 +288,7 @@ export default function CallPage() {
       <div style={S.full}>{bg && <img src={bg} alt="" style={S.bgImg} />}<div style={S.overlay} />
         <div style={S.incomingWrap}>
           <div style={{ textAlign: "center", marginBottom: 40 }}>
-            {(d?.callType === "audio" || d?.type === "audio") ? <h2 style={S.callerName}>{d?.name || "Unknown"} is Calling You...</h2> : <h2 style={S.callerName}>Video Call From {d?.name || "Unknown"}</h2>}
+            {(d?.callType === "audio" || d?.type === "audio") ? <h2 style={S.callerName}>{firstName(d?.name)} is Calling You...</h2> : <h2 style={S.callerName}>Video Call From {firstName(d?.name)}</h2>}
           </div>
           <div style={{ display: "flex", gap: 60 }}>
             <button onClick={acceptCall} style={S.acceptBtn}><Phone size={32} color="#fff" /><span style={{ color: "#fff", marginTop: 4, fontSize: 12 }}>Accept</span></button>
@@ -305,9 +306,9 @@ export default function CallPage() {
       <div style={S.full}>
         {callType === "audio" && fi && <img src={fi} alt="" style={S.bgImg} />}
         {callType === "audio" && <div style={S.overlay} />}
-        {callType === "video" && <div style={S.remoteWrap}>{remoteUsers.length === 0 && <div style={S.waitText}>{callState === OUTGOING ? `Calling ${remoteUser?.fullName || ""}...` : "Waiting..."}</div>}{remoteUsers.map((u) => <div key={u.uid} ref={(el) => remoteVideoCb(el, u)} style={S.remoteVid} />)}</div>}
+        {callType === "video" && <div style={S.remoteWrap}>{remoteUsers.length === 0 && <div style={S.waitText}>{callState === OUTGOING ? `Calling ${firstName(remoteUser?.fullName)}...` : "Waiting..."}</div>}{remoteUsers.map((u) => <div key={u.uid} ref={(el) => remoteVideoCb(el, u)} style={S.remoteVid} />)}</div>}
         {callType === "video" && !isVideoOff && <div ref={localVideoRef} style={remoteUsers.length > 0 ? S.localSmall : S.localFull} />}
-        <div style={S.timerBar}><span style={S.timerTxt}>{userJoined ? fmtTime(timer) : callState === OUTGOING ? `Calling ${remoteUser?.fullName || ""}...` : "Connecting..."}</span></div>
+        <div style={S.timerBar}><span style={S.timerTxt}>{userJoined ? fmtTime(timer) : callState === OUTGOING ? `Calling ${firstName(remoteUser?.fullName)}...` : "Connecting..."}</span></div>
         <div style={S.ctrlBar}>
           <button onClick={toggleMute} style={S.ctrlBtn}>{isMuted ? <MicOff size={24} color="#fff" /> : <Mic size={24} color="#fff" />}</button>
           {callType === "video" && <button onClick={toggleVideo} style={S.ctrlBtn}>{isVideoOff ? <VideoOff size={24} color="#fff" /> : <Video size={24} color="#fff" />}</button>}
@@ -377,9 +378,9 @@ export default function CallPage() {
                   return [...prev, f];
                 });
               }} style={S.friendRow}>
-                {img ? <img src={img} alt="" style={S.friendAvatar} /> : <div style={S.friendAvatarPH}>{(f.fullName || "?")[0]}</div>}
+                {img ? <img src={img} alt="" style={S.friendAvatar} /> : <div style={S.friendAvatarPH}>{firstName(f.fullName)[0]}</div>}
                 <div style={{ flex: 1, marginLeft: 10 }}>
-                  <div style={{ fontSize: 15, fontWeight: "600" }}>{f.fullName || ""}</div>
+                  <div style={{ fontSize: 15, fontWeight: "600" }}>{firstName(f.fullName)}</div>
                   <div style={{ fontSize: 12, color: "#666" }}>{f.email || ""}</div>
                 </div>
                 {sel ? <CheckSquare size={22} color="#1a6b3a" /> : <Square size={22} color="#999" />}
@@ -452,7 +453,7 @@ export default function CallPage() {
         </div>
         <div style={{ padding: 16 }}>
           <p style={{ fontSize: 13, color: "#666", marginBottom: 12 }}>
-            {schedFriends.length} participant{schedFriends.length > 1 ? "s" : ""}: {schedFriends.map((f) => f.fullName || f.email).join(", ")}
+            {schedFriends.length} participant{schedFriends.length > 1 ? "s" : ""}: {schedFriends.map((f) => firstName(f.fullName || f.email)).join(", ")}
           </p>
           <label style={S.label}>Call Title</label>
           <input type="text" placeholder="Enter call title" value={schedTitle} onChange={(e) => setSchedTitle(e.target.value)} style={S.input} />

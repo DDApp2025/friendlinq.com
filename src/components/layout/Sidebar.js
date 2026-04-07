@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { firstName } from '../../utils/displayName';
 import {
   MdHouse,
   MdPersonAdd,
@@ -45,6 +46,7 @@ const Sidebar = ({ open, onClose }) => {
   const profile = auth.getProfileData || {};
   const imageURL = profile.imageURL || '';
   const fullName = profile.fullName || profile.email || 'User';
+  const displayName = firstName(profile.fullName || profile.email);
   const email = profile.email || '';
   const initials = fullName.split(' ').map((w) => w.charAt(0)).slice(0, 2).join('').toUpperCase();
 
@@ -87,7 +89,7 @@ const Sidebar = ({ open, onClose }) => {
               <div style={styles.avatarFallback}>{initials || '?'}</div>
             )}
             <div style={styles.profileInfo}>
-              <span style={styles.profileName}>{fullName}</span>
+              <span style={styles.profileName}>{displayName}</span>
               {email && <span style={styles.profileEmail}>{email}</span>}
             </div>
           </div>

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { searchUsers, sendFriendReq } from '../actions/friend_actions';
 import { MdSearch, MdPersonAdd } from 'react-icons/md';
 import normalizeImg from '../utils/normalizeImg';
+import { firstName } from '../utils/displayName';
 
 export default function AddFriend() {
   const dispatch = useDispatch();
@@ -93,10 +94,10 @@ export default function AddFriend() {
             {results.map((user) => {
               const uid = user._id || user.userId;
               const img = normalizeImg(user.imageURL);
-              const name =
+              const name = firstName(
                 user.fullName ||
-                `${user.firstName || ''} ${user.lastName || ''}`.trim() ||
-                'User';
+                `${user.firstName || ''} ${user.lastName || ''}`.trim()
+              );
               const initials = (name.charAt(0) || '?').toUpperCase();
               const status = sentIds[uid];
 

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getFriendList } from '../actions/friend_actions';
 import { MdStar } from 'react-icons/md';
 import normalizeImg from '../utils/normalizeImg';
+import { firstName } from '../utils/displayName';
 
 export default function Favorites() {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ export default function Favorites() {
           <div style={styles.list}>
             {topFourFriendList.map((friend, idx) => {
               const id = friend.friendId || friend._id;
-              const name = friend.friendName || friend.fullName || 'User';
+              const name = firstName(friend.friendName || friend.fullName);
               const img = normalizeImg(friend.friendImage || friend.imageURL);
 
               return (

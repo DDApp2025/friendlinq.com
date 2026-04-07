@@ -13,6 +13,7 @@ import {
   MdMic, MdMicOff, MdCameraswitch, MdCallEnd,
   MdArrowBack, MdVideocam,
 } from 'react-icons/md';
+import { firstName } from '../utils/displayName';
 import './LiveStream.css';
 
 const AGORA_APP_ID = 'dd6dbba5e50d42c7880152591687410d';
@@ -76,7 +77,7 @@ export default function LiveStream() {
     try {
       await dotnetApi.post('/Client' + NOTIFY_USERS_FOR_LIVE_STREAMING, {
         senderId: userId,
-        textMessage: `${fullName} is Live now${title ? `, ${title}` : ''}`,
+        textMessage: `${firstName(profile?.fullName)} is Live now${title ? `, ${title}` : ''}`,
         callId: channelName,
         authorization: token,
       });

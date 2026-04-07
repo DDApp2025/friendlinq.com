@@ -7,6 +7,7 @@ import { AiOutlineCamera, AiOutlineVideoCamera, AiOutlineClose } from 'react-ico
 import { MdVideocam } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { createPost, notifyFriends } from '../actions/post_actions';
+import { firstName } from '../utils/displayName';
 
 const LIMIT = 20;
 
@@ -206,7 +207,7 @@ export default function Home() {
                 <img src={profilePic} alt="Your profile photo" style={styles.composerPic} />
               ) : (
                 <div style={styles.composerPicPlaceholder}>
-                  {(profile?.fullName || '?').charAt(0).toUpperCase()}
+                  {firstName(profile?.fullName).charAt(0).toUpperCase()}
                 </div>
               )}
             </div>

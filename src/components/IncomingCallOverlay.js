@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import SOCKET from "../api/socket";
 import { Phone, PhoneOff } from "lucide-react";
 import normalizeImg from "../utils/normalizeImg";
+import { firstName } from "../utils/displayName";
 
 export default function IncomingCallOverlay() {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ export default function IncomingCallOverlay() {
 
   const callerImg = incoming?.callerImage || incoming?.userDP;
   const imgUrl = callerImg ? normalizeImg(callerImg) : null;
-  const callerName = incoming?.name || "Unknown";
+  const callerName = firstName(incoming?.name);
   const isVideo = incoming?.type === "video" || incoming?.callType === "video";
 
   return (

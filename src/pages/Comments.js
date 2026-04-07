@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { getComments, addComment, deleteComment } from '../actions/post_actions';
 import normalizeImg from '../utils/normalizeImg';
 import { AiOutlineArrowLeft, AiOutlineDelete, AiOutlineSend } from 'react-icons/ai';
+import { firstName } from '../utils/displayName';
 
 function timeAgo(dateStr) {
   if (!dateStr) return '';
@@ -92,7 +93,7 @@ export default function Comments() {
           )}
           {comments.map((c) => {
             const author = c.commentAuthor || c.author || {};
-            const authorName = author.fullName || 'Unknown';
+            const authorName = firstName(author.fullName);
             const authorPic = normalizeImg(author.imageURL) || '';
             const isOwn = (author._id || author.userId) === myUserId;
 
@@ -131,7 +132,7 @@ export default function Comments() {
               <img src={profilePic} alt="" style={styles.inputPic} />
             ) : (
               <div style={styles.inputPicPlaceholder}>
-                {(profile?.fullName || '?').charAt(0).toUpperCase()}
+                {firstName(profile?.fullName).charAt(0).toUpperCase()}
               </div>
             )}
           </div>

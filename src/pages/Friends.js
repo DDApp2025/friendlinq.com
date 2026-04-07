@@ -13,6 +13,7 @@ import { MdPersonAdd, MdPersonRemove, MdCheck, MdClose, MdStar, MdStarBorder } f
 import { nodeApi } from '../api/axios';
 import { UPDATE_TOP_FRIENDS } from '../api/config';
 import normalizeImg from '../utils/normalizeImg';
+import { firstName } from '../utils/displayName';
 
 const TABS = [
   { key: 'friends', label: 'Friends' },
@@ -67,7 +68,7 @@ export default function Friends() {
     // Build the friendList array that the API expects
     const friendListPayload = newFavIds.map((id) => {
       const f = friendsList.find((fr) => (fr._id || fr.friendId) === id);
-      const fName = f?.fullName || '';
+      const fName = firstName(f?.fullName);
       const rawImg = f?.imageURL;
       const fImg = typeof rawImg === 'object' ? (rawImg?.thumbnail || '') : (rawImg || '');
       return {
@@ -165,10 +166,10 @@ export default function Friends() {
             {list.map((item) => {
               const id = item._id || item.friendId;
               const img = normalizeImg(item.imageURL);
-              const name =
+              const name = firstName(
                 item.fullName ||
-                `${item.firstName || ''} ${item.lastName || ''}`.trim() ||
-                'User';
+                `${item.firstName || ''} ${item.lastName || ''}`.trim()
+              );
               const initials = (name.charAt(0) || '?').toUpperCase();
               const busy = actionId === id;
 

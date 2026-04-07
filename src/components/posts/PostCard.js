@@ -10,6 +10,7 @@ import {
 } from 'react-icons/ai';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import normalizeImg from '../../utils/normalizeImg';
+import { firstName } from '../../utils/displayName';
 
 function timeAgo(dateStr) {
   if (!dateStr) return '';
@@ -36,7 +37,7 @@ export default function PostCard({ post, onUpdate, onDelete }) {
   const token = useSelector((s) => s.authReducer.login_access_token);
 
   const author = post?.postAuthor || post?.Author || {};
-  const authorName = author?.fullName || 'Unknown';
+  const authorName = firstName(author?.fullName);
   const isOnline = author?.isOnline === 1;
   const isMyPost = myId && (author?._id === myId || post?.postAuthor?._id === myId);
 

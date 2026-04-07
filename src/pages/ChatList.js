@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getChatList, getChatCount } from '../actions/chat_actions';
 import normalizeImg from '../utils/normalizeImg';
+import { firstName } from '../utils/displayName';
 
 export default function ChatList() {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ export default function ChatList() {
   const openChat = (chat) => {
     // .NET GetChatList response fields: friendId, senderId, name, imageURL.thumbnail, count, LastMessage
     const otherUserId = chat.friendId || chat.senderId || chat.Aborad_id || chat.aborad_id || '';
-    const otherUserName = chat.name || chat.Aborad_Name || chat.aborad_Name || chat.fullName || 'User';
+    const otherUserName = firstName(chat.name || chat.Aborad_Name || chat.aborad_Name || chat.fullName);
     const rawImg = chat.imageURL?.thumbnail || chat.imageURL || chat.Aborad_Image || chat.aborad_Image || '';
 
     navigate(`/chat/${otherUserId}`, {
@@ -76,7 +77,7 @@ export default function ChatList() {
         {chats.map((chat, idx) => {
           const rawImg = chat.imageURL?.thumbnail || chat.imageURL || chat.Aborad_Image || chat.aborad_Image || '';
           const img = normalizeImg(rawImg);
-          const name = chat.name || chat.Aborad_Name || chat.aborad_Name || chat.fullName || 'User';
+          const name = firstName(chat.name || chat.Aborad_Name || chat.aborad_Name || chat.fullName);
           const lastMsg = chat.LastMessage || chat.lastMessage || chat.message || '';
           const time = chat.LastMessageDate || chat.lastMessageDate || chat.createdAt || '';
           const unread = chat.count || chat.UnReadCount || chat.unReadCount || chat.unreadCount || 0;
