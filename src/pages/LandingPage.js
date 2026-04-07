@@ -9,35 +9,35 @@ const PLAY_STORE_BADGE = 'https://play.google.com/intl/en_us/badges/static/image
 const faqData = [
   {
     q: 'What is Friendlinq?',
-    a: 'Friendlinq is a social network designed for adults who want a simpler, safer way to stay connected. Unlike Facebook or Instagram, Friendlinq features a clean interface, enhanced privacy protections, and community features that help you stay in touch with friends and family and engage with people who share your interests. It is completely free to join and use.',
+    a: 'Friendlinq is a calm, private social network for the people you actually know \u2014 your family, your real friends, your community. No ads, no tracking, no algorithm. Just the people you\'d invite to your kitchen table.',
   },
   {
     q: 'How is Friendlinq different from Facebook?',
-    a: 'Friendlinq is built from the ground up for people who want simplicity. That means cleaner navigation, larger text, no algorithm-driven content manipulation, no advertisements, and privacy controls designed to actually protect you. Facebook is a general social network built around engagement metrics \u2014 Friendlinq is built around you.',
+    a: 'Facebook became an ad platform driven by an algorithm that decides what you see. Friendlinq is the opposite \u2014 your feed is your friends and family, in chronological order, with no ads, no tracking, and no algorithm. It is what social media was supposed to be.',
   },
   {
     q: 'Is Friendlinq really free?',
-    a: 'Yes, completely. There are no subscription fees, no hidden charges, and no premium tiers required to access core features including messaging, community groups, photo sharing, video calls, and event discovery.',
+    a: 'Yes, completely. No subscription fees, no hidden charges, no premium tier. The features that matter are free for everyone, forever.',
   },
   {
     q: 'Do I need to be tech-savvy to use Friendlinq?',
-    a: 'Not at all. Friendlinq uses large, clear buttons, simple navigation, and straightforward language. There\'s a guided tutorial that walks you through every feature step by step. If you can browse the internet and send an email, you can use Friendlinq.',
+    a: 'No. Friendlinq is designed for simplicity \u2014 clear buttons, simple navigation, and straightforward language. If you can browse the internet and send an email, you can use Friendlinq.',
   },
   {
     q: 'Is Friendlinq safe?',
-    a: 'Yes. Friendlinq is built with your safety as a top priority. The platform includes enhanced privacy controls, community moderation, and protection from scams and spam. Your personal data is never sold to advertisers or third parties.',
+    a: 'Yes. Your data is never sold. There are no third-party trackers. Privacy controls let you decide who sees what, and the platform is moderated to protect against scams and spam.',
   },
   {
-    q: 'Can my family members join?',
-    a: 'Absolutely. Friendlinq is open to adults of all ages. Invite your family, friends, and anyone you want to stay connected with. The more people you care about who join, the better the experience.',
+    q: 'Can my whole family join?',
+    a: 'Yes \u2014 and most people use Friendlinq exactly that way. One person creates an account and invites their family. Within a week, mom, dad, siblings, kids, and grandparents are all in one calm place.',
   },
   {
     q: 'What can I do on Friendlinq?',
-    a: 'You can connect with friends and family, join interest-based community groups (gardening, travel, book clubs, and more), share photos and updates, send private messages, make video and audio calls, host or join live streams, discover local events, and browse the marketplace \u2014 all through an interface designed for simplicity and comfort.',
+    a: 'Share photos and updates, send private messages, make video and audio calls, join family and interest groups, plan events, and stay in touch with the people you actually know. Everything you need, nothing you don\'t.',
   },
   {
     q: 'How do I sign up?',
-    a: 'Just fill out the sign-up form at the top of this page with your name, email address, and a password. It takes less than a minute. Once registered, you can immediately start connecting with others and exploring community groups.',
+    a: 'Fill out the sign-up form at the top of this page with your name, email, and a password. Takes less than a minute. Then invite your family and start sharing life again.',
   },
 ];
 
@@ -118,46 +118,46 @@ export default function LandingPage() {
       {/* ── Hero Section ── */}
       <section style={styles.hero} className="landing-hero" aria-label="Hero">
         <div style={styles.heroLeft} className="landing-hero-left">
-          <h1 style={styles.h1}>Stay connected with the people who matter most.</h1>
-          <p style={styles.subtitle}>Friendlinq is the social network designed for adults who value simplicity, safety, and real connection. Easy to use, private by design, and completely free.</p>
+          <h1 style={styles.h1}>The calm social network for the people you actually know.</h1>
+          <p style={styles.subtitle}>Friendlinq is the quiet, private place to share life with the people who matter — your family, your real friends, your community. No ads. No tracking. No algorithm deciding what you see. Just the people you'd invite to your kitchen table. Get your family on Friendlinq today.</p>
 
           <div style={styles.feature}>
             <div style={styles.featureIcon}><IconUsers /></div>
             <div>
               <div style={styles.featureTitle}>Connect with friends and family</div>
-              <div style={styles.featureDesc}>Share updates, photos, and messages with the people you care about — family, old friends, neighbors.</div>
+              <div style={styles.featureDesc}>Share updates, photos, and messages with the people who matter most.</div>
             </div>
           </div>
 
           <div style={styles.feature}>
             <div style={styles.featureIcon}><IconSmile /></div>
             <div>
-              <div style={styles.featureTitle}>Join community groups</div>
-              <div style={styles.featureDesc}>Gardening, travel, book clubs, cooking, health and wellness — find people who share your passions.</div>
+              <div style={styles.featureTitle}>Just your people</div>
+              <div style={styles.featureDesc}>Your feed shows your friends and family in chronological order. No algorithm. No strangers. No suggestions.</div>
             </div>
           </div>
 
           <div style={styles.feature}>
             <div style={styles.featureIcon}><IconVideo /></div>
             <div>
-              <div style={styles.featureTitle}>Video calls and live streams</div>
-              <div style={styles.featureDesc}>See loved ones face-to-face with one-tap video calling. Host or join live streams with friends and groups.</div>
+              <div style={styles.featureTitle}>Calm by design</div>
+              <div style={styles.featureDesc}>No ads. No tracking. No outrage bait. No infinite scroll. We help you stay connected and get on with your day.</div>
             </div>
           </div>
 
           <div style={styles.feature}>
             <div style={styles.featureIcon}><IconShield /></div>
             <div>
-              <div style={styles.featureTitle}>Safe and private by design</div>
-              <div style={styles.featureDesc}>No ads. No data selling. No algorithm tricks. Built from the ground up to protect your privacy online.</div>
+              <div style={styles.featureTitle}>Built for real life</div>
+              <div style={styles.featureDesc}>Photos, messages, video calls, family groups. Everything you actually want to do with the people you actually know.</div>
             </div>
           </div>
 
           <div style={styles.feature}>
             <div style={styles.featureIcon}><IconMonitor /></div>
             <div>
-              <div style={styles.featureTitle}>Designed for comfort, not complexity</div>
-              <div style={styles.featureDesc}>Large text, clear buttons, simple navigation. If you can browse the web and send email, you can use Friendlinq.</div>
+              <div style={styles.featureTitle}>Switch your family in 5 minutes</div>
+              <div style={styles.featureDesc}>Most accounts get created by one person who invites their family. Mom, dad, siblings, kids, grandparents. Your whole family in one calm place.</div>
             </div>
           </div>
         </div>
@@ -165,7 +165,7 @@ export default function LandingPage() {
         <div style={styles.heroRight} className="landing-hero-right">
           <div style={styles.signupCard}>
             <h2 style={styles.signupH2}>Join Friendlinq</h2>
-            <p style={styles.signupSub}>It's free and always will be.</p>
+            <p style={styles.signupSub}>Free, calm, and always will be.</p>
             <input type="text" placeholder="First name" style={styles.signupInput} readOnly onFocus={() => navigate('/register')} />
             <input type="text" placeholder="Last name" style={styles.signupInput} readOnly onFocus={() => navigate('/register')} />
             <input type="email" placeholder="Email address" style={styles.signupInput} readOnly onFocus={() => navigate('/register')} />
@@ -200,14 +200,14 @@ export default function LandingPage() {
         <div style={styles.statsInner} className="landing-stats-inner">
           <div style={styles.stat}>
             <div style={styles.statLabel}>Built for</div>
-            <div style={styles.statValue}>Real people</div>
+            <div style={styles.statValue}>Real connection</div>
           </div>
           <div style={styles.stat}>
             <div style={styles.statLabel}>Cost to join</div>
             <div style={styles.statValue}>Always free</div>
           </div>
           <div style={styles.stat}>
-            <div style={styles.statLabel}>Your personal data</div>
+            <div style={styles.statLabel}>Your data</div>
             <div style={styles.statValue}>Never sold</div>
           </div>
           <div style={styles.stat}>
@@ -220,37 +220,37 @@ export default function LandingPage() {
       {/* ── Features Grid ── */}
       <section style={styles.featuresDetail} aria-label="Features">
         <h2 style={styles.sectionH2}>Everything you need to stay connected</h2>
-        <p style={styles.sectionSub}>Friendlinq gives you the tools to keep your social life thriving — without the confusion.</p>
+        <p style={styles.sectionSub}>The features you actually use, without the things you don't.</p>
         <div style={styles.featuresGrid} className="landing-features-grid">
           <div style={styles.fcard}>
             <div style={styles.fcardIcon}><IconChatLg /></div>
             <h3 style={styles.fcardTitle}>Messaging</h3>
-            <p style={styles.fcardDesc}>Private conversations with friends and family. Send text, photos, and voice messages.</p>
+            <p style={styles.fcardDesc}>Private conversations with friends and family. Text, photos, and voice.</p>
           </div>
           <div style={styles.fcard}>
             <div style={styles.fcardIcon}><IconImageLg /></div>
             <h3 style={styles.fcardTitle}>Photo sharing</h3>
-            <p style={styles.fcardDesc}>Upload and share photos with friends. Create albums for trips, family, hobbies.</p>
+            <p style={styles.fcardDesc}>Upload photos and create albums. Share memories with the people who matter.</p>
           </div>
           <div style={styles.fcard}>
             <div style={styles.fcardIcon}><IconUsersLg /></div>
             <h3 style={styles.fcardTitle}>Groups</h3>
-            <p style={styles.fcardDesc}>Join or create groups around your interests. Meet people who love what you love.</p>
+            <p style={styles.fcardDesc}>Join private groups around your interests or your family. No strangers, no noise.</p>
           </div>
           <div style={styles.fcard}>
             <div style={styles.fcardIcon}><IconVideoLg /></div>
             <h3 style={styles.fcardTitle}>Video calls</h3>
-            <p style={styles.fcardDesc}>One-on-one or group video calls. See faces, not just text. Works on phone, tablet, or computer.</p>
+            <p style={styles.fcardDesc}>One-on-one or group calls. See faces, not just text. Works everywhere.</p>
           </div>
           <div style={styles.fcard}>
             <div style={styles.fcardIcon}><IconClockLg /></div>
             <h3 style={styles.fcardTitle}>Events</h3>
-            <p style={styles.fcardDesc}>Discover local activities, community events, and virtual get-togethers near you.</p>
+            <p style={styles.fcardDesc}>Plan family events, gatherings, and local activities with the people you know.</p>
           </div>
           <div style={styles.fcard}>
             <div style={styles.fcardIcon}><IconProfileLg /></div>
             <h3 style={styles.fcardTitle}>Your profile</h3>
-            <p style={styles.fcardDesc}>Share your story. Add a photo, bio, and interests so friends old and new can find you.</p>
+            <p style={styles.fcardDesc}>Share who you are with friends and family. Not with the world.</p>
           </div>
         </div>
       </section>
@@ -281,8 +281,8 @@ export default function LandingPage() {
 
       {/* ── CTA Bar ── */}
       <section style={styles.ctaBar} aria-label="Call to action">
-        <h2 style={styles.ctaH2}>Ready to stay connected?</h2>
-        <p style={styles.ctaP}>Join Friendlinq today. It takes less than a minute and it's completely free.</p>
+        <h2 style={styles.ctaH2}>Bring your family together.</h2>
+        <p style={styles.ctaP}>Friendlinq is free, takes a minute to set up, and works on iPhone, Android, and the web. Sign up, invite your people, and remember what social media was supposed to feel like.</p>
         <button style={styles.btnCta} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Sign up now</button>
       </section>
       </main>
