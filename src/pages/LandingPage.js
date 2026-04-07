@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { LoginAttempt } from '../actions/auth_actions';
+import { LoginAttempt, SignUpAttempt, getProfileAttempt, makeUserFriendWithAdmin } from '../actions/auth_actions';
 
 const APP_STORE_URL = 'https://apps.apple.com/us/app/friendlinq/id6476931666';
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.app.friendlinq';
@@ -91,10 +91,21 @@ export default function LandingPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [openFaq, setOpenFaq] = useState(0);
+
+  // Nav login state
   const [navEmail, setNavEmail] = useState('');
   const [navPassword, setNavPassword] = useState('');
   const [navError, setNavError] = useState('');
   const [navLoading, setNavLoading] = useState(false);
+
+  // Signup card state
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [signupEmail, setSignupEmail] = useState('');
+  const [signupPassword, setSignupPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [signupError, setSignupError] = useState('');
+  const [signupLoading, setSignupLoading] = useState(false);
 
   const toggleFaq = (i) => {
     setOpenFaq(openFaq === i ? -1 : i);
@@ -113,6 +124,58 @@ export default function LandingPage() {
       navigate('/home');
     } else {
       setNavError(res.message || 'Login failed');
+    }
+  };
+
+  const handleSignup = async () => {
+    setSignupError('');
+    if (!firstName.trim() || !lastName.trim()) {
+      setSignupError('Enter your first and last name');
+      return;
+    }
+    if (!signupEmail.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(signupEmail.trim())) {
+      setSignupError('Enter a valid email address');
+      return;
+    }
+    if (signupPassword.length < 6) {
+      setSignupError('Password must be at least 6 characters');
+      return;
+    }
+    if (signupPassword !== confirmPassword) {
+      setSignupError('Passwords do not match');
+      return;
+    }
+
+    setSignupLoading(true);
+    const fullName = (firstName.trim() + ' ' + lastName.trim()).trim();
+    const signupData = {
+      fullName,
+      email: signupEmail.trim(),
+      password: confirmPassword,
+      gender: '',
+      deviceType: 'ANDROID',
+      deviceToken: 'web',
+      usertype: '0',
+    };
+
+    const res = await dispatch(SignUpAttempt(signupData));
+
+    if (res.statusCode === 200 || res.success) {
+      if (res.data?.customerData?._id) {
+        await dispatch(makeUserFriendWithAdmin(res.data.customerData._id));
+      }
+      const loginRes = await dispatch(LoginAttempt(signupEmail.trim(), confirmPassword));
+      if (loginRes.success) {
+        await dispatch(getProfileAttempt());
+        setSignupLoading(false);
+        navigate('/home');
+      } else {
+        setSignupLoading(false);
+        setSignupError('Account created! Please log in.');
+      }
+    } else {
+      setSignupLoading(false);
+      setSignupError(res.message || 'Registration failed');
     }
   };
 
@@ -190,12 +253,14 @@ export default function LandingPage() {
           <div style={styles.signupCard}>
             <h2 style={styles.signupH2}>Join Friendlinq</h2>
             <p style={styles.signupSub}>Free, calm, and always will be.</p>
-            <input type="text" placeholder="First name" style={styles.signupInput} readOnly onFocus={() => navigate('/register')} />
-            <input type="text" placeholder="Last name" style={styles.signupInput} readOnly onFocus={() => navigate('/register')} />
-            <input type="email" placeholder="Email address" style={styles.signupInput} readOnly onFocus={() => navigate('/register')} />
-            <input type="password" placeholder="Create a password" style={styles.signupInput} readOnly onFocus={() => navigate('/register')} />
+            <input type="text" placeholder="First name" style={styles.signupInput} value={firstName} onChange={(e) => { setFirstName(e.target.value); setSignupError(''); }} />
+            <input type="text" placeholder="Last name" style={styles.signupInput} value={lastName} onChange={(e) => { setLastName(e.target.value); setSignupError(''); }} />
+            <input type="text" placeholder="Email address" style={styles.signupInput} value={signupEmail} onChange={(e) => { setSignupEmail(e.target.value); setSignupError(''); }} />
+            <input type="password" placeholder="Create a password" style={styles.signupInput} value={signupPassword} onChange={(e) => { setSignupPassword(e.target.value); setSignupError(''); }} />
+            <input type="password" placeholder="Confirm password" style={styles.signupInput} value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value); setSignupError(''); }} />
+            {signupError && <p style={{ color: 'red', fontSize: 13, textAlign: 'center', margin: '8px 0 0' }}>{signupError}</p>}
             <hr style={styles.divider} />
-            <button style={styles.btnSignup} onClick={() => navigate('/register')}>Sign up</button>
+            <button style={styles.btnSignup} onClick={handleSignup} disabled={signupLoading}>{signupLoading ? 'Creating account...' : 'Sign up'}</button>
             <p style={{ fontSize: 14, textAlign: 'center', marginBottom: 12, color: '#606770' }}>
               Already have an account? <Link to="/login" style={{ color: '#1a6b3a', fontWeight: 600, textDecoration: 'none' }}>Log in</Link>
             </p>
