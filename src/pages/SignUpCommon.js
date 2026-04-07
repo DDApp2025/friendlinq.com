@@ -12,6 +12,7 @@ function SignUpCommon() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -70,6 +71,9 @@ function SignUpCommon() {
         await dispatch(makeUserFriendWithAdmin(res.data.customerData._id));
       }
 
+      // Wait 1.5s for backend to finish processing the new account
+      await new Promise((r) => setTimeout(r, 1500));
+
       // Auto-login after signup
       const loginRes = await dispatch(LoginAttempt(email, confirmPassword));
       if (loginRes.success) {
@@ -78,13 +82,14 @@ function SignUpCommon() {
         navigate('/home');
       } else {
         // Retry login once
+        await new Promise((r) => setTimeout(r, 1000));
         const loginRes2 = await dispatch(LoginAttempt(email, confirmPassword));
         setLoading(false);
         if (loginRes2.success) {
           await dispatch(getProfileAttempt());
           navigate('/home');
         } else {
-          setError('Registration succeeded but auto-login failed. Please log in manually.');
+          setSuccessMsg('Account created! Taking you to login...');
           setTimeout(() => navigate('/login'), 2000);
         }
       }
@@ -201,6 +206,7 @@ function SignUpCommon() {
         </div>
 
         {error && <p style={styles.errorText}>{error}</p>}
+        {successMsg && <p style={{ color: '#1a6b3a', textAlign: 'center', marginTop: 10, fontSize: 14, fontWeight: 600 }}>{successMsg}</p>}
 
         <button onClick={handleSignup} disabled={loading} style={styles.nextButton}>
           {loading ? 'Signing up...' : 'Next'}

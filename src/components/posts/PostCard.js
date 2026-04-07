@@ -173,7 +173,7 @@ export default function PostCard({ post, onUpdate, onDelete }) {
     <div style={styles.card}>
       {/* Header */}
       <div style={styles.header}>
-        <div style={styles.profilePicWrap}>
+        <div style={{ ...styles.profilePicWrap, cursor: isMyPost ? 'default' : 'pointer' }} onClick={() => !isMyPost && author?._id && navigate(`/user/${author._id}`)}>
           {profileThumb ? (
             <img src={profileThumb} alt="" style={styles.profilePic} />
           ) : (
@@ -184,7 +184,7 @@ export default function PostCard({ post, onUpdate, onDelete }) {
         </div>
         <div style={styles.headerInfo}>
           <div style={styles.nameRow}>
-            <span style={styles.authorName}>{authorName}</span>
+            <span style={{ ...styles.authorName, cursor: isMyPost ? 'default' : 'pointer' }} onClick={() => !isMyPost && author?._id && navigate(`/user/${author._id}`)}>{authorName}</span>
             <span style={{
               display: 'inline-block',
               width: 10, height: 10, borderRadius: '50%',
@@ -213,9 +213,14 @@ export default function PostCard({ post, onUpdate, onDelete }) {
                   </div>
                 </>
               ) : (
-                <div style={styles.menuItem} onClick={handleReport}>
-                  Report this Post
-                </div>
+                <>
+                  <div style={styles.menuItem} onClick={() => { setMenuOpen(false); author?._id && navigate(`/user/${author._id}`); }}>
+                    View Profile
+                  </div>
+                  <div style={styles.menuItem} onClick={handleReport}>
+                    Report this Post
+                  </div>
+                </>
               )}
             </div>
           )}

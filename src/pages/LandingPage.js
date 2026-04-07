@@ -105,6 +105,7 @@ export default function LandingPage() {
   const [signupPassword, setSignupPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [signupError, setSignupError] = useState('');
+  const [signupSuccess, setSignupSuccess] = useState('');
   const [signupLoading, setSignupLoading] = useState(false);
 
   const toggleFaq = (i) => {
@@ -164,14 +165,26 @@ export default function LandingPage() {
       if (res.data?.customerData?._id) {
         await dispatch(makeUserFriendWithAdmin(res.data.customerData._id));
       }
+
+      await new Promise((r) => setTimeout(r, 1500));
+
       const loginRes = await dispatch(LoginAttempt(signupEmail.trim(), confirmPassword));
       if (loginRes.success) {
         await dispatch(getProfileAttempt());
         setSignupLoading(false);
         navigate('/home');
       } else {
-        setSignupLoading(false);
-        setSignupError('Account created! Please log in.');
+        await new Promise((r) => setTimeout(r, 1000));
+        const loginRes2 = await dispatch(LoginAttempt(signupEmail.trim(), confirmPassword));
+        if (loginRes2.success) {
+          await dispatch(getProfileAttempt());
+          setSignupLoading(false);
+          navigate('/home');
+        } else {
+          setSignupLoading(false);
+          setSignupSuccess('Account created! Taking you to login...');
+          setTimeout(() => navigate('/login'), 2000);
+        }
       }
     } else {
       setSignupLoading(false);
@@ -259,6 +272,7 @@ export default function LandingPage() {
             <input type="password" placeholder="Create a password" style={styles.signupInput} value={signupPassword} onChange={(e) => { setSignupPassword(e.target.value); setSignupError(''); }} />
             <input type="password" placeholder="Confirm password" style={styles.signupInput} value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value); setSignupError(''); }} />
             {signupError && <p style={{ color: 'red', fontSize: 13, textAlign: 'center', margin: '8px 0 0' }}>{signupError}</p>}
+            {signupSuccess && <p style={{ color: '#1a6b3a', fontSize: 13, textAlign: 'center', margin: '8px 0 0', fontWeight: 600 }}>{signupSuccess}</p>}
             <hr style={styles.divider} />
             <button style={styles.btnSignup} onClick={handleSignup} disabled={signupLoading}>{signupLoading ? 'Creating account...' : 'Sign up'}</button>
             <p style={{ fontSize: 14, textAlign: 'center', marginBottom: 12, color: '#606770' }}>
