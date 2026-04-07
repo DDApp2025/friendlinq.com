@@ -143,6 +143,23 @@ export default function Home() {
     setMediaPreview(URL.createObjectURL(file));
   };
 
+  // ── Paste-to-upload ─────────────────────────────────────
+  const handlePaste = (e) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        e.preventDefault();
+        const file = item.getAsFile();
+        if (file) {
+          setMediaFile(file);
+          setMediaPreview(URL.createObjectURL(file));
+        }
+        break;
+      }
+    }
+  };
+
   const clearMedia = () => {
     setMediaFile(null);
     if (mediaPreview) URL.revokeObjectURL(mediaPreview);
@@ -216,6 +233,7 @@ export default function Home() {
               placeholder="What's on your mind."
               value={postText}
               onChange={(e) => setPostText(e.target.value)}
+              onPaste={handlePaste}
               style={styles.composerInput}
             />
             <button
