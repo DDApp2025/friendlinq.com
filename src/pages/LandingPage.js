@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { LoginAttempt } from '../actions/auth_actions';
 
 const APP_STORE_URL = 'https://apps.apple.com/us/app/friendlinq/id6476931666';
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.app.friendlinq';
@@ -87,10 +89,31 @@ const IconChevron = ({ open }) => (
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [openFaq, setOpenFaq] = useState(0);
+  const [navEmail, setNavEmail] = useState('');
+  const [navPassword, setNavPassword] = useState('');
+  const [navError, setNavError] = useState('');
+  const [navLoading, setNavLoading] = useState(false);
 
   const toggleFaq = (i) => {
     setOpenFaq(openFaq === i ? -1 : i);
+  };
+
+  const handleNavLogin = async () => {
+    setNavError('');
+    if (!navEmail.trim() || !navPassword.trim()) {
+      setNavError('Enter email and password');
+      return;
+    }
+    setNavLoading(true);
+    const res = await dispatch(LoginAttempt(navEmail, navPassword));
+    setNavLoading(false);
+    if (res.success) {
+      navigate('/home');
+    } else {
+      setNavError(res.message || 'Login failed');
+    }
   };
 
   return (
@@ -103,10 +126,11 @@ export default function LandingPage() {
         </div>
         {/* Desktop login fields */}
         <div style={styles.topnavLogin} className="landing-topnav-login">
-          <input type="text" placeholder="Email" style={styles.navInput} />
-          <input type="password" placeholder="Password" style={styles.navInput} />
-          <button style={styles.btnLogin} onClick={() => navigate('/login')}>Log in</button>
+          <input type="text" placeholder="Email" style={styles.navInput} value={navEmail} onChange={(e) => { setNavEmail(e.target.value); setNavError(''); }} onKeyDown={(e) => e.key === 'Enter' && handleNavLogin()} />
+          <input type="password" placeholder="Password" style={styles.navInput} value={navPassword} onChange={(e) => { setNavPassword(e.target.value); setNavError(''); }} onKeyDown={(e) => e.key === 'Enter' && handleNavLogin()} />
+          <button style={styles.btnLogin} onClick={handleNavLogin} disabled={navLoading}>{navLoading ? '...' : 'Log in'}</button>
           <Link to="/forgot-password" style={styles.forgot}>Forgot password?</Link>
+          {navError && <span style={{ color: '#ff6b6b', fontSize: 11, whiteSpace: 'nowrap', marginLeft: 4 }}>{navError}</span>}
         </div>
         {/* Mobile login button */}
         <div style={styles.topnavMobileLogin} className="landing-topnav-mobile">
