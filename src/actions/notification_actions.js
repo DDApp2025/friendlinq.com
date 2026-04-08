@@ -21,23 +21,42 @@ export const getNotifications = async (skip = 0, limit = 20) => {
   }
 };
 
-// ── Mark one notification read (Node — GET) ──────────────
+// ── Mark one notification read (fetch — matches mobile) ──
 export const readNotification = async (notificationId) => {
   try {
-    const url = READ_NOTIFICATION + '?notificationId=' + notificationId;
-    const res = await nodeApi.get(url);
-    return res.data;
+    const token = localStorage.getItem('accessUserToken');
+    const fd = new FormData();
+    fd.append('notificationId', notificationId);
+    const response = await fetch('https://natural.friendlinq.com' + READ_NOTIFICATION, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'authorization': token,
+      },
+      body: fd,
+    });
+    const res = await response.json();
+    return res;
   } catch (err) {
     console.error('readNotification error:', err);
     return { statusCode: 500 };
   }
 };
 
-// ── Mark all notifications read (Node — GET) ─────────────
+// ── Mark all notifications read (fetch — matches mobile) ─
 export const viewAllNotifications = async () => {
   try {
-    const res = await nodeApi.get(VIEW_ALL_NOTIFICATION);
-    return res.data;
+    const token = localStorage.getItem('accessUserToken');
+    const response = await fetch('https://natural.friendlinq.com' + VIEW_ALL_NOTIFICATION, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'authorization': token,
+      },
+      body: JSON.stringify({}),
+    });
+    const res = await response.json();
+    return res;
   } catch (err) {
     console.error('viewAllNotifications error:', err);
     return { statusCode: 500 };

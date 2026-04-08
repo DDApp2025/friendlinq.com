@@ -122,6 +122,7 @@ const Notifications = () => {
   const totalCount = useSelector((s) => s.authReducer.notificationTotalCount);
   const [loading, setLoading] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
+  const [readIds, setReadIds] = useState(new Set());
 
   const fetchNotifications = useCallback(
     async (skip = 0, reset = false) => {
@@ -155,14 +156,12 @@ const Notifications = () => {
     fetchNotifications(notifications.length);
   };
 
-  const handleMarkAllRead = async () => {
-    const res = await viewAllNotifications();
-    if (res?.statusCode === 200) {
-      dispatch({ type: actionTypes.GET_NOTIFICATION_COUNT_RESET });
-      // Refresh list
-      dispatch({ type: actionTypes.GET_NOTIFICATION_LIST_EMPTY });
-      fetchNotifications(0, false);
-    }
+  const handleMarkAllRead = () => {
+    // Mark all read locally (instant)
+    setReadIds(new Set(notifications.map((n) => n._id)));
+    // Fire API in background
+    viewAllNotifications();
+    dispatch({ type: actionTypes.GET_NOTIFICATION_COUNT_RESET });
   };
 
   const handleDelete = async (e, notifId) => {
@@ -175,14 +174,19 @@ const Notifications = () => {
     });
   };
 
-  const handleClick = async (n) => {
-    // Mark as read
-    if (!n.isView) {
-      await readNotification(n._id);
-    }
+  const handleClick = (n) => {
+    // Mark as read locally (instant) + fire API in background
+    setReadIds((prev) => {
+      const next = new Set(prev);
+      next.add(n._id);
+      return next;
+    });
+    readNotification(n._id);
+
+    // Navigate after a brief moment so the user sees the read state change
     const target = getNavTarget(n);
     if (target) {
-      navigate(target);
+      setTimeout(() => navigate(target), 300);
     }
   };
 
@@ -210,7 +214,8 @@ const Notifications = () => {
             const senderImg = normalizeImg(
               n.senderImage || n.fromUserImage || n.image
             );
-            const isUnread = !n.isView;
+            const isRead = n.isRead || readIds.has(n._id);
+            const isUnread = !isRead;
 
             return (
               <div

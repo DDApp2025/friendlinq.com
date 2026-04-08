@@ -51,11 +51,19 @@ export default function Home() {
           Limit: LIMIT,
         });
       } else {
-        // Node server — FormData with auth in header (axios interceptor adds it)
-        const formData = new FormData();
-        formData.append('skip', skipVal);
-        formData.append('limit', LIMIT);
-        res = await nodeApi.post(GET_ALL_USERS_POST, formData);
+        // Node server — use fetch() directly (matches mobile) to avoid CORS preflight
+        const fd = new FormData();
+        fd.append('skip', skipVal);
+        fd.append('limit', LIMIT);
+        const fetchRes = await fetch('https://natural.friendlinq.com' + GET_ALL_USERS_POST, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'authorization': token,
+          },
+          body: fd,
+        });
+        res = { data: await fetchRes.json() };
       }
 
       const data = res.data;
