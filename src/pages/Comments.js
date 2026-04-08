@@ -111,7 +111,7 @@ export default function Comments() {
                 <div style={styles.commentBody}>
                   <div style={styles.commentBubble}>
                     <span style={styles.commentAuthor}>{authorName}</span>
-                    <span style={styles.commentText}>{c.comment || c.text}</span>
+                    <span style={styles.commentText}>{c.commentText || c.comment || c.text}</span>
                   </div>
                   <span style={styles.commentTime}>{timeAgo(c.createdAt || c.updatedAt)}</span>
                 </div>

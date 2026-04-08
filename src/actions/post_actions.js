@@ -40,6 +40,8 @@ export const getComments = async (postId) => {
   try {
     const fd = new FormData();
     fd.append('postId', postId);
+    fd.append('skip', 0);
+    fd.append('limit', 0);
     const res = await nodeApi.post(GET_COMMENT, fd);
     return res.data;
   } catch (err) {
@@ -53,7 +55,7 @@ export const addComment = async (postId, comment) => {
   try {
     const fd = new FormData();
     fd.append('postId', postId);
-    fd.append('comment', comment);
+    fd.append('commentText', comment);
     const res = await nodeApi.post(COMMENT_POST, fd);
     return res.data;
   } catch (err) {

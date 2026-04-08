@@ -31,6 +31,7 @@ import Support from './pages/Support';
 import { ChooseTutorial, TutorialViewer } from './pages/Tutorials';
 // Call and LiveStream lazy-loaded below
 import FavoritesPage from './pages/Favorites';
+import PostDetail from './pages/PostDetail';
 import LandingPage from './pages/LandingPage';
 // PublicSupport now served as static HTML from public/support/index.html
 // Contact, Privacy, Terms now served as static HTML from public/[route]/index.html
@@ -139,6 +140,7 @@ function App() {
                   <Route path="/edit-profile" element={<EditProfile />} />
                   <Route path="/user/:userId" element={<UserProfile />} />
                   <Route path="/comments/:postId" element={<CommentsPage />} />
+                  <Route path="/post/:postId" element={<PostDetail />} />
                   <Route path="/change-password" element={<ChangePassword />} />
                   <Route path="/portfolio" element={<Portfolio />} />
                   <Route path="/private-portfolio" element={<PrivatePortfolio />} />

@@ -6,11 +6,41 @@ import { MY_POST_LIKE, MY_POST_DISLIKE, DELETE_MY_POST, UPDATE_POST, REPORT_POST
 import {
   AiOutlineLike, AiFillLike,
   AiOutlineDislike, AiFillDislike,
-  AiOutlineComment, AiOutlineShareAlt,
+  AiOutlineComment,
 } from 'react-icons/ai';
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import { BsThreeDotsVertical, BsEmojiSmile } from 'react-icons/bs';
+import { FaShare } from 'react-icons/fa';
+import { addComment } from '../../actions/post_actions';
 import normalizeImg from '../../utils/normalizeImg';
 import { firstName } from '../../utils/displayName';
+
+const EMOJI_SET = new Set(['😀','😂','❤️','👍','👎','🎉','😍','😢','😮','🙏','🔥','💯','😡','🥰','👏','💪','😃','😄','😁','😆','😅','🤣','😊','😇','🙂','🙃','😉','😌','😘','😗','😙','😚','😋','😛','😜','😝','🤑','🤗','🤓','😎','🤡','🤠','😏','😒','😞','😔','😟','😕','🙁','☹️','😣','😖','😫','😩','😤','😠','😶','😐','😑','😯','😦','😧','😲','😵','😳','😱','😨','😰','😥','🤤','😭','😓','😪','😴','🙄','🤔','🤥','😬','🤐','🤢','🤧','😷','🤒','🤕','😈','👿','👹','👺','💩','👻','💀','☠️','👽','👾','🤖','🎃','😺','😸','😹','😻','😼','😽','🙀','😿','😾','🥲','🤮','🥵','🥶','🥴','🤯','🥳','🧐','☺️','✌️','🤞','🖕','👌','🤙','👆','👇','👈','👉','☝️']);
+
+function getTopEmojis(comments, max = 3) {
+  if (!comments?.length) return [];
+  const freq = {};
+  for (const c of comments) {
+    const t = c.commentText || c.comment || c.text || '';
+    if (EMOJI_SET.has(t)) {
+      freq[t] = (freq[t] || 0) + 1;
+    }
+  }
+  return Object.entries(freq)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, max)
+    .map(([emoji, count]) => ({ emoji, count }));
+}
+
+function linkify(text) {
+  if (!text) return text;
+  const urlRegex = /(https?:\/\/[^\s<]+)/g;
+  const parts = text.split(urlRegex);
+  return parts.map((part, i) =>
+    urlRegex.test(part)
+      ? <a key={i} href={part} target="_blank" rel="noopener noreferrer" style={{ color: '#1a6b3a', wordBreak: 'break-all' }}>{part}</a>
+      : part
+  );
+}
 
 function timeAgo(dateStr) {
   if (!dateStr) return '';
@@ -30,8 +60,10 @@ export default function PostCard({ post, onUpdate, onDelete }) {
   const [editText, setEditText] = useState('');
   const [saving, setSaving] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [emojiOpen, setEmojiOpen] = useState(false);
   const navigate = useNavigate();
   const menuRef = useRef(null);
+  const emojiRef = useRef(null);
 
   const myId = useSelector((s) => s.authReducer.getProfileData?._id);
   const token = useSelector((s) => s.authReducer.login_access_token);
@@ -40,6 +72,8 @@ export default function PostCard({ post, onUpdate, onDelete }) {
   const authorName = firstName(author?.fullName);
   const isOnline = author?.isOnline === 1;
   const isMyPost = myId && (author?._id === myId || post?.postAuthor?._id === myId);
+
+  const topEmojis = getTopEmojis(post.Comments);
 
   const profileThumb = normalizeImg(author?.imageURL) || null;
   const postImage = normalizeImg(post?.imageURL) || null;
@@ -55,6 +89,33 @@ export default function PostCard({ post, onUpdate, onDelete }) {
     if (menuOpen) document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, [menuOpen]);
+
+  // Close emoji picker on outside click
+  useEffect(() => {
+    const handler = (e) => {
+      if (emojiRef.current && !emojiRef.current.contains(e.target)) {
+        setEmojiOpen(false);
+      }
+    };
+    if (emojiOpen) document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [emojiOpen]);
+
+  const handleEmojiReact = async (emoji) => {
+    setEmojiOpen(false);
+    // Optimistically update the Comments array so emoji count shows immediately
+    const optimisticComment = { commentText: emoji, _id: Date.now().toString() };
+    const updatedComments = [...(post.Comments || []), optimisticComment];
+    if (onUpdate) {
+      onUpdate({ ...post, Comments: updatedComments, totalComment: (post.totalComment || 0) + 1 });
+    }
+    try {
+      await addComment(post._id, emoji);
+    } catch {
+      // revert on failure
+      if (onUpdate) onUpdate(post);
+    }
+  };
 
   const handleLike = async () => {
     const newIsLike = !post.isLike;
@@ -144,6 +205,17 @@ export default function PostCard({ post, onUpdate, onDelete }) {
       alert('Failed to edit post');
     } finally {
       setSaving(false);
+    }
+  };
+
+  // ── Share post ───────────────────────────────────────────
+  const handleShare = async () => {
+    const url = `https://friendlinq.com/post/${post._id}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      alert('Post link copied to clipboard');
+    } catch {
+      alert('Could not copy link: ' + url);
     }
   };
 
@@ -248,7 +320,7 @@ export default function PostCard({ post, onUpdate, onDelete }) {
         </div>
       ) : (
         post.postContent && post.postContent !== '..' && (
-          <p style={styles.postText}>{post.postContent}</p>
+          <p style={styles.postText}>{linkify(post.postContent)}</p>
         )
       )}
 
@@ -268,7 +340,7 @@ export default function PostCard({ post, onUpdate, onDelete }) {
         />
       )}
 
-      {/* Like/comment summary */}
+      {/* Like/emoji/comment summary */}
       <div style={styles.summaryRow}>
         <div style={styles.summaryLeft}>
           {(post.totalLike > 0) && (
@@ -281,6 +353,11 @@ export default function PostCard({ post, onUpdate, onDelete }) {
               <AiFillDislike size={14} color="#e04040" /> {post.totalDislike}
             </span>
           )}
+          {topEmojis.map((e) => (
+            <span key={e.emoji} style={styles.summaryBadge}>
+              <span style={{ fontSize: 16 }}>{e.emoji}</span> {e.count}
+            </span>
+          ))}
         </div>
         <span style={styles.commentCount}>
           {post.Comments?.length || post.totalComment || 0} Comments
@@ -305,14 +382,28 @@ export default function PostCard({ post, onUpdate, onDelete }) {
             {post.totalDislike ?? 0}
           </span>
         </button>
+        <div ref={emojiRef} style={{ flex: 1, position: 'relative', display: 'flex' }}>
+          <button style={styles.actionBtn} onClick={() => setEmojiOpen(!emojiOpen)}>
+            <BsEmojiSmile size={20} color="#888" />
+          </button>
+          {emojiOpen && (
+            <div style={styles.emojiPicker}>
+              {['😀','😂','❤️','👍','👎','🎉','😍','😢','😮','🙏','🔥','💯','😡','🥰','👏','💪'].map((emoji) => (
+                <button key={emoji} style={styles.emojiBtn} onClick={() => handleEmojiReact(emoji)}>
+                  {emoji}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
         <button style={styles.actionBtn} onClick={() => navigate(`/comments/${post._id}`)}>
           <AiOutlineComment size={22} color="#888" />
           <span style={{ marginLeft: 6, color: '#888', fontWeight: 600, fontSize: 13 }}>
             {post.Comments?.length || post.totalComment || 0}
           </span>
         </button>
-        <button style={styles.actionBtn}>
-          <AiOutlineShareAlt size={22} color="#888" />
+        <button style={styles.actionBtn} onClick={handleShare}>
+          <FaShare size={18} color="#888" />
         </button>
       </div>
 
@@ -434,5 +525,16 @@ const styles = {
   },
   modal: {
     backgroundColor: '#fff', borderRadius: 12, padding: 24, maxWidth: 360, width: '90%',
+  },
+  emojiPicker: {
+    position: 'absolute', bottom: 40, left: '50%', transform: 'translateX(-50%)',
+    backgroundColor: '#fff', border: '1px solid #ddd', borderRadius: 10,
+    boxShadow: '0 4px 16px rgba(0,0,0,0.15)', padding: 10,
+    display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 4,
+    zIndex: 20, width: 280,
+  },
+  emojiBtn: {
+    background: 'none', border: 'none', cursor: 'pointer', fontSize: 22,
+    padding: 4, borderRadius: 6, lineHeight: 1,
   },
 };
