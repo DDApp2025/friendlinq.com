@@ -257,7 +257,7 @@ const Notifications = () => {
                 {/* Content */}
                 <div style={styles.content}>
                   <p style={styles.message}>
-                    {n.message || n.notificationMessage || n.title || ''}
+                    {n.textMessage || n.message || n.notificationMessage || n.title || ''}
                   </p>
                   <span style={styles.time}>
                     {relativeTime(n.createdAt || n.created_at || n.date)}
