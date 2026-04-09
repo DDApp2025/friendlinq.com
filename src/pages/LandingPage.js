@@ -93,10 +93,11 @@ export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState(0);
 
   // Nav login state
-  const [navEmail, setNavEmail] = useState('');
+  const [navEmail, setNavEmail] = useState(() => localStorage.getItem('rememberedEmail') || '');
   const [navPassword, setNavPassword] = useState('');
   const [navError, setNavError] = useState('');
   const [navLoading, setNavLoading] = useState(false);
+  const [navRemember, setNavRemember] = useState(() => !!localStorage.getItem('rememberedEmail'));
 
   // Signup card state
   const [firstName, setFirstName] = useState('');
@@ -122,6 +123,11 @@ export default function LandingPage() {
     const res = await dispatch(LoginAttempt(navEmail, navPassword));
     setNavLoading(false);
     if (res.success) {
+      if (navRemember) {
+        localStorage.setItem('rememberedEmail', navEmail);
+      } else {
+        localStorage.removeItem('rememberedEmail');
+      }
       navigate('/home');
     } else {
       setNavError(res.message || 'Login failed');
@@ -205,7 +211,13 @@ export default function LandingPage() {
           <input type="text" placeholder="Email" style={styles.navInput} value={navEmail} onChange={(e) => { setNavEmail(e.target.value); setNavError(''); }} onKeyDown={(e) => e.key === 'Enter' && handleNavLogin()} />
           <input type="password" placeholder="Password" style={styles.navInput} value={navPassword} onChange={(e) => { setNavPassword(e.target.value); setNavError(''); }} onKeyDown={(e) => e.key === 'Enter' && handleNavLogin()} />
           <button style={styles.btnLogin} onClick={handleNavLogin} disabled={navLoading}>{navLoading ? '...' : 'Log in'}</button>
-          <Link to="/forgot-password" style={styles.forgot}>Forgot password?</Link>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 1, marginLeft: 4 }}>
+            <Link to="/forgot-password" style={styles.forgot}>Forgot password?</Link>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 3, cursor: 'pointer' }}>
+              <input type="checkbox" checked={navRemember} onChange={(e) => setNavRemember(e.target.checked)} style={{ accentColor: '#1a6b3a', width: 12, height: 12, margin: 0, cursor: 'pointer' }} />
+              <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 10, whiteSpace: 'nowrap' }}>Remember Me</span>
+            </label>
+          </div>
           {navError && <span style={{ color: '#ff6b6b', fontSize: 11, whiteSpace: 'nowrap', marginLeft: 4 }}>{navError}</span>}
         </div>
         {/* Mobile login button */}
@@ -283,17 +295,13 @@ export default function LandingPage() {
             </p>
           </div>
           {/* App Store Badges */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginTop: 18 }}>
-            <div style={styles.badgeWrap}>
-              <a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer" style={styles.badgeLink}>
-                <img src={APP_STORE_BADGE} alt="Download Friendlinq on the App Store" width="150" height="50" style={{ width: '100%', height: 'auto' }} />
-              </a>
-            </div>
-            <div style={styles.badgeWrap}>
-              <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" style={styles.badgeLink}>
-                <img src={PLAY_STORE_BADGE} alt="Get Friendlinq on Google Play" width="195" height="75" style={{ width: '130%', height: 'auto' }} />
-              </a>
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 18, justifyContent: 'center' }}>
+            <a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer">
+              <img src="/apple_badge.png" alt="Download Friendlinq on the App Store" style={{ width: 56, height: 25, display: 'block' }} />
+            </a>
+            <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer">
+              <img src="/google_badge.png" alt="Get Friendlinq on Google Play" style={{ width: 56, height: 25, display: 'block' }} />
+            </a>
           </div>
         </div>
       </section>

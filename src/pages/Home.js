@@ -324,23 +324,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ── App Store Badges ──────────────────────────────── */}
-        <div style={styles.badgeBanner}>
-          <a href="https://apps.apple.com/us/app/friendlinq/id6476931666" target="_blank" rel="noopener noreferrer">
-            <img
-              src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83"
-              alt="Download Friendlinq on the App Store"
-              style={styles.badgeImg}
-            />
-          </a>
-          <a href="https://play.google.com/store/apps/details?id=com.app.friendlinq" target="_blank" rel="noopener noreferrer">
-            <img
-              src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-              alt="Get Friendlinq on Google Play"
-              style={styles.badgeImgPlay}
-            />
-          </a>
-        </div>
 
         {/* ── Feed ──────────────────────────────────────────── */}
         {posts.map((post, idx) => (

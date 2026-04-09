@@ -124,6 +124,16 @@ const TopNav = ({ onMenuToggle }) => {
         })}
       </nav>
 
+      {/* App Store Badges */}
+      <div style={styles.badgeStack} className="topnav-badges">
+        <a href="https://apps.apple.com/us/app/friendlinq/id6476931666" target="_blank" rel="noopener noreferrer" style={styles.badgeLink}>
+          <img src="/apple_badge.png" alt="Download Friendlinq on the App Store" style={{ width: 112, height: 50, display: 'block' }} />
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.app.friendlinq" target="_blank" rel="noopener noreferrer" style={styles.badgeLink}>
+          <img src="/google_badge.png" alt="Get Friendlinq on Google Play" style={{ width: 112, height: 50, display: 'block' }} />
+        </a>
+      </div>
+
       {/* Right: video + profile with dropdown */}
       <div style={styles.right}>
         <button style={styles.iconBtn} aria-label="Video call">
@@ -319,6 +329,24 @@ const styles = {
     justifyContent: 'center',
     padding: '0 4px',
     marginLeft: 2,
+  },
+  badgeStack: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    padding: '3px 0',
+  },
+  badgeLink: {
+    display: 'block',
+    lineHeight: 0,
+  },
+  badgeImg: {
+    height: 18,
+    width: 54,
+    borderRadius: 3,
+    display: 'block',
+    objectFit: 'contain',
   },
   right: {
     display: 'flex',
