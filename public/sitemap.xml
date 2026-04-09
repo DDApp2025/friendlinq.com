@@ -7,37 +7,37 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://friendlinq.com/about</loc>
+    <loc>https://friendlinq.com/about/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://friendlinq.com/features</loc>
+    <loc>https://friendlinq.com/features/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://friendlinq.com/faq</loc>
+    <loc>https://friendlinq.com/faq/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://friendlinq.com/safety</loc>
+    <loc>https://friendlinq.com/safety/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://friendlinq.com/support</loc>
+    <loc>https://friendlinq.com/support/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://friendlinq.com/contact</loc>
+    <loc>https://friendlinq.com/contact/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -55,13 +55,13 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://friendlinq.com/privacy</loc>
+    <loc>https://friendlinq.com/privacy/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://friendlinq.com/terms</loc>
+    <loc>https://friendlinq.com/terms/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
