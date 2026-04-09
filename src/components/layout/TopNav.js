@@ -127,10 +127,10 @@ const TopNav = ({ onMenuToggle }) => {
       {/* App Store Badges */}
       <div style={styles.badgeStack} className="topnav-badges">
         <a href="https://apps.apple.com/us/app/friendlinq/id6476931666" target="_blank" rel="noopener noreferrer" style={styles.badgeLink}>
-          <img src="/apple_badge.png" alt="Download Friendlinq on the App Store" style={{ width: 112, height: 50, display: 'block' }} />
+          <img src="/apple_badge.png" alt="Download Friendlinq on the App Store" style={{ width: 112, height: 32, display: 'block' }} />
         </a>
         <a href="https://play.google.com/store/apps/details?id=com.app.friendlinq" target="_blank" rel="noopener noreferrer" style={styles.badgeLink}>
-          <img src="/google_badge.png" alt="Get Friendlinq on Google Play" style={{ width: 112, height: 50, display: 'block' }} />
+          <img src="/google_badge.png" alt="Get Friendlinq on Google Play" style={{ width: 112, height: 32, display: 'block' }} />
         </a>
       </div>
 
