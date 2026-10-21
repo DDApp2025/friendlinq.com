@@ -1,12 +1,12 @@
 import { io } from 'socket.io-client';
 
 export const BASE_URL = 'https://natural.friendlinq.com'; // node
-export const BASE_URL_2 = 'https://unpokedfolks.com/api/Client'; // .net
-export const BASE_URL_5 = 'https://unpokedfolks.com/api';
-export const BASE_URL_3 = 'https://unpokedfolks.com/api';
-export const BASE_URL_4 = "https://unpokedfolks.com/Customer";
+export const BASE_URL_2 = 'https://api.friendlinq.com/api/Client'; // .net
+export const BASE_URL_5 = 'https://api.friendlinq.com/api';
+export const BASE_URL_3 = 'https://api.friendlinq.com/api';
+export const BASE_URL_4 = "https://api.friendlinq.com/Customer";
 
-export const BASE_URL_IMAGE = 'https://unpokedfolks.com';
+export const BASE_URL_IMAGE = 'https://api.friendlinq.com';
 
 export const SOCKET = io("http://44.209.181.33:3155", {
   autoConnect: false,

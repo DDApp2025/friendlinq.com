@@ -82,7 +82,7 @@ export default function Groups() {
 
   // ── Task 96: Get group list (.NET JSON) ──────────────────
   // RN uses post_services2 → BASE_URL_3 + GET_GROUP_LIST → JSON POST
-  // dotnetApi base = https://unpokedfolks.com/api
+  // dotnetApi base = https://api.friendlinq.com/api
   // GET_GROUP_LIST = "/Group/GetGroupsList"
   const loadGroups = useCallback(async () => {
     console.log('=== LOAD GROUPS START === token exists:', !!token);

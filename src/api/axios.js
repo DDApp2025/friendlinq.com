@@ -13,6 +13,6 @@ nodeApi.interceptors.request.use((config) => {
 });
 
 export const dotnetApi = axios.create({
-  baseURL: 'https://unpokedfolks.com/api',
+  baseURL: 'https://api.friendlinq.com/api',
   headers: { 'Content-Type': 'application/json' },
 });
