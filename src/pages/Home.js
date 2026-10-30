@@ -86,7 +86,11 @@ export default function Home() {
         setTotal(totalCount);
 
         if (append) {
-          setPosts((prev) => [...prev, ...newPosts]);
+          // Skip posts already on screen (new posts added at the top by the 5-second check shift the pages)
+          setPosts((prev) => {
+            const seen = new Set(prev.map((p) => p._id));
+            return [...prev, ...newPosts.filter((p) => !seen.has(p._id))];
+          });
         } else {
           setPosts(newPosts);
         }
@@ -108,6 +112,81 @@ export default function Home() {
     fetchPosts(0, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [feedType, userType]);
+
+  // ── Live updates: check for new posts every 5 seconds ──────
+  // Same idea as the phone apps' Community feed reload. Reads the newest page only,
+  // adds posts that are not on screen yet to the top, and refreshes counts on posts
+  // already shown. Pauses while the browser tab is hidden.
+  const pollingRef = useRef(false);
+  const pollLatest = useCallback(async () => {
+    if (pollingRef.current || loadingRef.current || !token) return;
+    if (typeof document !== 'undefined' && document.hidden) return;
+    pollingRef.current = true;
+    try {
+      let data;
+      if (feedType === 'community') {
+        const res = await dotnetApi.post(GET_PUBLIC_POST, {
+          authorization: token,
+          Skip: 0,
+          Limit: LIMIT,
+        });
+        data = res.data;
+      } else {
+        const fd = new FormData();
+        fd.append('skip', 0);
+        fd.append('limit', LIMIT);
+        const fetchRes = await fetch('https://natural.friendlinq.com' + GET_ALL_USERS_POST, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'authorization': token },
+          body: fd,
+        });
+        data = await fetchRes.json();
+      }
+      if ((data?.statusCode ?? data?.StatusCode) !== 200) return;
+      let latest = data?.data?.myPost || data?.data?.myPosts || data?.Data?.myPost || [];
+      latest = latest.map((p) => {
+        if (p.Author && typeof p.Author === 'object' && typeof p.postAuthor !== 'object') {
+          return { ...p, postAuthor: p.Author };
+        }
+        return p;
+      });
+      const isDatingFilter = userType === 'dating' ? '1' : '0';
+      latest = latest.filter((p) => (p.isdating || '0') === isDatingFilter);
+      if (latest.length === 0) return;
+
+      const latestTotal = data?.data?.totalMyPost ?? data?.Data?.totalMyPost;
+      setPosts((prev) => {
+        const byId = new Map(latest.map((p) => [p._id, p]));
+        const seen = new Set(prev.map((p) => p._id));
+        const added = latest.filter((p) => !seen.has(p._id));
+        let changed = added.length > 0;
+        const updated = prev.map((p) => {
+          const fresh = byId.get(p._id);
+          if (fresh && JSON.stringify(fresh) !== JSON.stringify(p)) {
+            changed = true;
+            return fresh;
+          }
+          return p;
+        });
+        return changed ? [...added, ...updated] : prev;
+      });
+      if (typeof latestTotal === 'number') setTotal(latestTotal);
+    } catch (err) {
+      // Quiet: the next check in 5 seconds tries again
+    } finally {
+      pollingRef.current = false;
+    }
+  }, [feedType, token, userType]);
+
+  useEffect(() => {
+    const id = setInterval(pollLatest, 5000);
+    const onVisible = () => { if (!document.hidden) pollLatest(); };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      clearInterval(id);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
+  }, [pollLatest]);
 
   // ── Infinite scroll via IntersectionObserver ──────────────
   useEffect(() => {
