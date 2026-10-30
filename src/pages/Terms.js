@@ -42,6 +42,7 @@ export default function Terms() {
             <li style={styles.li}><strong>You must be an adult.</strong> Friendlinq is designed for adults. You must be at least 18 years old to create an account.</li>
             <li style={styles.li}><strong>Use your real identity.</strong> Your account should represent you as a real person. Fake identities, impersonation, and misleading profiles are not allowed.</li>
             <li style={styles.li}><strong>One account per person.</strong> Each person may only have one Friendlinq account. Creating multiple accounts is not permitted.</li>
+            <li style={styles.li}><strong>Community accounts.</strong> Friendlinq operates some community accounts to share everyday content.</li>
             <li style={styles.li}><strong>Keep your credentials secure.</strong> You are responsible for maintaining the security of your account. Do not share your password with anyone. If you believe your account has been compromised, contact us immediately at <a href="mailto:info@friendlinq.com" style={styles.link}>info@friendlinq.com</a>.</li>
             <li style={styles.li}><strong>Accurate information.</strong> The information you provide during registration and in your profile must be accurate and up to date.</li>
           </ul>

@@ -8,7 +8,6 @@ import {
   MdNotificationsActive,
   MdChat,
   MdGroup,
-  MdCall,
   MdStar,
 } from 'react-icons/md';
 
@@ -19,7 +18,6 @@ const tabs = [
   { key: 'notifications', icon: MdNotificationsActive, label: 'Notifications', path: '/notifications', badgeKey: 'notificationCount' },
   { key: 'messages', icon: MdChat, label: 'Messages', path: '/messages', badgeKey: 'chatnotificationCount' },
   { key: 'groups', icon: MdGroup, label: 'Groups', path: '/groups' },
-  { key: 'call', icon: MdCall, label: 'Call', path: '/call' },
   { key: 'favorites', icon: MdStar, label: 'Favorites', path: '/favorites' },
 ];
 

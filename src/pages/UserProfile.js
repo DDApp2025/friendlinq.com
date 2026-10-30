@@ -97,9 +97,14 @@ export default function UserProfile() {
   const fullName = user.fullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'User';
   const imageURL = normalizeImg(user.imageURL);
   const bannerURL = normalizeImg(user.bannerURL);
-  const bio = user.bio || user.aboutMe || '';
+  const bio = user.about || user.bio || user.aboutMe || '';
+  const placeParts = [user.city, user.state, user.country]
+    .filter((p) => typeof p === 'string' && p.trim() && !/^[\d.,\s-]+$/.test(p))
+    .map((p) => p.trim());
   const rawLoc = user.address || '';
-  const location = (typeof rawLoc === 'string' && rawLoc && !/^[\d.,\s-]+$/.test(rawLoc)) ? rawLoc : '';
+  const location = placeParts.length
+    ? placeParts.filter((p, i) => placeParts.indexOf(p) === i).join(', ')
+    : ((typeof rawLoc === 'string' && rawLoc && !/^[\d.,\s-]+$/.test(rawLoc)) ? rawLoc : '');
   const email = user.email || '';
   const topFriends = user.topFourFriend || [];
   const topImages = user.topFourImage || [];

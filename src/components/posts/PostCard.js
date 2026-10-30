@@ -14,6 +14,43 @@ import { addComment } from '../../actions/post_actions';
 import normalizeImg from '../../utils/normalizeImg';
 import { firstName } from '../../utils/displayName';
 
+// Feed videos play by themselves (muted, looping) while at least half of the video is on screen,
+// and pause when scrolled away. Tap the video controls to turn the sound on.
+function AutoPlayVideo({ src, style }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v || typeof IntersectionObserver === 'undefined') return undefined;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          const p = v.play();
+          if (p && typeof p.catch === 'function') p.catch(() => {});
+        } else {
+          v.pause();
+        }
+      },
+      { threshold: [0, 0.5, 1] }
+    );
+    obs.observe(v);
+    return () => obs.disconnect();
+  }, [src]);
+  return (
+    <video
+      ref={ref}
+      src={src}
+      muted
+      loop
+      playsInline
+      autoPlay
+      preload="metadata"
+      controls
+      style={style}
+      onError={(e) => { e.target.style.display = 'none'; }}
+    />
+  );
+}
+
 const EMOJI_SET = new Set(['😀','😂','❤️','👍','👎','🎉','😍','😢','😮','🙏','🔥','💯','😡','🥰','👏','💪','😃','😄','😁','😆','😅','🤣','😊','😇','🙂','🙃','😉','😌','😘','😗','😙','😚','😋','😛','😜','😝','🤑','🤗','🤓','😎','🤡','🤠','😏','😒','😞','😔','😟','😕','🙁','☹️','😣','😖','😫','😩','😤','😠','😶','😐','😑','😯','😦','😧','😲','😵','😳','😱','😨','😰','😥','🤤','😭','😓','😪','😴','🙄','🤔','🤥','😬','🤐','🤢','🤧','😷','🤒','🤕','😈','👿','👹','👺','💩','👻','💀','☠️','👽','👾','🤖','🎃','😺','😸','😹','😻','😼','😽','🙀','😿','😾','🥲','🤮','🥵','🥶','🥴','🤯','🥳','🧐','☺️','✌️','🤞','🖕','👌','🤙','👆','👇','👈','👉','☝️']);
 
 function getTopEmojis(comments, max = 3) {
@@ -334,10 +371,7 @@ export default function PostCard({ post, onUpdate, onDelete }) {
 
       {/* Post video */}
       {postVideo && (
-        <video
-          src={postVideo} controls style={styles.postImage}
-          onError={(e) => { e.target.style.display = 'none'; }}
-        />
+        <AutoPlayVideo src={postVideo} style={styles.postImage} />
       )}
 
       {/* Like/emoji/comment summary */}
