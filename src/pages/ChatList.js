@@ -62,7 +62,7 @@ export default function ChatList() {
     <div style={styles.container}>
       <div style={styles.content}>
         <div style={styles.header}>
-          <h2 style={styles.title}>Messages</h2>
+          <h2 style={styles.title}>Chat</h2>
           {unreadTotal > 0 && (
             <span style={styles.headerBadge}>{unreadTotal} unread</span>
           )}

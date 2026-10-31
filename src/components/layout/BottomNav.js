@@ -8,17 +8,15 @@ import {
   MdNotificationsActive,
   MdChat,
   MdGroup,
-  MdStar,
 } from 'react-icons/md';
 
 const tabs = [
   { key: 'home', icon: MdHouse, label: 'Home', path: '/home' },
-  { key: 'photos', icon: MdWallpaper, label: 'Photos', path: '/photos' },
-  { key: 'addfriend', icon: MdPersonAdd, label: 'Add Friend', path: '/add-friend' },
+  { key: 'photos', icon: MdWallpaper, label: 'Photo Library', path: '/photos' },
+  { key: 'friends', icon: MdPersonAdd, label: 'My Friends', path: '/friends' },
   { key: 'notifications', icon: MdNotificationsActive, label: 'Notifications', path: '/notifications', badgeKey: 'notificationCount' },
-  { key: 'messages', icon: MdChat, label: 'Messages', path: '/messages', badgeKey: 'chatnotificationCount' },
+  { key: 'messages', icon: MdChat, label: 'Chat', path: '/messages', badgeKey: 'chatnotificationCount' },
   { key: 'groups', icon: MdGroup, label: 'Groups', path: '/groups' },
-  { key: 'favorites', icon: MdStar, label: 'Favorites', path: '/favorites' },
 ];
 
 const BottomNav = () => {

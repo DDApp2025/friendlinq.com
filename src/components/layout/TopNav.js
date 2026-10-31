@@ -9,8 +9,6 @@ import {
   MdNotificationsActive,
   MdChat,
   MdGroup,
-  MdCall,
-  MdStar,
   MdPerson,
   MdMailOutline,
   MdHeadsetMic,
@@ -20,14 +18,11 @@ import {
 
 const navLinks = [
   { label: 'Home', path: '/home', icon: MdHouse },
-  { label: 'Photos', path: '/photos', icon: MdWallpaper },
-  { label: 'Add Friend', path: '/add-friend', icon: MdPersonAdd },
+  { label: 'Photo Library', path: '/photos', icon: MdWallpaper },
+  { label: 'My Friends', path: '/friends', icon: MdPersonAdd },
   { label: 'Notifications', path: '/notifications', icon: MdNotificationsActive, badgeKey: 'notificationCount' },
-  { label: 'Messages', path: '/messages', icon: MdChat, badgeKey: 'chatnotificationCount' },
-  { label: 'Friends', path: '/friends', icon: MdGroup },
+  { label: 'Chat', path: '/messages', icon: MdChat, badgeKey: 'chatnotificationCount' },
   { label: 'Groups', path: '/groups', icon: MdGroup },
-  { label: 'Call', path: '/call', icon: MdCall },
-  { label: 'Favorites', path: '/favorites', icon: MdStar },
 ];
 
 const dropdownItems = [

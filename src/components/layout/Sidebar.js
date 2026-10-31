@@ -8,8 +8,6 @@ import {
   MdNotificationsActive,
   MdChat,
   MdGroup,
-  MdCall,
-  MdStar,
   MdSettings,
   MdHeadsetMic,
   MdLogout,
@@ -23,14 +21,11 @@ import {
 const menuItems = [
   { label: 'Home', path: '/home', icon: MdHouse },
   { label: 'Photo Library', path: '/photos', icon: MdCollections },
-  { label: 'Add Friend', path: '/add-friend', icon: MdPersonAdd },
+  { label: 'My Friends', path: '/friends', icon: MdPersonAdd },
   { label: 'Notifications', path: '/notifications', icon: MdNotificationsActive },
-  { label: 'Messages', path: '/messages', icon: MdChat },
-  { label: 'Friends', path: '/friends', icon: MdGroup },
+  { label: 'Chat', path: '/messages', icon: MdChat },
   { label: 'Groups', path: '/groups', icon: MdGroup },
   { label: 'Marketplace', path: '/marketplace', icon: MdStorefront },
-  { label: 'Call', path: '/call', icon: MdCall },
-  { label: 'Favorites', path: '/favorites', icon: MdStar },
 ];
 
 const bottomItems = [
