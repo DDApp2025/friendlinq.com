@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { MdVideocam, MdMenu } from 'react-icons/md';
+import { MdMenu } from 'react-icons/md';
 import {
   MdHouse,
   MdWallpaper,
@@ -129,12 +129,8 @@ const TopNav = ({ onMenuToggle }) => {
         </a>
       </div>
 
-      {/* Right: video + profile with dropdown */}
+      {/* Right: notifications + profile with dropdown */}
       <div style={styles.right}>
-        <button style={styles.iconBtn} aria-label="Video call">
-          <MdVideocam size={24} color="#fff" />
-        </button>
-
         <button
           style={styles.iconBtn}
           aria-label="Notifications"
