@@ -97,7 +97,12 @@ export default function UserProfile() {
   const fullName = user.fullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'User';
   const imageURL = normalizeImg(user.imageURL);
   const bannerURL = normalizeImg(user.bannerURL);
-  const bio = user.about || user.bio || user.aboutMe || '';
+  const bioFull = user.about || user.bio || user.aboutMe || '';
+  // Robert's addition (Nov 5, 2026): a "Video credits" list at the end of About is shown at the very bottom
+  // of the profile, under the member's own details, not inside About.
+  const creditsAt = bioFull.indexOf('Video credits');
+  const bio = creditsAt >= 0 ? bioFull.slice(0, creditsAt).trim() : bioFull;
+  const credits = creditsAt >= 0 ? bioFull.slice(creditsAt).replace(/^Video credits[^\n]*\n?/, '').trim() : '';
   const placeParts = [user.city, user.state, user.country]
     .filter((p) => typeof p === 'string' && p.trim() && !/^[\d.,\s-]+$/.test(p))
     .map((p) => p.trim());
@@ -252,6 +257,13 @@ export default function UserProfile() {
                 );
               })}
             </div>
+          </div>
+        )}
+
+        {credits && (
+          <div style={styles.section}>
+            <h3 style={styles.sectionTitle}>Video credits (Creative Commons CC BY)</h3>
+            <p style={{ ...styles.bio, whiteSpace: 'pre-line', textAlign: 'left', fontSize: 13 }}>{credits}</p>
           </div>
         )}
       </div>
