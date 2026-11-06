@@ -11,7 +11,10 @@ function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const resetPasswordToken = useSelector((state) => state.authReducer.resetPasswordToken);
+  // Robert's change (Nov 6, 2026): the reset email now carries a one-time link (?token=...); use it when present.
+  const storeToken = useSelector((state) => state.authReducer.resetPasswordToken);
+  const urlToken = new URLSearchParams(window.location.search).get('token');
+  const resetPasswordToken = urlToken || storeToken;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,7 +37,7 @@ function ResetPassword() {
       return;
     }
     if (!resetPasswordToken) {
-      setError('No reset token found. Please verify OTP first.');
+      setError('This reset link is missing or incomplete. Please ask for a new one on the Forgot Password page.');
       return;
     }
 
@@ -48,9 +51,10 @@ function ResetPassword() {
     if (res.success) {
       setNewPassword('');
       setConfirmPassword('');
+      window.alert('Your password has been changed. You can log in now.');
       navigate('/login');
     } else {
-      setError(res.message || 'Failed to reset password');
+      setError((res.message && !/invalid|otp/i.test(res.message)) ? res.message : 'This reset link has expired or was already used. Please ask for a new one on the Forgot Password page.');
     }
   };
 

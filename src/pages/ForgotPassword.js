@@ -35,7 +35,7 @@ function ForgotPassword() {
     setLoading(false);
 
     if (res.success) {
-      setSuccess('Your Friendlinq password has been sent to your registered email. Please check your email.');
+      setSuccess('We emailed you a link to choose a new password. It works for 1 hour. Check your inbox, and your spam folder if you do not see it.');
       setEmail('');
     } else {
       setError(res.message || 'Something went wrong');
