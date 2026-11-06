@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Character Set & Viewport -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Favicon & App Icons -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Primary SEO Meta Tags -->
+    <title>Friendlinq | The Social Network Built for Real Connection</title>
+    <meta name="description" content="Friendlinq is the social network for adults who value simplicity, safety, and real connection. Connect with friends and family, join community groups, share photos, and discover events — all in a simple, safe interface. Free to join.">
+    <meta name="keywords" content="social network, simple social media, safe social platform, private social network, online community, connect with friends, social media no ads, social network no data selling, Friendlinq">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Friendlinq">
+    <link rel="canonical" href="https://friendlinq.com/">
+
+    <!-- Application Meta -->
+    <meta name="theme-color" content="#1a6b3a" />
+    <meta name="application-name" content="Friendlinq">
+    <meta name="apple-mobile-web-app-title" content="Friendlinq">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://friendlinq.com/">
+    <meta property="og:title" content="Friendlinq | The Social Network Built for Real Connection">
+    <meta property="og:description" content="Simple, safe social media for adults. Connect with friends, join groups, share photos, discover events — free to join, no ads, no data selling.">
+    <meta property="og:image" content="https://friendlinq.com/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Friendlinq - The Social Network Built for Real Connection">
+    <meta property="og:site_name" content="Friendlinq">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Friendlinq | The Social Network Built for Real Connection">
+    <meta name="twitter:description" content="Simple, safe social media. Connect, share, discover — free to join.">
+    <meta name="twitter:image" content="https://friendlinq.com/og-image.jpg">
+    <meta name="twitter:image:alt" content="Friendlinq - The Social Network Built for Real Connection">
+
+    <!-- Google Search Console Verification -->
+    <!-- Add verification meta tag when available -->
+
+    <!-- Analytics -->
+    <!-- GA4 and tracking scripts will be added in Section 12 -->
+
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Friendlinq",
+      "url": "https://friendlinq.com",
+      "logo": "https://friendlinq.com/logo192.png",
+      "description": "The social network built for real connection. Simple, safe, and free.",
+      "email": "info@friendlinq.com",
+      "sameAs": [
+        "https://www.facebook.com/friendlinq",
+        "https://www.instagram.com/friendlinq",
+        "https://www.linkedin.com/company/friendlinq"
+      ]
+    }
+    </script>
+
+    <!-- Structured Data: WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Friendlinq",
+      "url": "https://friendlinq.com",
+      "description": "The social network built for real connection. Connect with friends, join groups, share photos, and discover events.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://friendlinq.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- Structured Data: WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Friendlinq",
+      "url": "https://friendlinq.com",
+      "description": "Social network for adults who want simplicity, safety, and real connection. Clean interface, enhanced privacy, community groups, messaging, video calls, live streaming, photo sharing, and marketplace.",
+      "applicationCategory": "SocialNetworkingApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free to join and use"
+      },
+      "featureList": [
+        "Social feed with community and friends-only posts",
+        "Friend connections with search and favorites",
+        "Interest-based community groups",
+        "Real-time messaging with media attachments",
+        "Video and audio calls (one-on-one and group)",
+        "Live streaming",
+        "Photo and video sharing with albums",
+        "Community marketplace",
+        "Simplified intuitive interface",
+        "Enhanced privacy and safety controls"
+      ]
+    }
+    </script>
+
+    <!-- Structured Data: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Friendlinq?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Friendlinq is a social network designed for adults who want a simpler, safer way to stay connected. Unlike Facebook or Instagram, Friendlinq features a clean interface, enhanced privacy protections, and community features that help you stay in touch with friends and family and engage with people who share your interests. It is completely free to join and use."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is Friendlinq different from Facebook?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Friendlinq is built from the ground up for people who want simplicity. That means cleaner navigation, larger text, no algorithm-driven content manipulation, no advertisements, and privacy controls designed to actually protect you. Facebook is a general social network built around engagement metrics — Friendlinq is built around you."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Friendlinq really free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, completely. There are no subscription fees, no hidden charges, and no premium tiers required to access core features including messaging, community groups, photo sharing, video calls, and event discovery."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to be tech-savvy to use Friendlinq?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not at all. Friendlinq uses large, clear buttons, simple navigation, and straightforward language. There's a guided tutorial that walks you through every feature step by step. If you can browse the internet and send an email, you can use Friendlinq."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Friendlinq safe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Friendlinq is built with your safety as a top priority. The platform includes enhanced privacy controls, community moderation, and protection from scams and spam. Your personal data is never sold to advertisers or third parties."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can my family members join?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. Friendlinq is open to adults of all ages. Invite your family, friends, and anyone you want to stay connected with. The more people you care about who join, the better the experience."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What can I do on Friendlinq?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can connect with friends and family, join interest-based community groups (gardening, travel, book clubs, and more), share photos and updates, send private messages, make video and audio calls, host or join live streams, discover local events, and browse the marketplace — all through an interface designed for simplicity and comfort."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I sign up?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Just fill out the sign-up form at the top of the page with your name, email address, and a password. It takes less than a minute. Once registered, you can immediately start connecting with others and exploring community groups."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Structured Data: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://friendlinq.com"},
+        {"@type": "ListItem", "position": 2, "name": "Sign Up", "item": "https://friendlinq.com/register"},
+        {"@type": "ListItem", "position": 3, "name": "Log In", "item": "https://friendlinq.com/login"}
+      ]
+    }
+    </script>
+
+    <!-- Structured Data: SoftwareApplication (iOS) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Friendlinq",
+      "operatingSystem": "iOS",
+      "applicationCategory": "SocialNetworkingApplication",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "installUrl": "https://apps.apple.com/us/app/friendlinq/id6476931666"
+    }
+    </script>
+
+    <!-- Structured Data: SoftwareApplication (Android) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Friendlinq",
+      "operatingSystem": "Android",
+      "applicationCategory": "SocialNetworkingApplication",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "installUrl": "https://play.google.com/store/apps/details?id=com.app.friendlinq"
+    }
+    </script>
+
+    <!-- Styles -->
+    <style>
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    </style>
+
+    <!-- SPA Routing (GitHub Pages) -->
+    <script>
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      }(window.location))
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <div style="max-width: 800px; margin: 0 auto; padding: 40px 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1c1e21;">
+        <h1>Friendlinq — The Simple, Safe Social Network for Real Connection</h1>
+        <p>Friendlinq is a social media platform designed for adults who value simplicity, safety, and real connection. Unlike other social networks, Friendlinq offers a clean interface, enhanced privacy protections, and community features — all completely free to join and use. No ads, no data selling, no algorithm manipulation.</p>
+        <p>Whether you want to stay connected with friends and family, join interest-based community groups, share photos and updates, or make video calls, Friendlinq makes it easy. The platform is built from the ground up for people who want a simpler, safer online social experience.</p>
+        <p>Friendlinq is the private social network that puts you in control. Connect with the people who matter most through messaging, photo sharing, community groups, video and audio calls, live streaming, and more — all through an intuitive interface designed for comfort, not complexity.</p>
+
+        <h2>Features</h2>
+        <ul>
+          <li>Connect with friends and family — send messages, share updates, and stay in touch</li>
+          <li>Join interest-based community groups — gardening, travel, book clubs, cooking, health and wellness</li>
+          <li>Share photos and videos with simplified upload and album tools</li>
+          <li>Make video and audio calls — one-on-one or group calls with friends and family</li>
+          <li>Host or join live streams with your community</li>
+          <li>Discover local events and activities</li>
+          <li>Browse the community marketplace</li>
+          <li>Create your profile and manage your friend connections</li>
+          <li>Enhanced privacy and safety controls — your data is never sold</li>
+          <li>Free to join and use — no subscription fees for core features</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>What is Friendlinq?</h3>
+        <p>Friendlinq is a social network designed for adults who want a simpler, safer way to stay connected. It features a clean interface, enhanced privacy protections, and community features that help you stay in touch with friends and family.</p>
+        <h3>Is Friendlinq free?</h3>
+        <p>Yes, completely. There are no subscription fees, no hidden charges, and no premium tiers required to access core features including messaging, community groups, photo sharing, video calls, and event discovery.</p>
+        <h3>How is Friendlinq different from Facebook?</h3>
+        <p>Friendlinq is built from the ground up for people who want simplicity — cleaner navigation, larger text, no algorithm-driven content manipulation, no advertisements, and privacy controls designed to actually protect you.</p>
+        <h3>Is Friendlinq safe?</h3>
+        <p>Yes. Friendlinq includes enhanced privacy controls, community moderation, and protection from scams and spam. Your personal data is never sold to advertisers or third parties.</p>
+
+        <h2>Get Started</h2>
+        <p><a href="/register">Sign up for Friendlinq</a> — it takes less than a minute.</p>
+        <p><a href="/login">Log in</a> to your existing account.</p>
+
+        <h2>Download the App</h2>
+        <p><a href="https://apps.apple.com/us/app/friendlinq/id6476931666">Download Friendlinq on the App Store</a></p>
+        <p><a href="https://play.google.com/store/apps/details?id=com.app.friendlinq">Get Friendlinq on Google Play</a></p>
+
+        <p>Contact us: <a href="mailto:info@friendlinq.com">info@friendlinq.com</a></p>
+        <p>&copy; 2026 Spire Group Inc. All rights reserved.</p>
+      </div>
+    </noscript>
+    <div id="root">
+      <div style="padding: 40px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <h1>Friendlinq — The Social Network Built for Real Connection</h1>
+        <p>Loading Friendlinq... The simple, safe social platform.</p>
+      </div>
+    </div>
+  </body>
+</html>
