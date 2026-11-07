@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfileAttempt, updateUserType, setUserType } from '../actions/auth_actions';
+import { DATING_FREE } from '../api/config';
 
 function ChooseUserType() {
   const [loading, setLoading] = useState(false);
@@ -71,14 +72,14 @@ function ChooseUserType() {
             {`Features:\n\u2713 All Social Features, plus\n\u2713 Single Adults Flirting/Dating\n\u2713 Premium Messaging\n\u2713 Ad free experience`}
           </p>
           <p style={{ ...styles.body, marginTop: 20, whiteSpace: 'pre-line' }}>
-            {`Pricing:\nPlans starting at $.99/month with our limited-time offer!`}
+            {DATING_FREE ? 'Free for now.' : `Pricing:\nPlans starting at $.99/month with our limited-time offer!`}
           </p>
           <button
             onClick={() => handleChoose('dating')}
             disabled={loading}
             style={styles.chooseButton}
           >
-            Explore Flirting/Dating Plans
+            {DATING_FREE ? 'Join Flirting/Dating for Free' : 'Explore Flirting/Dating Plans'}
           </button>
         </div>
       </div>

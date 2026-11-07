@@ -146,3 +146,6 @@ export const NOTIFY_USERS_FOR_LIVE_STREAMING = '/Notification/NotifyUserForLiveS
 export const UPDATE_LIVE_STREAMING_COUNT = '/Post/UpdateBroadcastUsersCount';
 export const UPDATE_BROADCAST_ID = '/Customer/updateBroadCastId';
 export const UPLOAD_GROUP_PIC = '/Group/addProfileImageForGroup';
+
+// Flirting/Dating is free for now (Robert, November 7, 2026). Same switch as the app (legacy/Utils/constants.js).
+export const DATING_FREE = true;

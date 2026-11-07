@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { nodeApi, dotnetApi } from '../api/axios';
 import { LogoutAttempt, updateUserType, setUserType } from '../actions/auth_actions';
+import { DATING_FREE } from '../api/config';
 
 const CHANGE_AUTO_REFRESH_VALUE = '/api/v1/user/autoRefresh';
 const CHANGE_WALLPAPER = '/api/v1/user/updateWallpaperData';
@@ -313,12 +314,14 @@ function Settings() {
         </button>
       </div>
 
+      {!DATING_FREE && (
       <div style={styles.section}>
         <button style={styles.menuRow} onClick={() => navigate('/subscription')}>
           <span style={styles.icon}>📋</span>
           <span style={styles.label}>Plans</span>
         </button>
       </div>
+      )}
 
       <div style={styles.section}>
         <button style={styles.menuRow} onClick={() => navigate('/choose-tutorial')}>
