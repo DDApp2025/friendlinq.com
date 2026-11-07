@@ -20,7 +20,8 @@ import {
 
 const menuItems = [
   { label: 'Home', path: '/home', icon: MdHouse },
-  { label: 'Photo Library', path: '/photos', icon: MdCollections },
+  { label: 'My Friendlinq Profile Album', path: '/photos', icon: MdCollections },
+  { label: 'Search People', path: '/add-friend', icon: MdPersonAdd },
   { label: 'My Friends', path: '/friends', icon: MdPersonAdd },
   { label: 'Notifications', path: '/notifications', icon: MdNotificationsActive },
   { label: 'Chat', path: '/messages', icon: MdChat },

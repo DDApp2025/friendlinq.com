@@ -24,7 +24,7 @@ const tutorialList = [
     ],
   },
   {
-    title: 'Photo Library Tutorial',
+    title: 'My Friendlinq Profile Album Tutorial',
     iconTitle: 'Icon: Image',
     icon: <MdWallpaper size={40} color="#1a6b3a" />,
     items: [

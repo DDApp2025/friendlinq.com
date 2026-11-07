@@ -17,10 +17,12 @@ import {
   MdSwapHoriz,
 } from 'react-icons/md';
 import { useModeSwitch } from '../ModeSwitch';
+import HelpButton from '../HelpButton';
 
 const navLinks = [
   { label: 'Home', path: '/home', icon: MdHouse },
-  { label: 'Photo Library', path: '/photos', icon: MdWallpaper },
+  { label: 'Profile Album', path: '/photos', icon: MdWallpaper },
+  { label: 'Search People', path: '/add-friend', icon: MdPersonAdd },
   { label: 'My Friends', path: '/friends', icon: MdPersonAdd },
   { label: 'Notifications', path: '/notifications', icon: MdNotificationsActive, badgeKey: 'notificationCount' },
   { label: 'Chat', path: '/messages', icon: MdChat, badgeKey: 'chatnotificationCount' },
@@ -139,6 +141,7 @@ const TopNav = ({ onMenuToggle }) => {
 
       {/* Right: notifications + profile with dropdown */}
       <div style={styles.right}>
+        <HelpButton light />
         <button
           style={styles.iconBtn}
           aria-label="Notifications"

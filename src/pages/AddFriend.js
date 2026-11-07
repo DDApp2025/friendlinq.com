@@ -55,14 +55,15 @@ export default function AddFriend() {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <h2 style={styles.title}>Find Friends</h2>
+        <h2 style={styles.title}>Search People</h2>
+        <p style={{ margin: '0 0 10px', fontSize: 14, color: '#555' }}>Searches everyone on Friendlinq. Click a person to see their profile, add them as a friend, or send a message.</p>
 
         {/* Search bar */}
         <div style={styles.searchRow}>
           <MdSearch size={20} color="#888" />
           <input
             type="text"
-            placeholder="Search by name..."
+            placeholder="Type a name, for example Mary Smith"
             value={query}
             onChange={(e) => handleSearch(e.target.value)}
             style={styles.searchInput}

@@ -12,7 +12,7 @@ import {
 
 const tabs = [
   { key: 'home', icon: MdHouse, label: 'Home', path: '/home' },
-  { key: 'photos', icon: MdWallpaper, label: 'Photo Library', path: '/photos' },
+  { key: 'photos', icon: MdWallpaper, label: 'Profile Album', path: '/photos' },
   { key: 'friends', icon: MdPersonAdd, label: 'My Friends', path: '/friends' },
   { key: 'notifications', icon: MdNotificationsActive, label: 'Notifications', path: '/notifications', badgeKey: 'notificationCount' },
   { key: 'messages', icon: MdChat, label: 'Chat', path: '/messages', badgeKey: 'chatnotificationCount' },

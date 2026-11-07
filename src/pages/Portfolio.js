@@ -191,7 +191,8 @@ export default function Portfolio() {
           <button onClick={() => navigate(-1)} style={styles.backBtn}>
             <MdArrowBack size={24} />
           </button>
-          <h2 style={styles.title}>Photo Library</h2>
+          <h2 style={styles.title}>My Friendlinq Profile Album</h2>
+          <p style={{ margin: '4px 0 0', fontSize: 14, color: '#555' }}>Photos and videos here show on your profile only. To share with friends, go to Home and use Photo or Video.</p>
         </div>
 
         {/* Action buttons */}

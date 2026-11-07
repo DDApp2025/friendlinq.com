@@ -313,6 +313,14 @@ export default function Home() {
   return (
     <div style={styles.container}>
       <h1 style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }}>Friendlinq Home Feed</h1>
+      {/* Search people (user testing, November 7, 2026: "There is no way to search for a user"). Same as the app. */}
+      <button
+        onClick={() => navigate('/add-friend')}
+        aria-label="Search people"
+        style={{ display: 'flex', alignItems: 'center', width: '100%', maxWidth: 600, margin: '8px auto 6px', height: 40, borderRadius: 20, border: '1.5px solid #1a6b3a', background: '#fff', padding: '0 14px', cursor: 'pointer', fontSize: 15.5, color: '#666' }}
+      >
+        <span style={{ color: '#1a6b3a', marginRight: 8, fontSize: 17 }}>&#128269;</span> Search people on Friendlinq
+      </button>
       <div style={styles.feed}>
         {/* ── Post Composer ─────────────────────────────────── */}
         <div style={styles.composerCard}>
@@ -346,30 +354,24 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Radio toggle: Friends / Community */}
-          <div style={styles.radioRow}>
-            <label style={styles.radioLabel}>
-              <input
-                type="radio"
-                name="postPrivacy"
-                value="Friend_Only"
-                checked={privacyForPost === 'Friend_Only'}
-                onChange={() => setPrivacyForPost('Friend_Only')}
-                style={styles.radioInput}
-              />
-              Friends
-            </label>
-            <label style={styles.radioLabel}>
-              <input
-                type="radio"
-                name="postPrivacy"
-                value="Public"
-                checked={privacyForPost === 'Public'}
-                onChange={() => setPrivacyForPost('Public')}
-                style={styles.radioInput}
-              />
-              Community
-            </label>
+          {/* Who can see this post (was the unexplained Friends / Community radio buttons; same change as the app) */}
+          <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 6, margin: '8px 0 4px' }}>
+            <span style={{ fontSize: 15, color: '#222', marginRight: 4 }}>Who can see this post:</span>
+            {[{ v: 'Public', label: 'Everyone' }, { v: 'Friend_Only', label: 'Only my friends' }].map((o) => {
+              const on = privacyForPost === o.v;
+              return (
+                <button
+                  key={o.v}
+                  type="button"
+                  role="radio"
+                  aria-checked={on}
+                  onClick={() => setPrivacyForPost(o.v)}
+                  style={{ padding: '5px 12px', borderRadius: 16, border: '1.5px solid #1a6b3a', background: on ? '#1a6b3a' : '#fff', color: on ? '#fff' : '#1a6b3a', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}
+                >
+                  {o.label}
+                </button>
+              );
+            })}
           </div>
 
           {/* Media preview */}
@@ -426,9 +428,35 @@ export default function Home() {
               </button>
               {/* Go Live button — hidden for now, route still works at /live/:channelName?host=1 */}
             </div>
-            <button onClick={toggleFeed} style={styles.feedToggleBtn}>
-              {feedType === 'community' ? 'See Friends Posts' : 'Feed'}
-            </button>
+          </div>
+          {/* Clear feed tabs (was "See Friends Posts" / "Feed"; same change as the app). My Posts opens your profile. */}
+          <div role="tablist" style={{ display: 'flex', border: '1.5px solid #1a6b3a', borderRadius: 10, overflow: 'hidden', marginTop: 10 }}>
+            {[
+              { key: 'community', label: "Everyone's Posts" },
+              { key: 'friends', label: "My Friends' Posts" },
+              { key: 'mine', label: 'My Posts' },
+            ].map((t, ti) => {
+              const on = t.key === feedType;
+              return (
+                <button
+                  key={t.key}
+                  role="tab"
+                  aria-selected={on}
+                  onClick={() => {
+                    if (t.key === 'mine') { navigate('/profile'); return; }
+                    if (t.key !== feedType) toggleFeed();
+                  }}
+                  style={{ flex: 1, padding: '9px 4px', border: 'none', borderLeft: ti ? '1px solid #1a6b3a' : 'none', background: on ? '#1a6b3a' : '#fff', color: on ? '#fff' : '#1a6b3a', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}
+                >
+                  {t.label}
+                </button>
+              );
+            })}
+          </div>
+          <div style={{ fontSize: 12.5, color: '#666', margin: '5px 2px 0' }}>
+            {feedType === 'community'
+              ? 'Showing posts from all Friendlinq members. My Posts opens your profile, where your own posts are.'
+              : 'Showing posts only from people you are friends with. My Posts opens your profile, where your own posts are.'}
           </div>
         </div>
 
