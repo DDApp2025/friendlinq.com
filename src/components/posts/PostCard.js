@@ -228,6 +228,8 @@ export default function PostCard({ post, onUpdate, onDelete }) {
   const [shareOpen, setShareOpen] = useState(false);
   const [shareText, setShareText] = useState('');
   const [shareType, setShareType] = useState('Public');
+  const [shareGroups, setShareGroups] = useState(null);
+  const [shareGroupId, setShareGroupId] = useState('');
   const [commentsOn, setCommentsOn] = useState(String(post?.commentOnOff ?? true) !== 'false');
   const [saving, setSaving] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -393,9 +395,27 @@ export default function PostCard({ post, onUpdate, onDelete }) {
   };
 
   // ── Share post ───────────────────────────────────────────
+  // Groups I belong to, for "Share in a group" (same as the app's "Share Post on your Groups").
+  const loadShareGroups = async () => {
+    if (shareGroups) return;
+    try {
+      const res = await dotnetApi.post('/Group/GetGroupsList', { authorization: token });
+      const find = (o, d = 0) => {
+        if (d > 3) return null;
+        if (Array.isArray(o) && o.length && typeof o[0] === 'object') return o;
+        if (o && typeof o === 'object' && !Array.isArray(o)) for (const v of Object.values(o)) { const f = find(v, d + 1); if (f) return f; }
+        return null;
+      };
+      setShareGroups(find(res.data) || []);
+    } catch {
+      setShareGroups([]);
+    }
+  };
+
   const handleShareToFeed = async () => {
     try {
       const res = await dotnetApi.post(SHARE_POST, {
+        ...(shareGroupId ? { groupId: shareGroupId } : {}),
         authorization: token,
         imageUrl: post.imageURL?.original || null,
         imageThumbnail: null,
@@ -409,7 +429,8 @@ export default function PostCard({ post, onUpdate, onDelete }) {
       if (code === 200 || code === undefined) {
         setShareOpen(false);
         setShareText('');
-        alert('Shared to your feed.');
+        alert(shareGroupId ? 'Shared in your group.' : 'Shared to your feed.');
+        setShareGroupId('');
       } else {
         alert(res.data?.Message || res.data?.message || 'Failed to share');
       }
@@ -648,7 +669,7 @@ export default function PostCard({ post, onUpdate, onDelete }) {
             {post.Comments?.length || post.totalComment || 0}
           </span>
         </button>
-        <button style={styles.actionBtn} onClick={() => setShareOpen((v) => !v)} title="Share">
+        <button style={styles.actionBtn} onClick={() => { setShareOpen((v) => !v); loadShareGroups(); }} title="Share">
           <FaShare size={18} color="#888" />
         </button>
       </div>
@@ -659,7 +680,11 @@ export default function PostCard({ post, onUpdate, onDelete }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 6, flexWrap: 'wrap' }}>
             <label style={{ fontSize: 14 }}><input type="radio" checked={shareType === 'Friend_Only'} onChange={() => setShareType('Friend_Only')} /> Friends</label>
             <label style={{ fontSize: 14 }}><input type="radio" checked={shareType === 'Public'} onChange={() => setShareType('Public')} /> Community</label>
-            <button style={{ ...styles.editSaveBtn, marginLeft: 'auto' }} onClick={handleShareToFeed}>Share to my feed</button>
+            <select value={shareGroupId} onChange={(e) => setShareGroupId(e.target.value)} style={{ fontSize: 14, padding: 4, borderRadius: 6 }}>
+              <option value="">My feed</option>
+              {(shareGroups || []).map((g) => <option key={g._id} value={g._id}>Group: {g.groupName}</option>)}
+            </select>
+            <button style={{ ...styles.editSaveBtn, marginLeft: 'auto' }} onClick={handleShareToFeed}>Share</button>
             <button style={styles.editCancelBtn} onClick={() => { setShareOpen(false); handleShare(); }}>Copy link</button>
           </div>
         </div>
