@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { nodeApi, dotnetApi } from '../api/axios';
 import { LogoutAttempt, updateUserType, setUserType } from '../actions/auth_actions';
 import { DATING_FREE } from '../api/config';
+import { useModeSwitch } from '../components/ModeSwitch';
 
 const CHANGE_AUTO_REFRESH_VALUE = '/api/v1/user/autoRefresh';
 const CHANGE_WALLPAPER = '/api/v1/user/updateWallpaperData';
@@ -23,13 +24,12 @@ const WALLPAPERS = [
 ];
 
 function Settings() {
+  const modeSwitch = useModeSwitch();
   const [loading, setLoading] = useState(false);
   const [emailSubscribed, setEmailSubscribed] = useState(false);
   const [autoRefresh, setAutoRefresh] = useState(false);
   const [selectedWallpaper, setSelectedWallpaper] = useState('default');
   const [showSuspendConfirm, setShowSuspendConfirm] = useState(false);
-  const [showDatingSplash, setShowDatingSplash] = useState(false);
-  const [splashStep, setSplashStep] = useState(1);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -136,47 +136,6 @@ function Settings() {
     }
   };
 
-  const toggleUserType = async () => {
-    const newType = userType === 'dating' ? 'normal' : 'dating';
-
-    // Show dating splash on first switch to dating
-    if (newType === 'dating' && !localStorage.getItem('datingSplashSeen')) {
-      setShowDatingSplash(true);
-      setSplashStep(1);
-      return;
-    }
-
-    await switchUserType(newType);
-  };
-
-  const switchUserType = async (newType) => {
-    setLoading(true);
-    try {
-      const res = await dispatch(updateUserType(token, profile._id, newType));
-      if (res.StatusCode === 200) {
-        localStorage.setItem('usertype', newType);
-        dispatch(setUserType(newType));
-      } else {
-        alert('Failed to switch mode');
-      }
-    } catch (err) {
-      console.error('switchUserType error:', err);
-      alert('Failed to switch mode');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDatingSplashContinue = async () => {
-    if (splashStep === 1) {
-      setSplashStep(2);
-    } else {
-      setShowDatingSplash(false);
-      localStorage.setItem('datingSplashSeen', 'true');
-      await switchUserType('dating');
-    }
-  };
-
   const handleLogout = async () => {
     setLoading(true);
     try {
@@ -255,32 +214,17 @@ function Settings() {
         </div>
       </div>
 
-      {/* Dating Mode Toggle */}
+      {/* Social Mode / Dating Mode (same switch as the top menu and the app) */}
       <div style={styles.section}>
-        <div style={styles.row} onClick={toggleUserType}>
-          <span style={styles.icon}>&#x2764;</span>
-          <span style={styles.label}>
-            {userType === 'dating' ? 'Switch to Normal Mode' : 'Switch to Dating Mode'}
-          </span>
-          <div
-            style={{
-              ...styles.toggle,
-              backgroundColor: userType === 'dating' ? '#e84393' : '#ccc',
-            }}
-          >
-            <div
-              style={{
-                ...styles.toggleThumb,
-                transform: userType === 'dating' ? 'translateX(20px)' : 'translateX(0)',
-              }}
-            />
-          </div>
-        </div>
-        {userType === 'dating' && (
-          <p style={{ margin: '4px 10px 0', fontSize: 13, color: '#e84393' }}>
-            Dating mode active — your feed and posts will be dating-only
-          </p>
-        )}
+        <button style={styles.menuRow} onClick={modeSwitch.requestSwitch}>
+          <span style={styles.icon}>&#x21C4;</span>
+          <span style={styles.label}>{modeSwitch.label}</span>
+        </button>
+        <p style={{ margin: '4px 10px 0', fontSize: 13, color: '#666' }}>
+          {modeSwitch.userType === 'dating'
+            ? 'You are in Dating mode: your feed and new posts are for members in Dating mode.'
+            : 'You are in Social mode: your feed shows friends and community posts.'}
+        </p>
       </div>
 
       {/* Wallpaper Selection */}
@@ -349,35 +293,7 @@ function Settings() {
         </button>
       </div>
 
-      {/* Dating Splash Modal */}
-      {showDatingSplash && (
-        <div style={styles.overlay}>
-          <div style={{ ...styles.modal, maxWidth: 440, textAlign: 'center' }}>
-            <p style={{ color: '#e84393', fontSize: 16, fontWeight: 600, margin: '0 0 16px' }}>
-              {splashStep === 1
-                ? 'Diverse faces, unique stories, waiting to unfold.\nFind your perfect match today!'
-                : "Life's a beach, but it's better shared.\nFind your perfect wave."}
-            </p>
-            <div style={{ height: 200, backgroundColor: '#fce4ec', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
-              <span style={{ fontSize: 48 }}>{splashStep === 1 ? '\u2764\uFE0F' : '\u{1F3D6}\uFE0F'}</span>
-            </div>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
-              <button
-                style={styles.cancelBtn}
-                onClick={() => setShowDatingSplash(false)}
-              >
-                Cancel
-              </button>
-              <button
-                style={{ ...styles.dangerBtn, background: '#e84393' }}
-                onClick={handleDatingSplashContinue}
-              >
-                {splashStep === 1 ? 'Continue' : 'Start Dating Mode'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {modeSwitch.dialog}
 
       {/* Suspend confirmation modal */}
       {showSuspendConfirm && (

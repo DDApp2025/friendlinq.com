@@ -14,7 +14,9 @@ import {
   MdHeadsetMic,
   MdSettings,
   MdLogout,
+  MdSwapHoriz,
 } from 'react-icons/md';
+import { useModeSwitch } from '../ModeSwitch';
 
 const navLinks = [
   { label: 'Home', path: '/home', icon: MdHouse },
@@ -26,7 +28,7 @@ const navLinks = [
 ];
 
 const dropdownItems = [
-  { label: 'Profile', path: '/profile', icon: MdPerson },
+  { label: 'My Profile', path: '/profile', icon: MdPerson },
   { label: 'Send Invitation', path: '/invite', icon: MdMailOutline },
   { label: 'Support', path: '/support', icon: MdHeadsetMic },
   { label: 'Settings', path: '/settings', icon: MdSettings },
@@ -45,6 +47,7 @@ const TopNav = ({ onMenuToggle }) => {
     : '';
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const mode = useModeSwitch();
   const dropdownRef = useRef(null);
 
   // Close dropdown when clicking outside
@@ -88,6 +91,11 @@ const TopNav = ({ onMenuToggle }) => {
         <div style={styles.logoWrap} onClick={() => navigate('/home')}>
           <img src="/logo-icon.png" alt="Friendlinq logo — simple safe social network" style={styles.logoImg} />
           <span style={styles.logoText}>Friendlinq</span>
+          {mode.userType === 'dating' && (
+            <span style={{ marginLeft: 8, fontSize: 12, fontWeight: 600, color: '#fff', background: 'rgba(255,255,255,0.18)', borderRadius: 10, padding: '2px 8px' }}>
+              Dating mode
+            </span>
+          )}
         </div>
       </div>
 
@@ -191,11 +199,11 @@ const TopNav = ({ onMenuToggle }) => {
               <div style={styles.dropdownDivider} />
 
               {/* Menu items */}
-              {dropdownItems.map((item) => {
+              {dropdownItems.map((item, idx) => {
                 const Icon = item.icon;
                 return (
+                  <React.Fragment key={item.path}>
                   <button
-                    key={item.path}
                     onClick={() => {
                       setDropdownOpen(false);
                       navigate(item.path);
@@ -211,6 +219,25 @@ const TopNav = ({ onMenuToggle }) => {
                     <Icon size={18} color="#1a6b3a" />
                     <span style={styles.dropdownLabel}>{item.label}</span>
                   </button>
+                  {idx === 0 && (
+                    <button
+                      onClick={() => {
+                        setDropdownOpen(false);
+                        mode.requestSwitch();
+                      }}
+                      style={styles.dropdownItem}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#f0faf4';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                      }}
+                    >
+                      <MdSwapHoriz size={18} color="#1a6b3a" />
+                      <span style={styles.dropdownLabel}>{mode.label}</span>
+                    </button>
+                  )}
+                  </React.Fragment>
                 );
               })}
 
@@ -236,6 +263,7 @@ const TopNav = ({ onMenuToggle }) => {
           )}
         </div>
       </div>
+      {mode.dialog}
     </header>
   );
 };
