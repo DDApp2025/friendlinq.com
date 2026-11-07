@@ -24,7 +24,9 @@ function parseOverlay(raw) {
   try {
     const o = typeof raw === 'string' ? JSON.parse(raw) : raw;
     const items = (o && Array.isArray(o.items) ? o.items : []).filter((it) => it && typeof it.t === 'string' && it.t.trim());
-    return items.length ? items : null;
+    // Captions (Nov 6, 2026): "cap": [ { s: start seconds, e: end seconds, t: text } ]
+    const cap = (o && Array.isArray(o.cap) ? o.cap : []).filter((c) => c && typeof c.t === 'string' && c.t.trim());
+    return items.length || cap.length ? { items, cap } : null;
   } catch (e) {
     return null;
   }
@@ -33,7 +35,7 @@ function parseOverlay(raw) {
 function VideoTextOverlay({ overlay }) {
   return (
     <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', containerType: 'size' }}>
-      {overlay.map((it, i) => {
+      {overlay.items.map((it, i) => {
         const size = Math.max(0.03, Number(it.s) || 0.06) * 100;
         const box = it.bg === 'dark'
           ? { background: 'rgba(0,0,0,0.65)', padding: `${size * 0.15}cqw ${size * 0.3}cqw`, borderRadius: `${size * 0.3}cqw` }
@@ -68,7 +70,55 @@ function VideoTextOverlay({ overlay }) {
   );
 }
 
-function AutoPlayVideo({ src, style }) {
+// Robert's addition (Nov 6, 2026): the CC switch (one setting for the whole site, kept in this browser).
+function readCC() {
+  try { return window.localStorage.getItem('fl_cc_on') !== '0'; } catch (e) { return true; }
+}
+function captionAt(cap, t) {
+  for (let i = 0; i < cap.length; i++) {
+    if (t >= Number(cap[i].s) - 0.05 && t <= Number(cap[i].e) + 0.35) return cap[i].t;
+  }
+  return '';
+}
+function VideoWithOverlay({ src, overlay }) {
+  const [time, setTime] = useState(0);
+  const [ccOn, setCcOn] = useState(readCC);
+  useEffect(() => {
+    const f = () => setCcOn(readCC());
+    window.addEventListener('fl-cc-change', f);
+    return () => window.removeEventListener('fl-cc-change', f);
+  }, []);
+  const toggle = (e) => {
+    e.stopPropagation();
+    const next = !ccOn;
+    try { window.localStorage.setItem('fl_cc_on', next ? '1' : '0'); } catch (err) {}
+    setCcOn(next);
+    window.dispatchEvent(new Event('fl-cc-change'));
+  };
+  const line = overlay.cap.length && ccOn ? captionAt(overlay.cap, time) : '';
+  return (
+    <div style={styles.overlayFrame}>
+      <AutoPlayVideo src={src} style={styles.overlayVideo} onTime={overlay.cap.length ? setTime : undefined} />
+      <VideoTextOverlay overlay={overlay} />
+      {line ? (
+        <div style={{ position: 'absolute', left: 0, right: 0, bottom: '16%', display: 'flex', justifyContent: 'center', pointerEvents: 'none' }}>
+          <span style={{ maxWidth: '80%', background: 'rgba(0,0,0,0.7)', color: '#fff', fontSize: 16, lineHeight: 1.35, fontWeight: 600, textAlign: 'center', padding: '3px 8px', borderRadius: 6 }}>{line}</span>
+        </div>
+      ) : null}
+      {overlay.cap.length ? (
+        <button
+          onClick={toggle}
+          title={ccOn ? 'Turn captions off' : 'Turn captions on'}
+          style={{ position: 'absolute', top: 10, right: 10, border: '1.5px solid #fff', borderRadius: 5, padding: '1px 6px', fontWeight: 'bold', fontSize: 13, cursor: 'pointer', background: ccOn ? '#fff' : 'rgba(0,0,0,0.35)', color: ccOn ? '#000' : '#fff' }}
+        >
+          CC
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
+function AutoPlayVideo({ src, style, onTime }) {
   const ref = useRef(null);
   useEffect(() => {
     const v = ref.current;
@@ -98,6 +148,7 @@ function AutoPlayVideo({ src, style }) {
       preload="metadata"
       controls
       style={style}
+      onTimeUpdate={onTime ? (e) => onTime(e.currentTarget.currentTime) : undefined}
       onError={(e) => { e.target.style.display = 'none'; }}
     />
   );
@@ -427,10 +478,7 @@ export default function PostCard({ post, onUpdate, onDelete }) {
         <AutoPlayVideo src={postVideo} style={styles.postImage} />
       )}
       {postVideo && postOverlay && (
-        <div style={styles.overlayFrame}>
-          <AutoPlayVideo src={postVideo} style={styles.overlayVideo} />
-          <VideoTextOverlay overlay={postOverlay} />
-        </div>
+        <VideoWithOverlay src={postVideo} overlay={postOverlay} />
       )}
 
       {/* Like/emoji/comment summary */}

@@ -235,7 +235,8 @@ export default function Home() {
     const items = e.clipboardData?.items;
     if (!items) return;
     for (const item of items) {
-      if (item.type.startsWith('image/')) {
+      // Robert's addition (Nov 6, 2026): a copied video can be pasted too, not only a photo.
+      if (item.type.startsWith('image/') || item.type.startsWith('video/')) {
         e.preventDefault();
         const file = item.getAsFile();
         if (file) {
