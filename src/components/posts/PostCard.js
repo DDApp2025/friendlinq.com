@@ -16,6 +16,58 @@ import { firstName } from '../../utils/displayName';
 
 // Feed videos play by themselves (muted, looping) while at least half of the video is on screen,
 // and pause when scrolled away. Tap the video controls to turn the sound on.
+// Robert's addition (Nov 6, 2026): text written on top of a video in the app ("Aa" editor).
+// postOverlay is a JSON text: { v: 1, items: [ { t, x, y, s, c, b, bg } ] }. x and y are the centre of
+// the text as a share of a 9:16 frame; s is the font size as a share of the frame width.
+function parseOverlay(raw) {
+  if (!raw) return null;
+  try {
+    const o = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    const items = (o && Array.isArray(o.items) ? o.items : []).filter((it) => it && typeof it.t === 'string' && it.t.trim());
+    return items.length ? items : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function VideoTextOverlay({ overlay }) {
+  return (
+    <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', containerType: 'size' }}>
+      {overlay.map((it, i) => {
+        const size = Math.max(0.03, Number(it.s) || 0.06) * 100;
+        const box = it.bg === 'dark'
+          ? { background: 'rgba(0,0,0,0.65)', padding: `${size * 0.15}cqw ${size * 0.3}cqw`, borderRadius: `${size * 0.3}cqw` }
+          : it.bg === 'light'
+            ? { background: 'rgba(255,255,255,0.88)', padding: `${size * 0.15}cqw ${size * 0.3}cqw`, borderRadius: `${size * 0.3}cqw` }
+            : { textShadow: '1px 1px 3px rgba(0,0,0,0.75)' };
+        return (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              left: `${(Number(it.x) || 0.5) * 100}%`,
+              top: `${(Number(it.y) || 0.5) * 100}%`,
+              transform: 'translate(-50%, -50%)',
+              maxWidth: '90%',
+              width: 'max-content',
+              textAlign: 'center',
+              whiteSpace: 'pre-wrap',
+              wordBreak: 'break-word',
+              color: it.c || '#FFFFFF',
+              fontWeight: it.b ? 'bold' : 'normal',
+              fontSize: `${size}cqw`,
+              lineHeight: 1.2,
+              ...box,
+            }}
+          >
+            {it.t}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function AutoPlayVideo({ src, style }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -115,6 +167,7 @@ export default function PostCard({ post, onUpdate, onDelete }) {
   const profileThumb = normalizeImg(author?.imageURL) || null;
   const postImage = normalizeImg(post?.imageURL) || null;
   const postVideo = post?.videoURL ? normalizeImg(post.videoURL) : null;
+  const postOverlay = parseOverlay(post?.postOverlay);
 
   // Close menu on outside click
   useEffect(() => {
@@ -370,8 +423,14 @@ export default function PostCard({ post, onUpdate, onDelete }) {
       )}
 
       {/* Post video */}
-      {postVideo && (
+      {postVideo && !postOverlay && (
         <AutoPlayVideo src={postVideo} style={styles.postImage} />
+      )}
+      {postVideo && postOverlay && (
+        <div style={styles.overlayFrame}>
+          <AutoPlayVideo src={postVideo} style={styles.overlayVideo} />
+          <VideoTextOverlay overlay={postOverlay} />
+        </div>
       )}
 
       {/* Like/emoji/comment summary */}
@@ -519,6 +578,12 @@ const styles = {
   },
   postImage: {
     width: '100%', maxHeight: 500, objectFit: 'cover', display: 'block',
+  },
+  overlayFrame: {
+    position: 'relative', width: '100%', maxWidth: 340, aspectRatio: '9 / 16', margin: '0 auto', background: '#000', overflow: 'hidden',
+  },
+  overlayVideo: {
+    width: '100%', height: '100%', objectFit: 'cover', display: 'block',
   },
   summaryRow: {
     display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 14px 4px',
