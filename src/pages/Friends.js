@@ -200,6 +200,12 @@ export default function Friends() {
                             : <MdStarBorder size={22} color="#999" />}
                         </button>
                         <button
+                          style={{ ...styles.btnDanger, backgroundColor: '#1a6b3a', marginRight: 6 }}
+                          onClick={() => navigate(`/chat/${id}`, { state: { userId: id, userName: name, userImage: item.imageURL?.thumbnail || '' } })}
+                        >
+                          <span>Message</span>
+                        </button>
+                        <button
                           style={styles.btnDanger}
                           onClick={() => handleUnfriend(id)}
                           disabled={busy}

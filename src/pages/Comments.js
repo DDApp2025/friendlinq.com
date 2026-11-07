@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getComments, addComment, deleteComment } from '../actions/post_actions';
+import { getComments, addComment, deleteComment, editComment } from '../actions/post_actions';
 import normalizeImg from '../utils/normalizeImg';
 import { AiOutlineArrowLeft, AiOutlineDelete, AiOutlineSend } from 'react-icons/ai';
 import { firstName } from '../utils/displayName';
@@ -27,6 +27,10 @@ export default function Comments() {
   const [loading, setLoading] = useState(true);
   const [text, setText] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  // Robert's additions (Nov 6, 2026): reply to a comment and edit your own comment, like the app.
+  const [replyTo, setReplyTo] = useState(null);
+  const [editId, setEditId] = useState(null);
+  const [editText, setEditText] = useState('');
 
   const profilePic = profile?.imageURL || '';
   const myUserId = profile?._id || profile?.userId || '';
@@ -35,7 +39,9 @@ export default function Comments() {
     setLoading(true);
     const res = await getComments(postId);
     if (res?.statusCode === 200) {
-      setComments(res.data?.commentData || res.data?.comments || res.data || []);
+      const list = res.data?.commentData || res.data?.comments || res.data || [];
+      // Replies arrive inside their comment (childComment); show only top comments at the top level.
+      setComments(Array.isArray(list) ? list.filter((c) => !c.parentId) : []);
     }
     setLoading(false);
   }, [postId]);
@@ -47,9 +53,10 @@ export default function Comments() {
   const handleAdd = async () => {
     if (!text.trim() || submitting) return;
     setSubmitting(true);
-    const res = await addComment(postId, text.trim());
+    const res = await addComment(postId, text.trim(), replyTo?._id);
     if (res?.statusCode === 200) {
       setText('');
+      setReplyTo(null);
       fetchComments();
     } else {
       alert(res?.message || 'Failed to add comment');
@@ -64,6 +71,18 @@ export default function Comments() {
       setComments((prev) => prev.filter((c) => c._id !== commentId));
     } else {
       alert(res?.message || 'Failed to delete comment');
+    }
+  };
+
+  const handleSaveEdit = async (c) => {
+    const t = editText.trim();
+    if (t.length < 2) { alert('Please write at least 2 letters.'); return; }
+    const res = await editComment(postId, c._id, t);
+    if (res?.statusCode === 200) {
+      setEditId(null);
+      fetchComments();
+    } else {
+      alert(res?.message || 'Failed to edit comment');
     }
   };
 
@@ -91,14 +110,14 @@ export default function Comments() {
           {!loading && comments.length === 0 && (
             <div style={styles.empty}>No comments yet. Be the first!</div>
           )}
-          {comments.map((c) => {
+          {comments.map((top) => [top, ...((top.childComment || []).map((r) => ({ ...r, _reply: true })))]).flat().map((c) => {
             const author = c.commentAuthor || c.author || {};
             const authorName = firstName(author.fullName);
             const authorPic = normalizeImg(author.imageURL) || '';
             const isOwn = (author._id || author.userId) === myUserId;
 
             return (
-              <div key={c._id} style={styles.commentCard}>
+              <div key={c._id} style={{ ...styles.commentCard, ...(c._reply ? { marginLeft: 40 } : {}) }}>
                 <div style={styles.commentPicWrap}>
                   {authorPic ? (
                     <img src={authorPic} alt="" style={styles.commentPic} />
@@ -109,11 +128,26 @@ export default function Comments() {
                   )}
                 </div>
                 <div style={styles.commentBody}>
-                  <div style={styles.commentBubble}>
-                    <span style={styles.commentAuthor}>{authorName}</span>
-                    <span style={styles.commentText}>{c.commentText || c.comment || c.text}</span>
-                  </div>
+                  {editId === c._id ? (
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <input value={editText} onChange={(e) => setEditText(e.target.value)} style={styles.input} autoFocus
+                        onKeyDown={(e) => { if (e.key === 'Enter') handleSaveEdit(c); if (e.key === 'Escape') setEditId(null); }} />
+                      <button style={styles.smallBtn} onClick={() => handleSaveEdit(c)}>Save</button>
+                      <button style={styles.smallBtn} onClick={() => setEditId(null)}>Cancel</button>
+                    </div>
+                  ) : (
+                    <div style={styles.commentBubble}>
+                      <span style={styles.commentAuthor}>{authorName}</span>
+                      <span style={styles.commentText}>{c.commentText || c.comment || c.text}</span>
+                    </div>
+                  )}
                   <span style={styles.commentTime}>{timeAgo(c.createdAt || c.updatedAt)}</span>
+                  {!c._reply && (
+                    <button style={styles.linkBtn} onClick={() => setReplyTo(c)}>Reply</button>
+                  )}
+                  {isOwn && editId !== c._id && (
+                    <button style={styles.linkBtn} onClick={() => { setEditId(c._id); setEditText(c.commentText || ''); }}>Edit</button>
+                  )}
                 </div>
                 {isOwn && (
                   <button onClick={() => handleDelete(c._id)} style={styles.deleteBtn}>
@@ -125,6 +159,12 @@ export default function Comments() {
           })}
         </div>
 
+        {replyTo && (
+          <div style={{ fontSize: 13, color: '#555', padding: '6px 0 0' }}>
+            Replying to {firstName((replyTo.commentAuthor || {}).fullName)}{' '}
+            <button style={styles.linkBtn} onClick={() => setReplyTo(null)}>Cancel</button>
+          </div>
+        )}
         {/* Input bar */}
         <div style={styles.inputBar}>
           <div style={styles.inputPicWrap}>
@@ -138,7 +178,7 @@ export default function Comments() {
           </div>
           <input
             type="text"
-            placeholder="Write a comment..."
+            placeholder={replyTo ? 'Write a reply...' : 'Write a comment...'}
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -266,6 +306,24 @@ const styles = {
     marginLeft: 12,
     marginTop: 2,
     display: 'inline-block',
+  },
+  linkBtn: {
+    background: 'none',
+    border: 'none',
+    color: '#1a6b3a',
+    fontSize: 12,
+    fontWeight: 600,
+    cursor: 'pointer',
+    padding: '0 6px',
+  },
+  smallBtn: {
+    background: '#1a6b3a',
+    color: '#fff',
+    border: 'none',
+    borderRadius: 14,
+    padding: '4px 12px',
+    cursor: 'pointer',
+    fontSize: 13,
   },
   deleteBtn: {
     background: 'none',

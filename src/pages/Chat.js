@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { getChatMessages, sendMessage, sendMediaMessage, markChatRead } from '../actions/chat_actions';
 import SOCKET from '../api/socket';
+import { dotnetApi } from '../api/axios';
+import { DELETE_CHAT_MESSAGE_ENDPOINT } from '../api/config';
 import normalizeImg from '../utils/normalizeImg';
 import { MdArrowBack, MdSend, MdAttachFile, MdClose } from 'react-icons/md';
 
@@ -215,7 +217,7 @@ export default function Chat() {
           <div style={styles.emptyText}>No messages yet. Say hello!</div>
         )}
 
-        {messages.map((msg, idx) => {
+        {messages.filter((m) => (m.textMessage || m.message) !== '#Deleted').map((msg, idx) => {
           const mine = isMine(msg);
           const mediaUrl = getMessageMedia(msg);
 
@@ -241,6 +243,25 @@ export default function Chat() {
                 )}
                 {(msg.textMessage || msg.message || msg.text || msg.content) && (
                   <span style={styles.msgText}>{msg.textMessage || msg.message || msg.text || msg.content}</span>
+                )}
+                {/* Robert's addition (Nov 6, 2026): delete your own message, like the app. */}
+                {mine && msg._id && (
+                  <span
+                    role="button"
+                    title="Delete this message"
+                    style={{ display: 'block', fontSize: 11, textAlign: 'right', cursor: 'pointer', color: 'rgba(255,255,255,0.75)', marginTop: 2 }}
+                    onClick={async () => {
+                      if (!window.confirm('Delete this message?')) return;
+                      try {
+                        await dotnetApi.post(DELETE_CHAT_MESSAGE_ENDPOINT, { authorization: token, ChatId: msg._id });
+                        setMessages((list) => list.filter((m) => m._id !== msg._id));
+                      } catch {
+                        alert('Could not delete the message');
+                      }
+                    }}
+                  >
+                    Delete
+                  </span>
                 )}
                 <span
                   style={{

@@ -28,6 +28,7 @@ import MarketplaceDetail from './pages/MarketplaceDetail';
 // Subscription lazy-loaded below
 import Settings from './pages/Settings';
 import Support from './pages/Support';
+import Invite from './pages/Invite';
 import { ChooseTutorial, TutorialViewer } from './pages/Tutorials';
 // Call and LiveStream lazy-loaded below
 import FavoritesPage from './pages/Favorites';
@@ -146,6 +147,7 @@ function App() {
                   <Route path="/subscription" element={<Subscription />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/support" element={<Support />} />
+                  <Route path="/invite" element={<Invite />} />
                   <Route path="/choose-tutorial" element={<ChooseTutorial />} />
                   <Route path="/tutorials" element={<TutorialViewer />} />
                   <Route path="*" element={<Navigate to="/home" replace />} />

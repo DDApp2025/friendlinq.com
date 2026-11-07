@@ -1,3 +1,4 @@
+import ProfilePosts from '../components/posts/ProfilePosts';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -184,6 +185,14 @@ export default function UserProfile() {
 
           {/* Friend action button */}
           <div style={styles.actionRow}>
+            {friendStatus === 'friend' && (
+              <button
+                style={{ ...styles.unfriendBtn, backgroundColor: '#1a6b3a', marginRight: 8 }}
+                onClick={() => navigate(`/chat/${userId}`, { state: { userId, userName: fullName, userImage: user.imageURL?.thumbnail || '' } })}
+              >
+                <span>Message</span>
+              </button>
+            )}
             {friendStatus === 'friend' ? (
               <button
                 style={styles.unfriendBtn}
@@ -267,6 +276,9 @@ export default function UserProfile() {
           </div>
         )}
       </div>
+      <div style={{ width: '100%', maxWidth: 600, margin: '0 auto' }}>
+        <ProfilePosts userId={userId} />
+      </div>
     </div>
   );
 }
@@ -274,7 +286,9 @@ export default function UserProfile() {
 const styles = {
   container: {
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     padding: '16px 12px',
     backgroundColor: '#f0f2f5',
     minHeight: 'calc(100vh - 56px)',

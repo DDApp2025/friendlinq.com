@@ -47,6 +47,7 @@ const VIEW = {
   HOME: 'home',
   MEMBERS: 'members',
   BROWSE: 'browse',
+  REQUESTS: 'requests',
 };
 
 export default function Groups() {
@@ -201,6 +202,70 @@ export default function Groups() {
     }
     setLoading(false);
   }, []);
+
+  // Robert's additions (Nov 6, 2026), same as the app: the group's admin can see and answer join
+  // requests, remove a member, and delete the group.
+  const [requests, setRequests] = useState([]);
+  const isGroupAdmin = (g) => !!g && String(g.groupAdminId) === String(profile._id);
+
+  const openRequests = async () => {
+    if (!activeGroup) return;
+    setView(VIEW.REQUESTS);
+    setRequests([]);
+    setLoading(true);
+    try {
+      const res = await dotnetApi.post(config.GROUP_REQUESTS, { authorization: token, groupId: activeGroup.groupId });
+      const d = res.data?.Data ?? res.data?.data ?? res.data;
+      setRequests(Array.isArray(d) ? d : []);
+    } catch (e) {
+      setRequests([]);
+    }
+    setLoading(false);
+  };
+
+  const answerRequest = async (req, status) => {
+    try {
+      await dotnetApi.post(config.ACCEPT_GROUP_REQUESTS, { authorization: token, requestId: req._id, status });
+      setRequests((l) => l.filter((r) => r._id !== req._id));
+    } catch (e) {
+      alert('Could not answer the request');
+    }
+  };
+
+  const handleRemoveMember = async (memberId) => {
+    if (!window.confirm('Remove this member from the group?')) return;
+    try {
+      const fd = new FormData();
+      fd.append('groupId', activeGroup.groupId);
+      fd.append('groupMemberId', memberId);
+      const res = await nodeApi.post(config.DELETE_GROUP_MEMBERS, fd);
+      if (res.data?.statusCode === 200) loadMembers(activeGroup.groupId);
+      else alert(res.data?.message || 'Failed to remove member');
+    } catch (e) {
+      alert('Failed to remove member');
+    }
+  };
+
+  const handleDeleteGroup = async () => {
+    if (!activeGroup) return;
+    if (!window.confirm('Delete this group for everyone? This cannot be undone.')) return;
+    setLoading(true);
+    try {
+      const fd = new FormData();
+      fd.append('groupId', activeGroup.groupId);
+      const res = await nodeApi.post(config.DELETE_GROUP, fd);
+      if (res.data?.statusCode === 200) {
+        setView(VIEW.LIST);
+        setActiveGroup(null);
+        loadGroups();
+      } else {
+        alert(res.data?.message || 'Failed to delete group');
+      }
+    } catch (e) {
+      alert('Failed to delete group');
+    }
+    setLoading(false);
+  };
 
   const openMembers = () => {
     if (!activeGroup) return;
@@ -463,6 +528,16 @@ export default function Groups() {
                 <button style={s.menuItem} onClick={() => { setShowMenu(false); openMembers(); }}>
                   <MdGroup size={18} /> Members
                 </button>
+                {isGroupAdmin(activeGroup) && (
+                  <>
+                    <button style={s.menuItem} onClick={() => { setShowMenu(false); openRequests(); }}>
+                      <MdGroup size={18} /> Join requests
+                    </button>
+                    <button style={{ ...s.menuItem, color: '#d32f2f' }} onClick={() => { setShowMenu(false); handleDeleteGroup(); }}>
+                      <MdExitToApp size={18} /> Delete Group
+                    </button>
+                  </>
+                )}
                 {activeGroup.groupAdminId !== profile._id && (
                   <button style={{ ...s.menuItem, color: '#d32f2f' }} onClick={() => { setShowMenu(false); handleLeaveGroup(); }}>
                     <MdExitToApp size={18} /> Leave Group
@@ -588,6 +663,42 @@ export default function Groups() {
                   <div style={s.groupName}>{firstName(member.fullName)}</div>
                   <div style={s.groupDate}>{member.email || ''}</div>
                 </div>
+                {isGroupAdmin(activeGroup) && member._id && String(member._id) !== String(profile._id) && (
+                  <button style={{ ...s.menuItem, width: 'auto', color: '#d32f2f' }} onClick={() => handleRemoveMember(member._id)}>
+                    Remove
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  if (view === VIEW.REQUESTS) {
+    return (
+      <div style={s.page}>
+        <div style={s.header}>
+          <button style={s.backBtn} onClick={() => { setView(VIEW.HOME); }}>
+            <MdArrowBack size={24} />
+          </button>
+          <h2 style={s.title}>Join requests</h2>
+        </div>
+        {loading && <div style={s.loader}>Loading...</div>}
+        <div style={s.list}>
+          {requests.length === 0 && !loading && <div style={s.empty}>No requests right now</div>}
+          {requests.map((r, i) => {
+            const m = r.groupMember || {};
+            const img = m.imageURL?.thumbnail ? normalizeImg(m.imageURL.thumbnail) : '';
+            return (
+              <div key={r._id || i} style={s.groupRow}>
+                {img ? <img src={img} alt={m.fullName || 'Member'} style={s.groupIcon} /> : <div style={s.groupIconFallback}>{firstName(m.fullName)[0]}</div>}
+                <div style={s.groupInfo}>
+                  <div style={s.groupName}>{firstName(m.fullName)}</div>
+                </div>
+                <button style={{ ...s.menuItem, width: 'auto', color: '#1a6b3a' }} onClick={() => answerRequest(r, 'accepted')}>Accept</button>
+                <button style={{ ...s.menuItem, width: 'auto', color: '#d32f2f' }} onClick={() => answerRequest(r, 'deny')}>Deny</button>
               </div>
             );
           })}

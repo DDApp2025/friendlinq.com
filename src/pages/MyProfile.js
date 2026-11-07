@@ -1,3 +1,4 @@
+import ProfilePosts from '../components/posts/ProfilePosts';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -181,6 +182,9 @@ export default function MyProfile() {
           </div>
         )}
       </div>
+      <div style={{ width: '100%', maxWidth: 600, margin: '0 auto' }}>
+        <ProfilePosts own userId={profile?._id} />
+      </div>
     </div>
   );
 }
@@ -188,7 +192,9 @@ export default function MyProfile() {
 const styles = {
   container: {
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     padding: '16px 12px',
     backgroundColor: '#f0f2f5',
     minHeight: 'calc(100vh - 56px)',

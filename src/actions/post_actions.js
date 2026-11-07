@@ -53,11 +53,13 @@ export const getComments = async (postId) => {
 };
 
 // ── Add comment ───────────────────────────────────────────
-export const addComment = async (postId, comment) => {
+export const addComment = async (postId, comment, parentId) => {
   try {
     const fd = new FormData();
     fd.append('postId', postId);
     fd.append('commentText', comment);
+    // Robert's addition (Nov 6, 2026): a reply to a comment (same as the app).
+    if (parentId) fd.append('parentId', parentId);
     const res = await nodeApi.post(COMMENT_POST, fd);
     return res.data;
   } catch (err) {
@@ -112,5 +114,19 @@ export const notifyFriends = async (token, postId, authorName) => {
     }
   } catch (err) {
     console.error('notifyFriends error:', err);
+  }
+};
+
+// Robert's addition (Nov 6, 2026): edit your own comment (same as the app; the server wants 2+ letters).
+export const editComment = async (postId, commentId, commentText) => {
+  try {
+    const fd = new FormData();
+    fd.append('postId', postId);
+    fd.append('commentId', commentId);
+    fd.append('commentText', commentText);
+    const res = await nodeApi.put('/api/v1/post/editPostComment', fd);
+    return res.data;
+  } catch (err) {
+    return { statusCode: 500, message: err?.response?.data?.message || 'Network error' };
   }
 };

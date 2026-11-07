@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getChatList, getChatCount } from '../actions/chat_actions';
+import { dotnetApi } from '../api/axios';
+import { DELETE_CHAT_NOTIFICATION_END_POINT } from '../api/config';
 import normalizeImg from '../utils/normalizeImg';
 import { firstName } from '../utils/displayName';
 
@@ -113,6 +115,25 @@ export default function ChatList() {
                   )}
                 </div>
               </div>
+              {/* Robert's addition (Nov 6, 2026): delete a whole conversation, like the app. */}
+              <span
+                role="button"
+                title="Delete this conversation"
+                style={{ marginLeft: 8, color: '#d32f2f', fontSize: 13, padding: 4 }}
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  if (!window.confirm('Delete this whole conversation?')) return;
+                  const friendId = chat.friendId || chat.senderId || chat.Aborad_id || chat.aborad_id;
+                  try {
+                    await dotnetApi.post(DELETE_CHAT_NOTIFICATION_END_POINT, { authorization: token, FriendId: friendId });
+                    setChats((list) => list.filter((c) => c !== chat));
+                  } catch {
+                    alert('Could not delete the conversation');
+                  }
+                }}
+              >
+                Delete
+              </span>
             </button>
           );
         })}

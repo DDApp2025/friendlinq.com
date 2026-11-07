@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { nodeApi, dotnetApi } from '../../api/axios';
-import { MY_POST_LIKE, MY_POST_DISLIKE, DELETE_MY_POST, UPDATE_POST, REPORT_POST } from '../../api/config';
+import { MY_POST_LIKE, MY_POST_DISLIKE, DELETE_MY_POST, UPDATE_POST, REPORT_POST, SHARE_POST, CHANGE_COMMENT_VALUE } from '../../api/config';
 import {
   AiOutlineLike, AiFillLike,
   AiOutlineDislike, AiFillDislike,
@@ -223,6 +223,12 @@ export default function PostCard({ post, onUpdate, onDelete }) {
   const [editing, setEditing] = useState(false);
   const [editText, setEditText] = useState('');
   const [showTextEditor, setShowTextEditor] = useState(false);
+  // Robert's additions (Nov 6, 2026), same as the app: share a post to your own feed, and turn
+  // comments on or off on your own post.
+  const [shareOpen, setShareOpen] = useState(false);
+  const [shareText, setShareText] = useState('');
+  const [shareType, setShareType] = useState('Public');
+  const [commentsOn, setCommentsOn] = useState(String(post?.commentOnOff ?? true) !== 'false');
   const [saving, setSaving] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [emojiOpen, setEmojiOpen] = useState(false);
@@ -387,6 +393,45 @@ export default function PostCard({ post, onUpdate, onDelete }) {
   };
 
   // ── Share post ───────────────────────────────────────────
+  const handleShareToFeed = async () => {
+    try {
+      const res = await dotnetApi.post(SHARE_POST, {
+        authorization: token,
+        imageUrl: post.imageURL?.original || null,
+        imageThumbnail: null,
+        videoUrl: post.videoURL || null,
+        videoThumbnail: post.videoThumbnailUrl?.original || null,
+        postTitle: shareText.trim() || null,
+        postContent: shareText.trim() || null,
+        postType: shareType,
+      });
+      const code = res.data?.StatusCode ?? res.data?.statusCode;
+      if (code === 200 || code === undefined) {
+        setShareOpen(false);
+        setShareText('');
+        alert('Shared to your feed.');
+      } else {
+        alert(res.data?.Message || res.data?.message || 'Failed to share');
+      }
+    } catch {
+      alert('Failed to share');
+    }
+  };
+
+  const toggleComments = async () => {
+    setMenuOpen(false);
+    const next = !commentsOn;
+    try {
+      const fd = new FormData();
+      fd.append('commentOnOff', next ? 'true' : 'false');
+      fd.append('postId', post._id);
+      await nodeApi.post(CHANGE_COMMENT_VALUE, fd);
+      setCommentsOn(next);
+    } catch {
+      alert('Could not change comments');
+    }
+  };
+
   const handleShare = async () => {
     const url = `https://friendlinq.com/post/${post._id}`;
     try {
@@ -455,6 +500,9 @@ export default function PostCard({ post, onUpdate, onDelete }) {
                 <>
                   <div style={styles.menuItem} onClick={startEdit}>
                     Edit Post
+                  </div>
+                  <div style={styles.menuItem} onClick={toggleComments}>
+                    {commentsOn ? 'Turn comments off' : 'Turn comments on'}
                   </div>
                   <div
                     style={{ ...styles.menuItem, color: '#d32f2f' }}
@@ -590,16 +638,32 @@ export default function PostCard({ post, onUpdate, onDelete }) {
             </div>
           )}
         </div>
-        <button style={styles.actionBtn} onClick={() => navigate(`/comments/${post._id}`)}>
+        <button
+          style={{ ...styles.actionBtn, ...(commentsOn ? {} : { opacity: 0.4, cursor: 'default' }) }}
+          title={commentsOn ? 'Comments' : 'Comments are turned off for this post'}
+          onClick={() => commentsOn && navigate(`/comments/${post._id}`)}
+        >
           <AiOutlineComment size={22} color="#888" />
           <span style={{ marginLeft: 6, color: '#888', fontWeight: 600, fontSize: 13 }}>
             {post.Comments?.length || post.totalComment || 0}
           </span>
         </button>
-        <button style={styles.actionBtn} onClick={handleShare}>
+        <button style={styles.actionBtn} onClick={() => setShareOpen((v) => !v)} title="Share">
           <FaShare size={18} color="#888" />
         </button>
       </div>
+      {shareOpen && (
+        <div style={{ padding: '8px 14px 12px', borderTop: '1px solid #eee' }}>
+          <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 6 }}>Share this post</div>
+          <textarea value={shareText} onChange={(e) => setShareText(e.target.value)} placeholder="Say something about this (optional)" rows={2} style={styles.editTextarea} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 6, flexWrap: 'wrap' }}>
+            <label style={{ fontSize: 14 }}><input type="radio" checked={shareType === 'Friend_Only'} onChange={() => setShareType('Friend_Only')} /> Friends</label>
+            <label style={{ fontSize: 14 }}><input type="radio" checked={shareType === 'Public'} onChange={() => setShareType('Public')} /> Community</label>
+            <button style={{ ...styles.editSaveBtn, marginLeft: 'auto' }} onClick={handleShareToFeed}>Share to my feed</button>
+            <button style={styles.editCancelBtn} onClick={() => { setShareOpen(false); handleShare(); }}>Copy link</button>
+          </div>
+        </div>
+      )}
 
       {/* Delete confirmation modal */}
       {showDeleteConfirm && (
