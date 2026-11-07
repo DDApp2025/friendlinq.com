@@ -218,7 +218,8 @@ export default function PostCard({ post, onUpdate, onDelete }) {
   const profileThumb = normalizeImg(author?.imageURL) || null;
   const postImage = normalizeImg(post?.imageURL) || null;
   const postVideo = post?.videoURL ? normalizeImg(post.videoURL) : null;
-  const postOverlay = parseOverlay(post?.postOverlay);
+  // The community feed comes from the .NET server, which returns new fields inside "ExtraElements".
+  const postOverlay = parseOverlay(post?.postOverlay || post?.ExtraElements?.postOverlay);
 
   // Close menu on outside click
   useEffect(() => {
