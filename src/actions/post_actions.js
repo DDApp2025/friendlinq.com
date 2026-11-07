@@ -9,7 +9,7 @@ import {
 } from '../api/config';
 
 // ── Create post (FormData) ────────────────────────────────
-export const createPost = async ({ postTitle, postContent, postType, mediaFile, isdating }) => {
+export const createPost = async ({ postTitle, postContent, postType, mediaFile, isdating, postOverlay }) => {
   try {
     const fd = new FormData();
     fd.append('postTitle', postTitle || '');
@@ -27,6 +27,8 @@ export const createPost = async ({ postTitle, postContent, postType, mediaFile, 
       fd.append('isMediaTypeVideo', 'false');
     }
 
+    // Robert's addition (Nov 6, 2026): text, captions and voice on a video (same as the app).
+    if (postOverlay) fd.append('postOverlay', postOverlay);
     const res = await nodeApi.post(CREATE_MY_POST, fd);
     return res.data;
   } catch (err) {

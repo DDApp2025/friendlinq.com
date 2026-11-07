@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { nodeApi, dotnetApi } from '../api/axios';
 import { GET_ALL_USERS_POST, GET_PUBLIC_POST } from '../api/config';
 import PostCard from '../components/posts/PostCard';
+import VideoTextEditor, { overlayToString } from '../components/posts/VideoTextEditor';
 import { AiOutlineCamera, AiOutlineVideoCamera, AiOutlineClose } from 'react-icons/ai';
 import { MdVideocam } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +26,9 @@ export default function Home() {
   const [privacyForPost, setPrivacyForPost] = useState('Public'); // 'Public' or 'Friend_Only'
   const [mediaFile, setMediaFile] = useState(null);
   const [mediaPreview, setMediaPreview] = useState(null);
+  // Robert's addition (Nov 6, 2026): the Aa editor (text, captions, voice) for a video being posted.
+  const [postOverlay, setPostOverlay] = useState(null);
+  const [showEditor, setShowEditor] = useState(false);
   const [posting, setPosting] = useState(false);
   const navigate = useNavigate();
 
@@ -228,6 +232,8 @@ export default function Home() {
     if (!file) return;
     setMediaFile(file);
     setMediaPreview(URL.createObjectURL(file));
+    setPostOverlay(null);
+    if (file.type?.startsWith('video')) setShowEditor(true);
   };
 
   // ── Paste-to-upload ─────────────────────────────────────
@@ -242,6 +248,8 @@ export default function Home() {
         if (file) {
           setMediaFile(file);
           setMediaPreview(URL.createObjectURL(file));
+          setPostOverlay(null);
+          if (file.type?.startsWith('video')) setShowEditor(true);
         }
         break;
       }
@@ -250,6 +258,7 @@ export default function Home() {
 
   const clearMedia = () => {
     setMediaFile(null);
+    setPostOverlay(null);
     if (mediaPreview) URL.revokeObjectURL(mediaPreview);
     setMediaPreview(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
@@ -269,6 +278,7 @@ export default function Home() {
         postType,
         mediaFile: mediaFile || null,
         isdating: userType === 'dating' ? '1' : '0',
+        postOverlay: mediaFile?.type?.startsWith('video') ? overlayToString(postOverlay) : '',
       });
 
       if (res?.statusCode === 200) {
@@ -366,7 +376,16 @@ export default function Home() {
           {mediaPreview && (
             <div style={styles.mediaPreviewWrap}>
               {mediaFile?.type?.startsWith('video') ? (
-                <video src={mediaPreview} controls style={styles.mediaPreview} />
+                <>
+                  <video src={mediaPreview} controls style={styles.mediaPreview} />
+                  <button
+                    onClick={() => setShowEditor(true)}
+                    style={{ position: 'absolute', left: 8, bottom: 8, background: 'rgba(0,0,0,0.65)', color: '#fff', border: '1px solid #fff', borderRadius: 8, padding: '3px 10px', cursor: 'pointer', fontWeight: 'bold' }}
+                    title="Text, captions and voice on your video"
+                  >
+                    Aa{postOverlay ? ' ✓' : ''}
+                  </button>
+                </>
               ) : (
                 <img src={mediaPreview} alt="Media attachment preview" style={styles.mediaPreview} />
               )}
@@ -375,6 +394,15 @@ export default function Home() {
               </button>
             </div>
           )}
+
+          <VideoTextEditor
+            open={showEditor}
+            videoSrc={mediaPreview}
+            file={mediaFile}
+            initial={postOverlay}
+            onCancel={() => setShowEditor(false)}
+            onDone={(o) => { setPostOverlay(o); setShowEditor(false); }}
+          />
 
           {/* Hidden file input */}
           <input

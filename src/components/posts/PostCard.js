@@ -12,6 +12,7 @@ import { BsThreeDotsVertical, BsEmojiSmile } from 'react-icons/bs';
 import { FaShare } from 'react-icons/fa';
 import { addComment } from '../../actions/post_actions';
 import normalizeImg from '../../utils/normalizeImg';
+import VideoTextEditor, { overlayToString } from './VideoTextEditor';
 import { firstName } from '../../utils/displayName';
 
 // Feed videos play by themselves (muted, looping) while at least half of the video is on screen,
@@ -96,9 +97,29 @@ function VideoWithOverlay({ src, overlay }) {
     window.dispatchEvent(new Event('fl-cc-change'));
   };
   const line = overlay.cap.length && ccOn ? captionAt(overlay.cap, time) : '';
+  // Voice (text to speech): plays from the start whenever the video plays with the sound on.
+  const voices = overlay.items.filter((it) => it.tts && it.tts.u && (!it.tts.t || it.tts.t === it.t)).map((it) => it.tts.u);
+  const audioRef = useRef(null);
+  const wasOn = useRef(false);
+  const onState = ({ playing, muted }) => {
+    const on = playing && !muted;
+    if (on && !wasOn.current && voices.length) {
+      let i = 0;
+      const next = () => {
+        if (i >= voices.length) return;
+        const a = new Audio('https://natural.friendlinq.com/' + voices[i++]);
+        audioRef.current = a;
+        a.onended = next;
+        a.play().catch(() => {});
+      };
+      next();
+    }
+    if (!on && audioRef.current) { audioRef.current.onended = null; audioRef.current.pause(); audioRef.current = null; }
+    wasOn.current = on;
+  };
   return (
     <div style={styles.overlayFrame}>
-      <AutoPlayVideo src={src} style={styles.overlayVideo} onTime={overlay.cap.length ? setTime : undefined} />
+      <AutoPlayVideo src={src} style={styles.overlayVideo} onTime={overlay.cap.length ? setTime : undefined} onState={voices.length ? onState : undefined} />
       <VideoTextOverlay overlay={overlay} />
       {line ? (
         <div style={{ position: 'absolute', left: 0, right: 0, bottom: '16%', display: 'flex', justifyContent: 'center', pointerEvents: 'none' }}>
@@ -118,7 +139,7 @@ function VideoWithOverlay({ src, overlay }) {
   );
 }
 
-function AutoPlayVideo({ src, style, onTime }) {
+function AutoPlayVideo({ src, style, onTime, onState }) {
   const ref = useRef(null);
   useEffect(() => {
     const v = ref.current;
@@ -149,6 +170,9 @@ function AutoPlayVideo({ src, style, onTime }) {
       controls
       style={style}
       onTimeUpdate={onTime ? (e) => onTime(e.currentTarget.currentTime) : undefined}
+      onPlay={onState ? (e) => onState({ playing: true, muted: e.currentTarget.muted }) : undefined}
+      onPause={onState ? (e) => onState({ playing: false, muted: e.currentTarget.muted }) : undefined}
+      onVolumeChange={onState ? (e) => onState({ playing: !e.currentTarget.paused, muted: e.currentTarget.muted }) : undefined}
       onError={(e) => { e.target.style.display = 'none'; }}
     />
   );
@@ -198,6 +222,7 @@ export default function PostCard({ post, onUpdate, onDelete }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [editText, setEditText] = useState('');
+  const [showTextEditor, setShowTextEditor] = useState(false);
   const [saving, setSaving] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [emojiOpen, setEmojiOpen] = useState(false);
@@ -321,24 +346,35 @@ export default function PostCard({ post, onUpdate, onDelete }) {
 
   // ── Edit post ────────────────────────────────────────────
   const startEdit = () => {
-    setEditText(post.postContent || post.postTitle || '');
+    const words = post.postContent || post.postTitle || '';
+    setEditText(words === '..' ? '' : words);
     setEditing(true);
     setMenuOpen(false);
   };
 
-  const handleSaveEdit = async () => {
-    if (!editText.trim()) return;
+  const handleSaveEdit = async (overlayText) => {
+    const words = editText.trim();
+    if (!words && !post.videoURL && !post.imageURL?.original) return;
     setSaving(true);
     try {
       const fd = new FormData();
       fd.append('postId', post._id);
-      fd.append('postTitle', editText.trim());
-      fd.append('postContent', editText.trim());
+      fd.append('postTitle', words || '..');
+      fd.append('postContent', words || '..');
       fd.append('isMediaFileUploaded', 'false');
       fd.append('isMediaTypeVideo', 'false');
+      // Fix (Nov 6, 2026): keep the post's audience (the app had the same fix on Oct 31); without it the
+      // server saves it blank and the post disappears from the feeds.
+      fd.append('postType', post.postType || 'Public');
+      if (typeof overlayText === 'string') fd.append('postOverlay', overlayText);
       const res = await nodeApi.post(UPDATE_POST, fd);
       if (res.data?.statusCode === 200) {
-        onUpdate({ ...post, postContent: editText.trim(), postTitle: editText.trim() });
+        onUpdate({
+          ...post,
+          postContent: words || '..',
+          postTitle: words || '..',
+          ...(typeof overlayText === 'string' ? { postOverlay: overlayText, ExtraElements: { ...(post.ExtraElements || {}), postOverlay: overlayText } } : {}),
+        });
         setEditing(false);
       } else {
         alert(res.data?.message || 'Failed to edit post');
@@ -452,10 +488,15 @@ export default function PostCard({ post, onUpdate, onDelete }) {
             rows={3}
           />
           <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 8 }}>
+            {post.videoURL && (
+              <button style={{ ...styles.editCancelBtn, marginRight: 'auto' }} onClick={() => setShowTextEditor(true)} disabled={saving}>
+                Aa Text, captions and voice on video
+              </button>
+            )}
             <button style={styles.editCancelBtn} onClick={() => setEditing(false)} disabled={saving}>
               Cancel
             </button>
-            <button style={styles.editSaveBtn} onClick={handleSaveEdit} disabled={saving}>
+            <button style={styles.editSaveBtn} onClick={() => handleSaveEdit()} disabled={saving}>
               {saving ? 'Saving...' : 'Save'}
             </button>
           </div>
@@ -464,6 +505,17 @@ export default function PostCard({ post, onUpdate, onDelete }) {
         post.postContent && post.postContent !== '..' && (
           <p style={styles.postText}>{linkify(post.postContent)}</p>
         )
+      )}
+
+      {showTextEditor && (
+        <VideoTextEditor
+          open={showTextEditor}
+          videoSrc={postVideo}
+          postId={post._id}
+          initial={postOverlay}
+          onCancel={() => setShowTextEditor(false)}
+          onDone={(o) => { setShowTextEditor(false); handleSaveEdit(overlayToString(o)); }}
+        />
       )}
 
       {/* Post image */}
