@@ -412,24 +412,31 @@ export default function PostCard({ post, onUpdate, onDelete }) {
     }
   };
 
-  const handleShareToFeed = async () => {
+  // Four plain choices, same as the app (Robert, Nov 8, 2026): Public feed, Friends' feed, one of my Groups, Copy link.
+  const handleShareToFeed = async (typeArg, groupArg) => {
+    const useType = typeArg || shareType;
+    const useGroup = groupArg !== undefined ? groupArg : shareGroupId;
     try {
       const res = await dotnetApi.post(SHARE_POST, {
-        ...(shareGroupId ? { groupId: shareGroupId } : {}),
+        ...(useGroup ? { groupId: useGroup } : {}),
         authorization: token,
         imageUrl: post.imageURL?.original || null,
         imageThumbnail: null,
         videoUrl: post.videoURL || null,
         videoThumbnail: post.videoThumbnailUrl?.original || null,
-        postTitle: shareText.trim() || null,
-        postContent: shareText.trim() || null,
-        postType: shareType,
+        postTitle: shareText.trim() || (post.postTitle && post.postTitle !== '..' ? post.postTitle : null),
+        postContent: shareText.trim() || (post.postContent && post.postContent !== '..' ? post.postContent : null),
+        postType: useType,
+        postOwnerId: post.postAuthor?._id || null,
+        postOwnerName: post.postAuthor?.fullName || null,
       });
       const code = res.data?.StatusCode ?? res.data?.statusCode;
       if (code === 200 || code === undefined) {
         setShareOpen(false);
         setShareText('');
-        alert(shareGroupId ? 'Shared in your group.' : 'Shared to your feed.');
+        alert(useGroup ? 'Shared in your group.' : useType === 'Public'
+          ? "Shared to the Public feed. Everyone can see it in Everyone's Posts. It is also in My Posts on your profile."
+          : "Shared to your Friends' feed. Your friends can see it in My Friends' Posts. It is also in My Posts on your profile.");
         setShareGroupId('');
       } else {
         alert(res.data?.Message || res.data?.message || 'Failed to share');
@@ -678,14 +685,13 @@ export default function PostCard({ post, onUpdate, onDelete }) {
           <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 6 }}>Share this post</div>
           <textarea value={shareText} onChange={(e) => setShareText(e.target.value)} placeholder="Say something about this (optional)" rows={2} style={styles.editTextarea} />
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 6, flexWrap: 'wrap' }}>
-            <label style={{ fontSize: 14 }}><input type="radio" checked={shareType === 'Friend_Only'} onChange={() => setShareType('Friend_Only')} /> Friends</label>
-            <label style={{ fontSize: 14 }}><input type="radio" checked={shareType === 'Public'} onChange={() => setShareType('Public')} /> Community</label>
-            <select value={shareGroupId} onChange={(e) => setShareGroupId(e.target.value)} style={{ fontSize: 14, padding: 4, borderRadius: 6 }}>
-              <option value="">My feed</option>
-              {(shareGroups || []).map((g) => <option key={g._id} value={g._id}>Group: {g.groupName}</option>)}
+            <button style={styles.editSaveBtn} onClick={() => handleShareToFeed('Public', '')}>Share to the Public feed</button>
+            <button style={styles.editSaveBtn} onClick={() => handleShareToFeed('Friend_Only', '')}>Share to my Friends' feed</button>
+            <select value={shareGroupId} onChange={(e) => { const g = e.target.value; setShareGroupId(g); if (g) handleShareToFeed('Public', g); }} style={{ fontSize: 14, padding: 6, borderRadius: 6 }}>
+              <option value="">Share to one of my Groups...</option>
+              {(shareGroups || []).map((g) => <option key={g._id} value={g._id}>{g.groupName}</option>)}
             </select>
-            <button style={{ ...styles.editSaveBtn, marginLeft: 'auto' }} onClick={handleShareToFeed}>Share</button>
-            <button style={styles.editCancelBtn} onClick={() => { setShareOpen(false); handleShare(); }}>Copy link</button>
+            <button style={styles.editCancelBtn} onClick={() => { setShareOpen(false); handleShare(); }}>Copy link to this post</button>
           </div>
         </div>
       )}
