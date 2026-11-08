@@ -93,13 +93,15 @@ function relativeTime(dateStr) {
 // Decide navigation target based on notification type
 function getNavTarget(n) {
   const type = (n.type || n.notificationType || '').toLowerCase();
+  const idOf = (v) => (v && typeof v === 'object' ? v._id : v);
   if (type.includes('message') || type.includes('chat')) {
-    const userId = n.senderId || n.fromUserId || n.userId;
+    const userId = idOf(n.senderId || n.fromUserId || n.userId);
     return userId ? `/chat/${userId}` : null;
   }
-  if (type.includes('comment') || type.includes('like')) {
-    const postId = n.postId || n.data?.postId;
-    return postId ? `/comments/${postId}` : null;
+  if (type.includes('comment') || type.includes('like') || type.includes('new_post')) {
+    const postId = idOf(n.postId || n.data?.postId);
+    // Older comment notifications were saved without the post: open your own posts instead.
+    return postId ? `/comments/${postId}` : '/profile';
   }
   if (type.includes('friend')) {
     return '/friends';
@@ -262,7 +264,7 @@ const Notifications = () => {
                 {/* Content */}
                 <div style={styles.content}>
                   <p style={styles.message}>
-                    {n.textMessage || n.message || n.notificationMessage || n.title || ''}
+                    {String(n.textMessage || n.message || n.notificationMessage || n.title || '').replace(/\s*\(\.\.\)\./g, '.').replace(/ {2,}/g, ' ')}
                   </p>
                   <span style={styles.time}>
                     {relativeTime(n.createdAt || n.created_at || n.date)}
