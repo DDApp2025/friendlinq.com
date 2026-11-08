@@ -12,13 +12,13 @@ const TEXT = {
   toDating: {
     title: 'Switch to Dating Mode?',
     body:
-      'Dating Mode is a separate profile with its own friends, chats, groups, photos and posts. Nothing from your Social Profile is shown there, and nothing from Dating is shown on your Social Profile.\n\nYou can switch back any time from the menu.',
+      'Dating Mode is a separate profile with its own friends, chats, groups, photos and posts. Nothing from your Public Profile is shown there, and nothing from Dating is shown on your Public Profile.\n\nYou can switch back any time from the menu.',
     button: 'Switch to Dating',
   },
   toSocial: {
     title: 'Switch to Social Mode?',
     body:
-      'You will go back to your Social Profile, with your friends, chats, groups, photos and posts.\n\nYour Dating Profile and everything in it is kept separately. You can switch back any time from the menu.',
+      'You will go back to your Public Profile, with your friends, chats, groups, photos and posts.\n\nYour Dating Profile and everything in it is kept separately. You can switch back any time from the menu.',
     button: 'Switch to Social',
   },
 };

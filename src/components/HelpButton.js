@@ -24,7 +24,7 @@ export const HELP = {
       'Discover shows one person at a time. Click the heart to like them, or the X to pass. Click the card to see their full profile.',
       'Likes You shows people who liked you. Click Like back and it is a match.',
       'Matches are people who like each other. Click Say hi to start a chat.',
-      'To go back to your Social Profile, open the menu under your picture and choose Switch to Social Mode.',
+      'To go back to your Public Profile, open the menu under your picture and choose Switch to Social Mode.',
     ],
   },
   searchPeople: {
@@ -68,7 +68,7 @@ export const HELP = {
     items: ['Groups are for people who share an interest.', 'Click a group to see its posts. Join a group to post in it.', 'You can also create your own group.'],
   },
   profile: {
-    title: 'My Profile',
+    title: 'My Public Profile',
     items: ['This is your profile. Your own posts are listed further down this page under My Posts.', 'Click Edit Profile to change your details, photo and banner.'],
   },
   userProfile: {

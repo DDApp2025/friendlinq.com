@@ -1,4 +1,5 @@
 import ProfilePosts from '../components/posts/ProfilePosts';
+import { useModeSwitch } from '../components/ModeSwitch';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +12,7 @@ export default function MyProfile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const profile = useSelector((s) => s.authReducer.getProfileData) || {};
+  const profileMode = useModeSwitch();
   const [friends, setFriends] = useState([]);
   const [friendCount, setFriendCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -82,6 +84,9 @@ export default function MyProfile() {
 
         {/* Info section */}
         <div style={styles.infoSection}>
+          <div style={{ display: 'inline-block', background: '#1a6b3a', color: '#fff', borderRadius: 12, padding: '3px 12px', fontSize: 13, fontWeight: 600, marginBottom: 6 }}>
+            {profileMode.userType === 'dating' ? 'My Dating Profile' : 'My Public Profile'}
+          </div>
           <h2 style={styles.name}>{fullName}</h2>
 
           {email && (

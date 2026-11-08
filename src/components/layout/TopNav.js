@@ -220,7 +220,7 @@ const TopNav = ({ onMenuToggle }) => {
                     }}
                   >
                     <Icon size={18} color="#1a6b3a" />
-                    <span style={styles.dropdownLabel}>{item.label}</span>
+                    <span style={styles.dropdownLabel}>{item.path === '/profile' ? (mode.userType === 'dating' ? 'My Dating Profile' : 'My Public Profile') : item.label}</span>
                   </button>
                   {idx === 0 && (
                     <button
