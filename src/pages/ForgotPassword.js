@@ -25,13 +25,13 @@ function ForgotPassword() {
       setError('Enter email');
       return;
     }
-    if (!validateEmail(email)) {
+    if (!validateEmail(email.trim())) {
       setError('Enter valid email');
       return;
     }
 
     setLoading(true);
-    const res = await dispatch(ForgotPasswordAttempt({ email }));
+    const res = await dispatch(ForgotPasswordAttempt({ email: email.trim().toLowerCase() }));
     setLoading(false);
 
     if (res.success) {
@@ -71,7 +71,7 @@ function ForgotPassword() {
         </div>
 
         <p style={styles.description}>
-          Enter the email you used to join Friendlinq below and we'll send you an OTP for resetting your password.
+          Enter the email you used to join Friendlinq and we will email you a link to choose a new password.
         </p>
 
         <form onSubmit={handleSubmit}>
