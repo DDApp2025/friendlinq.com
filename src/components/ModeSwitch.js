@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserType, setUserType } from '../actions/auth_actions';
+import { setUserType } from '../actions/auth_actions';
+import { BASE_URL } from '../api/config';
 
 // One place to change between Social Mode and Dating Mode, used by the top menu and by Settings.
 // Same words and same steps as the app (homeSocial_screen.js confirmModeSwitch).
@@ -11,13 +12,13 @@ const TEXT = {
   toDating: {
     title: 'Switch to Dating Mode?',
     body:
-      'Your feed will show posts from single adults in Dating mode, and your new posts will go to them. Members in Dating mode will see your Dating Profile.\n\nYour friends, chats and Social Profile stay as they are. You can switch back any time from the menu.',
+      'Dating Mode is a separate profile with its own friends, chats, groups, photos and posts. Nothing from your Social Profile is shown there, and nothing from Dating is shown on your Social Profile.\n\nYou can switch back any time from the menu.',
     button: 'Switch to Dating',
   },
   toSocial: {
     title: 'Switch to Social Mode?',
     body:
-      'Your feed will go back to friends and community posts, and members will see your Social Profile.\n\nYour Dating Profile is kept. You can switch back any time from the menu.',
+      'You will go back to your Social Profile, with your friends, chats, groups, photos and posts.\n\nYour Dating Profile and everything in it is kept separately. You can switch back any time from the menu.',
     button: 'Switch to Social',
   },
 };
@@ -34,23 +35,33 @@ export function useModeSwitch() {
 
   const requestSwitch = () => setOpen(true);
 
+  // Social and Dating are two separate linked profiles (Robert, November 7, 2026). The server hands back
+  // the other profile's sign-in; the page then reloads so everything shown belongs to that profile.
   const doSwitch = async () => {
     const newType = userType === 'dating' ? 'normal' : 'dating';
     const token = auth.login_access_token;
-    const profile = auth.getProfileData || {};
     setBusy(true);
     try {
-      const res = token && profile._id ? await dispatch(updateUserType(token, profile._id, newType)) : null;
-      if (res && res.StatusCode === 200) {
+      const fd = new FormData();
+      fd.append('to', newType === 'dating' ? 'dating' : 'social');
+      const r = await fetch(BASE_URL + '/api/v1/user/switchProfile', { method: 'POST', headers: { authorization: token }, body: fd });
+      const res = await r.json();
+      const c = res && res.statusCode === 200 && res.data && res.data.customerData;
+      if (c && c.accessToken) {
+        localStorage.setItem('accessUserToken', c.accessToken);
         localStorage.setItem('usertype', newType);
+        dispatch({ type: 'LOGIN_SUCCESS', email: c.email, login_access_token: c.accessToken });
+        dispatch({ type: 'GET_PROFILE_SUCCESS', getProfile: c });
         dispatch(setUserType(newType));
         setOpen(false);
+        const firstTimeDating = newType === 'dating' && !(c.looking_for && c.looking_for !== 'null');
+        setTimeout(() => { window.location.href = firstTimeDating ? '/profile' : '/home'; }, 200);
       } else {
-        alert('Unable to switch mode. Please try again.');
+        alert((res && res.message) || 'Unable to switch. Please try again.');
       }
     } catch (err) {
       console.error('mode switch error:', err);
-      alert('Unable to switch mode. Please try again.');
+      alert('Unable to switch. Please try again.');
     } finally {
       setBusy(false);
     }
