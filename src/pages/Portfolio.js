@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { nodeApi } from '../api/axios';
 import normalizeImg from '../utils/normalizeImg';
+import MediaSharePanel from '../components/MediaSharePanel';
 import { MdClose, MdArrowBack, MdPlayArrow, MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 
 export default function Portfolio() {
@@ -319,6 +320,14 @@ export default function Portfolio() {
           >
             Delete
           </button>
+          <div style={{ marginTop: 6 }}>
+            <MediaSharePanel
+              path={previewItem.imageURL}
+              isVideo={!!(previewItem.imageURL && previewItem.imageURL.match('mp4'))}
+              thumbnail={previewItem.thumbnailURL}
+              link={normalizeImg(previewItem.imageURL)}
+            />
+          </div>
         </div>
       )}
     </div>

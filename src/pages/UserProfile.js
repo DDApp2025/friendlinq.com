@@ -1,6 +1,7 @@
 import ProfilePosts from '../components/posts/ProfilePosts';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import NotifyMeButton from '../components/NotifyMeButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserProfile, sendFriendRequest, unfriendUser, getUserOnlineStatus } from '../actions/profile_actions';
 import { MdArrowBack, MdPersonAdd, MdPersonRemove, MdLocationOn, MdEmail } from 'react-icons/md';
@@ -11,6 +12,7 @@ export default function UserProfile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((s) => s.authReducer.login_access_token);
+  const myProfileId = useSelector((s) => s.authReducer.getProfileData && s.authReducer.getProfileData._id);
   const myId = useSelector((s) => s.authReducer.getProfileData?._id);
 
   const [user, setUser] = useState(null);
@@ -216,6 +218,9 @@ export default function UserProfile() {
                 <span>{actionLoading ? 'Sending...' : 'Add Friend'}</span>
               </button>
             )}
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <NotifyMeButton userId={userId} token={token} myId={myProfileId} />
           </div>
 
           {message && (
