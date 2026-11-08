@@ -90,7 +90,17 @@ export default function DatingHome({ token, myProfile }) {
     }
   };
 
-  const queue = (data.discover || []).filter((p) => passed.indexOf(p._id) < 0 && blocked.indexOf(p._id) < 0);
+  // "Show me" and age range from Edit My Dating Profile (saved in this browser), same as the app.
+  const prefs = (() => { try { return { interestedIn: 'everyone', minAge: 18, maxAge: 99, ...JSON.parse(localStorage.getItem('fl_dating_prefs') || '{}') }; } catch (e) { return { interestedIn: 'everyone', minAge: 18, maxAge: 99 }; } })();
+  const fits = (p) => {
+    const g = String(p.gender || '').toLowerCase();
+    if (prefs.interestedIn === 'male' && g && g !== 'male') return false;
+    if (prefs.interestedIn === 'female' && g && g !== 'female') return false;
+    const a = ageOf(p);
+    if (a && (a < prefs.minAge || a > prefs.maxAge)) return false;
+    return true;
+  };
+  const queue = (data.discover || []).filter((p) => passed.indexOf(p._id) < 0 && blocked.indexOf(p._id) < 0 && fits(p));
   const current = queue[0];
 
   const pass = (p) => {
@@ -145,6 +155,9 @@ export default function DatingHome({ token, myProfile }) {
       <div style={{ padding: '0 14px' }}>
         <div style={{ fontSize: 22, fontWeight: 800, color: DARK }}>Find someone special</div>
         <div style={{ fontSize: 14, color: '#7a5a6a' }}>Single adults in Dating Mode. Like someone; if they like you back, it's a match.</div>
+        <div onClick={() => navigate('/edit-profile')} style={{ fontSize: 14, color: PINK, fontWeight: 700, marginTop: 4, cursor: 'pointer' }}>
+          Showing: {prefs.interestedIn === 'male' ? 'Men' : prefs.interestedIn === 'female' ? 'Women' : 'Everyone'}, ages {prefs.minAge} to {prefs.maxAge}. Change
+        </div>
       </div>
       {incomplete && (
         <div onClick={() => navigate('/edit-profile')} style={{ margin: '10px 12px 0', padding: 10, borderRadius: 10, background: '#fde3ef', border: `1px solid ${PINK}`, color: DARK, fontWeight: 700, cursor: 'pointer' }}>

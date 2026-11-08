@@ -3,6 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { uploadProfilePic, uploadBannerPic, saveProfileData } from '../actions/profile_actions';
 import { MdCameraAlt, MdArrowBack, MdSave } from 'react-icons/md';
+import { useModeSwitch } from '../components/ModeSwitch';
+import countryStates from '../data/countryStates.json';
+import {
+  educationOptions, personalityOptions, lookingForOptions, exerciseOptions, alcoholOptions,
+  drugUseOptions, politicalViewsOptions, religionOptions,
+} from '../data/profileConstants';
 
 const IMG_BASE = 'https://natural.friendlinq.com/';
 
@@ -25,6 +31,27 @@ export default function EditProfile() {
   const [state1, setState1] = useState(() => profile.state || '');
   const [country, setCountry] = useState(() => profile.country || '');
   const [gender, setGender] = useState(() => profile.gender || '');
+  // Same fields and order as the app (Robert, Nov 8, 2026: "The website is supposed to be identical to the app").
+  const mode = useModeSwitch();
+  const isDating = mode.userType === 'dating';
+  const clean = (v) => (v && v !== 'null' && v !== 'undefined' ? v : '');
+  const [dob, setDob] = useState(() => (profile.dob ? String(profile.dob).slice(0, 10) : ''));
+  const [lookingFor, setLookingFor] = useState(() => clean(profile.looking_for));
+  const [occupation, setOccupation] = useState(() => clean(profile.occupation));
+  const [education, setEducation] = useState(() => clean(profile.education_level));
+  const [personality, setPersonality] = useState(() => clean(profile.personality));
+  const [interests, setInterests] = useState(() => clean(profile.interests));
+  const [exercise, setExercise] = useState(() => clean(profile.exercise_habits));
+  const [alcohol, setAlcohol] = useState(() => clean(profile.alcohol_use));
+  const [drugUse, setDrugUse] = useState(() => clean(profile.drug_use));
+  const [politicalViews, setPoliticalViews] = useState(() => clean(profile.political_views));
+  const [religion, setReligion] = useState(() => clean(profile.religion));
+  const savedPrefs = (() => { try { return JSON.parse(localStorage.getItem('fl_dating_prefs') || '{}'); } catch (e) { return {}; } })();
+  const [interestedIn, setInterestedIn] = useState(savedPrefs.interestedIn || 'everyone');
+  const [minAge, setMinAge] = useState(savedPrefs.minAge || 18);
+  const [maxAge, setMaxAge] = useState(savedPrefs.maxAge || 99);
+  const stateList = ((countryStates.find((c) => c[0] === country) || [])[1]) || [];
+  const ages = Array.from({ length: 82 }, (_, i) => i + 18);
 
   const [bannerPreview, setBannerPreview] = useState(normalizeImg(profile.bannerURL));
   const [avatarPreview, setAvatarPreview] = useState(profile.imageURL || '');
@@ -69,17 +96,26 @@ export default function EditProfile() {
   };
 
   const handleSave = async () => {
-    setSaving(true);
     setMessage('');
-    const result = await dispatch(saveProfileData({
-      fullName,
-      about,
-      phoneNumber,
-      city,
-      state: state1,
-      country,
-      gender,
-    }));
+    if (!fullName.trim()) { setMessage('Please enter your name. Save failed.'); return; }
+    if (isDating) {
+      if (!dob) { setMessage('Please enter your date of birth. Save failed.'); return; }
+      if (!gender) { setMessage('Please choose your gender. Save failed.'); return; }
+      if (!country) { setMessage('Please choose your country. Save failed.'); return; }
+      if (!state1) { setMessage('Please choose your state. Save failed.'); return; }
+      if (!lookingFor) { setMessage('Please choose what you are looking for. Save failed.'); return; }
+      if (Number(minAge) > Number(maxAge)) { setMessage('The lowest age must be less than the highest age. Save failed.'); return; }
+      try { localStorage.setItem('fl_dating_prefs', JSON.stringify({ interestedIn, minAge: Number(minAge), maxAge: Number(maxAge) })); } catch (e) { /* ignore */ }
+    }
+    setSaving(true);
+    const fields = { fullName, about, phoneNumber, city, state: state1, country, gender };
+    if (isDating) {
+      Object.assign(fields, {
+        dob, looking_for: lookingFor, occupation, education_level: education, personality, interests,
+        exercise_habits: exercise, alcohol_use: alcohol, drug_use: drugUse, political_views: politicalViews, religion,
+      });
+    }
+    const result = await dispatch(saveProfileData(fields));
     if (result.success) {
       setMessage('Profile saved!');
       setTimeout(() => navigate('/profile'), 800);
@@ -100,7 +136,7 @@ export default function EditProfile() {
           <button style={styles.backBtn} onClick={() => navigate('/profile')}>
             <MdArrowBack size={22} />
           </button>
-          <h2 style={styles.title}>Edit Profile</h2>
+          <h2 style={styles.title}>{isDating ? 'Edit My Dating Profile' : 'Edit My Public Profile'}</h2>
         </div>
 
         {/* Banner upload */}
@@ -135,40 +171,115 @@ export default function EditProfile() {
 
         {/* Form fields */}
         <div style={styles.form}>
-          <label style={styles.label}>Name</label>
+          <label style={styles.label}>Name - Required</label>
           <input style={styles.input} value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Name" />
 
-          <label style={styles.label}>About</label>
-          <textarea style={styles.textarea} value={about} onChange={(e) => setAbout(e.target.value)} placeholder="About yourself" rows={3} />
+          <label style={styles.label}>About me</label>
+          <textarea style={styles.textarea} value={about} onChange={(e) => setAbout(e.target.value)} placeholder="A few words about you and what you enjoy" rows={3} maxLength={500} />
 
-          <label style={styles.label}>Phone Number</label>
+          {isDating && (
+            <>
+              <label style={styles.label}>Date of birth - Required</label>
+              <input style={styles.input} type="date" value={dob} max={new Date().toISOString().slice(0, 10)} onChange={(e) => setDob(e.target.value)} />
+            </>
+          )}
+
+          <label style={styles.label}>Gender{isDating ? ' - Required' : ''}</label>
+          <div style={styles.radioRow}>
+            {['Male', 'Female', 'Other'].map((g) => (
+              <label key={g} style={styles.radioLabel}>
+                <input type="radio" name="gender" value={g} checked={String(gender).toLowerCase() === g.toLowerCase()} onChange={() => setGender(g)} style={styles.radioInput} />
+                {g}
+              </label>
+            ))}
+          </div>
+
+          {isDating && (
+            <>
+              <label style={styles.label}>Show me</label>
+              <div style={{ display: 'flex', gap: 8 }}>
+                {[['male', 'Men'], ['female', 'Women'], ['everyone', 'Everyone']].map(([v, l]) => (
+                  <button key={v} type="button" onClick={() => setInterestedIn(v)}
+                    style={{ flex: 1, padding: '8px 0', borderRadius: 18, border: '1.5px solid #e84393', fontWeight: 700, cursor: 'pointer',
+                      background: interestedIn === v ? '#e84393' : '#fff', color: interestedIn === v ? '#fff' : '#e84393' }}>{l}</button>
+                ))}
+              </div>
+              <label style={styles.label}>Ages from {minAge} to {maxAge}</label>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <select style={styles.input} value={minAge} onChange={(e) => setMinAge(Number(e.target.value))}>{ages.map((a) => <option key={a} value={a}>{a}</option>)}</select>
+                <span>to</span>
+                <select style={styles.input} value={maxAge} onChange={(e) => setMaxAge(Number(e.target.value))}>{ages.map((a) => <option key={a} value={a}>{a}</option>)}</select>
+              </div>
+            </>
+          )}
+
+          <label style={styles.label}>Phone Number (optional)</label>
           <input style={styles.input} value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} placeholder="Phone number" />
 
-          <label style={styles.label}>Gender</label>
-          <div style={styles.radioRow}>
-            <label style={styles.radioLabel}>
-              <input type="radio" name="gender" value="Male" checked={gender === 'Male'} onChange={(e) => setGender(e.target.value)} style={styles.radioInput} />
-              Male
-            </label>
-            <label style={styles.radioLabel}>
-              <input type="radio" name="gender" value="Female" checked={gender === 'Female'} onChange={(e) => setGender(e.target.value)} style={styles.radioInput} />
-              Female
-            </label>
-          </div>
+          <label style={styles.label}>Country{isDating ? ' - Required' : ''}</label>
+          <select style={styles.input} value={country} onChange={(e) => { setCountry(e.target.value); setState1(''); }}>
+            <option value="">Choose your country</option>
+            {countryStates.map((c) => <option key={c[0]} value={c[0]}>{c[0]}</option>)}
+          </select>
 
-          <div style={styles.rowFields}>
-            <div style={styles.halfField}>
-              <label style={styles.label}>City</label>
-              <input style={styles.input} value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" />
-            </div>
-            <div style={styles.halfField}>
-              <label style={styles.label}>State</label>
-              <input style={styles.input} value={state1} onChange={(e) => setState1(e.target.value)} placeholder="State" />
-            </div>
-          </div>
+          <label style={styles.label}>State{isDating ? ' - Required' : ''}</label>
+          {stateList.length ? (
+            <select style={styles.input} value={state1} onChange={(e) => setState1(e.target.value)}>
+              <option value="">Choose your state</option>
+              {stateList.map((st) => <option key={st} value={st}>{st}</option>)}
+            </select>
+          ) : (
+            <input style={styles.input} value={state1} onChange={(e) => setState1(e.target.value)} placeholder="State or region" />
+          )}
 
-          <label style={styles.label}>Country</label>
-          <input style={styles.input} value={country} onChange={(e) => setCountry(e.target.value)} placeholder="Country" />
+          {isDating && (
+            <>
+              <label style={styles.label}>Looking for - Required</label>
+              <select style={styles.input} value={lookingFor} onChange={(e) => setLookingFor(e.target.value)}>
+                <option value="">Looking for</option>
+                {lookingForOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </>
+          )}
+
+          <label style={styles.label}>City (optional)</label>
+          <input style={styles.input} value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" />
+
+          {isDating && (
+            <>
+              <label style={styles.label}>Occupation</label>
+              <input style={styles.input} value={occupation} onChange={(e) => setOccupation(e.target.value)} placeholder="Occupation" />
+              {[
+                ['Education level', education, setEducation, educationOptions],
+                ['Personality', personality, setPersonality, personalityOptions],
+              ].map(([l, v, set, opts]) => (
+                <React.Fragment key={l}>
+                  <label style={styles.label}>{l}</label>
+                  <select style={styles.input} value={v} onChange={(e) => set(e.target.value)}>
+                    <option value="">{l}</option>
+                    {opts.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                </React.Fragment>
+              ))}
+              <label style={styles.label}>Interests and hobbies</label>
+              <input style={styles.input} value={interests} onChange={(e) => setInterests(e.target.value)} placeholder="Interests and hobbies" />
+              {[
+                ['Exercise habits', exercise, setExercise, exerciseOptions],
+                ['Alcohol use', alcohol, setAlcohol, alcoholOptions],
+                ['Drug use', drugUse, setDrugUse, drugUseOptions],
+                ['Political views', politicalViews, setPoliticalViews, politicalViewsOptions],
+                ['Religion', religion, setReligion, religionOptions],
+              ].map(([l, v, set, opts]) => (
+                <React.Fragment key={l}>
+                  <label style={styles.label}>{l}</label>
+                  <select style={styles.input} value={v} onChange={(e) => set(e.target.value)}>
+                    <option value="">{l}</option>
+                    {opts.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                </React.Fragment>
+              ))}
+            </>
+          )}
 
           {message && (
             <div style={{ ...styles.message, color: message.includes('fail') || message.includes('Failed') ? '#d32f2f' : '#1a6b3a' }}>
