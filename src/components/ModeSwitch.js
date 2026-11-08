@@ -50,7 +50,9 @@ export function useModeSwitch() {
       if (c && c.accessToken) {
         localStorage.setItem('accessUserToken', c.accessToken);
         localStorage.setItem('usertype', newType);
-        dispatch({ type: 'LOGIN_SUCCESS', email: c.email, login_access_token: c.accessToken });
+        // Keep the real sign-in email; the Dating record has an internal address.
+        const keepEmail = /@dating\.friendlinq\.com$/i.test(String(c.email || '')) ? (auth && !/@dating\.friendlinq\.com$/i.test(String(auth.email || '')) && auth.email) || c.email : c.email;
+        dispatch({ type: 'LOGIN_SUCCESS', email: keepEmail, login_access_token: c.accessToken });
         dispatch({ type: 'GET_PROFILE_SUCCESS', getProfile: c });
         dispatch(setUserType(newType));
         setOpen(false);

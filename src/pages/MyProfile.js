@@ -37,7 +37,11 @@ export default function MyProfile() {
   const rawLoc = profile.address || '';
   // Only show location if it's readable text, not GPS coordinates or objects
   const location = (typeof rawLoc === 'string' && rawLoc && !/^[\d.,\s-]+$/.test(rawLoc)) ? rawLoc : '';
-  const email = profile.email || '';
+  // The Dating profile is a separate record with an internal address; show the real sign-in email instead.
+  const isInternal = (e) => /@dating\.friendlinq\.com$/i.test(String(e || ''));
+  let signInEmail = '';
+  try { signInEmail = (JSON.parse(localStorage.getItem('userCredentials') || '{}') || {}).userName || ''; } catch (e) {}
+  const email = !isInternal(profile.email) ? (profile.email || '') : (!isInternal(signInEmail) ? signInEmail : '');
   const topFriends = profile.topFourFriend || [];
   const topImages = profile.topFourImage || [];
   const initials = `${(profile.firstName || '').charAt(0)}${(profile.lastName || '').charAt(0)}`.toUpperCase() || '?';

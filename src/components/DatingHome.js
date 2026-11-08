@@ -71,7 +71,26 @@ export default function DatingHome({ token, myProfile }) {
     return r.json();
   };
 
-  const queue = (data.discover || []).filter((p) => passed.indexOf(p._id) < 0);
+  // Block (saved on the server, "userblocks") and Report (email to support), same as the app.
+  const [blocked, setBlocked] = useState([]);
+  useEffect(() => {
+    fetch(BASE_URL + '/api/v1/user/blocks', { headers: { authorization: token } })
+      .then((r) => r.json())
+      .then((res) => { if (res && res.statusCode === 200 && res.data && res.data.blocked) setBlocked(res.data.blocked); })
+      .catch(() => {});
+  }, [token]);
+  const reportOrBlock = async (p) => {
+    const name = p.fullName || 'this member';
+    if (window.confirm('Block ' + name + '? You will no longer see each other in Dating. (Cancel to report instead.)')) {
+      setBlocked((b) => [...b, p._id]);
+      try { await post('/api/v1/user/block', { userId: p._id, block: true }); } catch (e) { /* hidden here anyway */ }
+    } else if (window.confirm('Report ' + name + ' to Friendlinq support by email?')) {
+      window.location.href = 'mailto:info@friendlinq.com?subject=' + encodeURIComponent('Report a Dating profile') +
+        '&body=' + encodeURIComponent('Member: ' + (p.fullName || '') + '\nMember ID: ' + p._id + '\nWhat happened:\n');
+    }
+  };
+
+  const queue = (data.discover || []).filter((p) => passed.indexOf(p._id) < 0 && blocked.indexOf(p._id) < 0);
   const current = queue[0];
 
   const pass = (p) => {
@@ -167,6 +186,7 @@ export default function DatingHome({ token, myProfile }) {
               <button disabled={acting} onClick={() => like(current)} aria-label="Like" title="Like"
                 style={{ width: 70, height: 70, borderRadius: 35, background: PINK, border: 'none', fontSize: 34, color: '#fff', cursor: 'pointer' }}>&#9829;</button>
             </div>
+            <button onClick={() => reportOrBlock(current)} style={{ marginTop: 12, background: 'none', border: 'none', color: '#999', textDecoration: 'underline', cursor: 'pointer' }}>Report or block</button>
           </div>
         ) : (
           <div style={{ textAlign: 'center', padding: '30px 24px', color: DARK }}>
@@ -177,11 +197,11 @@ export default function DatingHome({ token, myProfile }) {
           </div>
         )
       ) : tab === 'likes' ? (
-        (data.likesYou || []).length ? data.likesYou.map((p) => row(p,
+        (data.likesYou || []).length ? data.likesYou.filter((p) => blocked.indexOf(p._id) < 0).map((p) => row(p,
           <button disabled={acting} onClick={() => likeBack(p)} style={{ background: PINK, color: '#fff', border: 'none', borderRadius: 18, padding: '8px 14px', fontWeight: 800, cursor: 'pointer' }}>Like back</button>))
           : <div style={{ textAlign: 'center', color: '#7a5a6a', padding: '30px 24px' }}>No new likes yet. A complete profile with a good photo gets the most likes.</div>
       ) : (
-        (data.matches || []).length ? data.matches.map((p) => row(p,
+        (data.matches || []).length ? data.matches.filter((p) => blocked.indexOf(p._id) < 0).map((p) => row(p,
           <button onClick={() => navigate('/chat/' + p._id)} style={{ background: DARK, color: '#fff', border: 'none', borderRadius: 18, padding: '8px 14px', fontWeight: 800, cursor: 'pointer' }}>Say hi</button>))
           : <div style={{ textAlign: 'center', color: '#7a5a6a', padding: '30px 24px' }}>No matches yet. Like people in Discover; when someone likes you back, they show up here.</div>
       )}
