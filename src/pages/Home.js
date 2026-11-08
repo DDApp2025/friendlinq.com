@@ -313,15 +313,16 @@ export default function Home() {
   return (
     <div style={styles.container}>
       <h1 style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }}>Friendlinq Home Feed</h1>
-      {/* Search people (user testing, November 7, 2026: "There is no way to search for a user"). Same as the app. */}
-      <button
-        onClick={() => navigate('/add-friend')}
-        aria-label="Search people"
-        style={{ display: 'flex', alignItems: 'center', width: '100%', maxWidth: 600, margin: '8px auto 6px', height: 40, borderRadius: 20, border: '1.5px solid #1a6b3a', background: '#fff', padding: '0 14px', cursor: 'pointer', fontSize: 15.5, color: '#666' }}
-      >
-        <span style={{ color: '#1a6b3a', marginRight: 8, fontSize: 17 }}>&#128269;</span> Search people on Friendlinq
-      </button>
       <div style={styles.feed}>
+        {/* Search people (user testing, November 7, 2026: "There is no way to search for a user"). Same as the app. */}
+        <button
+          onClick={() => navigate('/add-friend')}
+          aria-label="Search people"
+          style={{ display: 'flex', alignItems: 'center', width: '100%', boxSizing: 'border-box', margin: '0 0 10px', height: 40, borderRadius: 20, border: '1.5px solid #1a6b3a', background: '#fff', padding: '0 14px', cursor: 'pointer', fontSize: 15.5, color: '#666' }}
+        >
+          <span style={{ color: '#1a6b3a', marginRight: 8, fontSize: 17 }}>&#128269;</span> Search people on Friendlinq
+        </button>
+
         {/* ── Post Composer ─────────────────────────────────── */}
         <div style={styles.composerCard}>
           <div style={styles.composerRow}>
