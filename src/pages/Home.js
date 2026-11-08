@@ -7,6 +7,7 @@ import VideoTextEditor, { overlayToString } from '../components/posts/VideoTextE
 import { AiOutlineCamera, AiOutlineVideoCamera, AiOutlineClose } from 'react-icons/ai';
 import { MdVideocam } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import DatingHome from '../components/DatingHome';
 import { createPost, notifyFriends } from '../actions/post_actions';
 import { firstName } from '../utils/displayName';
 
@@ -309,6 +310,17 @@ export default function Home() {
   const toggleFeed = () => {
     setFeedType((f) => (f === 'community' ? 'friends' : 'community'));
   };
+
+  // Dating Mode has its own home (Discover, Likes You, Matches), same as the app.
+  if (userType === 'dating') {
+    return (
+      <div style={styles.container}>
+        <div style={styles.feed}>
+          <DatingHome token={token} myProfile={profile} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={styles.container}>

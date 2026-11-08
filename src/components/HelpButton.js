@@ -17,6 +17,16 @@ export const HELP = {
       'Click your picture at the top right for your profile, Dating Mode, invitations, settings and log out.',
     ],
   },
+  datingHome: {
+    title: 'Dating',
+    items: [
+      'Dating Mode is a separate profile with its own friends, chats, groups and photos.',
+      'Discover shows one person at a time. Click the heart to like them, or the X to pass. Click the card to see their full profile.',
+      'Likes You shows people who liked you. Click Like back and it is a match.',
+      'Matches are people who like each other. Click Say hi to start a chat.',
+      'To go back to your Social Profile, open the menu under your picture and choose Switch to Social Mode.',
+    ],
+  },
   searchPeople: {
     title: 'Search People',
     items: [
@@ -85,8 +95,10 @@ export function helpKeyForPath(path) {
 
 export default function HelpButton({ screen, light = false }) {
   const location = useLocation();
+  const isDating = (typeof localStorage !== 'undefined' && localStorage.getItem('usertype') === 'dating');
   const [open, setOpen] = useState(false);
-  const h = HELP[screen || helpKeyForPath(location.pathname)] || HELP.home;
+  const key = screen || helpKeyForPath(location.pathname);
+  const h = HELP[key === 'home' && isDating ? 'datingHome' : key] || HELP.home;
   const c = light ? '#fff' : '#1a6b3a';
   return (
     <>
