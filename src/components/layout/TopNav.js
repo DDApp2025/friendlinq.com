@@ -18,6 +18,7 @@ import {
 } from 'react-icons/md';
 import { useModeSwitch } from '../ModeSwitch';
 import HelpButton from '../HelpButton';
+import AskAriel from '../AskAriel';
 
 const navLinks = [
   { label: 'Home', path: '/home', icon: MdHouse },
@@ -49,6 +50,7 @@ const TopNav = ({ onMenuToggle }) => {
     : '';
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [arielOpen, setArielOpen] = useState(false);
   const mode = useModeSwitch();
   const dropdownRef = useRef(null);
 
@@ -244,6 +246,24 @@ const TopNav = ({ onMenuToggle }) => {
                 );
               })}
 
+              {/* Ask Ariel help chat (November 12, 2026), same as the app's menu. */}
+              <button
+                onClick={() => {
+                  setDropdownOpen(false);
+                  setArielOpen(true);
+                }}
+                style={styles.dropdownItem}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#f0faf4';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
+              >
+                <MdHeadsetMic size={18} color="#1a6b3a" />
+                <span style={styles.dropdownLabel}>Ask Ariel (help)</span>
+              </button>
+
               <div style={styles.dropdownDivider} />
 
               {/* Logout */}
@@ -267,6 +287,7 @@ const TopNav = ({ onMenuToggle }) => {
         </div>
       </div>
       {mode.dialog}
+      <AskAriel open={arielOpen} onClose={() => setArielOpen(false)} />
     </header>
   );
 };

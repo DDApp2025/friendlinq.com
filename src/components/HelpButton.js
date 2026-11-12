@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AskAriel from './AskAriel';
 import { useLocation } from 'react-router-dom';
 
 // Help button for every page (Robert, November 7, 2026: "put a help button on each screen").
@@ -97,6 +98,7 @@ export default function HelpButton({ screen, light = false }) {
   const location = useLocation();
   const isDating = (typeof localStorage !== 'undefined' && localStorage.getItem('usertype') === 'dating');
   const [open, setOpen] = useState(false);
+  const [ariel, setAriel] = useState(false);
   const key = screen || helpKeyForPath(location.pathname);
   const h = HELP[key === 'home' && isDating ? 'datingHome' : key] || HELP.home;
   const c = light ? '#fff' : '#1a6b3a';
@@ -124,12 +126,16 @@ export default function HelpButton({ screen, light = false }) {
             <p style={{ fontSize: 14.5, color: '#555', marginTop: 10 }}>
               Still stuck? Email us at <a href="mailto:info@friendlinq.com" style={{ color: '#1a6b3a', fontWeight: 700 }}>info@friendlinq.com</a>
             </p>
+            <button onClick={() => { setOpen(false); setAriel(true); }} style={{ marginTop: 8, width: '100%', background: '#fff', color: '#1a6b3a', border: '2px solid #1a6b3a', borderRadius: 10, padding: '10px 0', fontSize: 16, fontWeight: 700, cursor: 'pointer' }}>
+              Ask Ariel a question
+            </button>
             <button onClick={() => setOpen(false)} style={{ marginTop: 8, width: '100%', background: '#1a6b3a', color: '#fff', border: 'none', borderRadius: 10, padding: '11px 0', fontSize: 16, fontWeight: 700, cursor: 'pointer' }}>
               Got it
             </button>
           </div>
         </div>
       )}
+      <AskAriel open={ariel} onClose={() => setAriel(false)} />
     </>
   );
 }
