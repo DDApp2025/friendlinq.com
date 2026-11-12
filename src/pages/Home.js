@@ -540,18 +540,15 @@ export default function Home() {
                     if (t.key === 'mine') { navigate('/profile'); return; }
                     if (t.key !== feedType) toggleFeed();
                   }}
-                  style={{ flex: 1, padding: '9px 4px', border: 'none', borderLeft: ti ? '1px solid #1a6b3a' : 'none', background: on ? '#1a6b3a' : '#fff', color: on ? '#fff' : '#1a6b3a', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}
+                  style={{ flex: 1, minHeight: 46, padding: '5px 4px', border: 'none', borderLeft: ti ? '1px solid #1a6b3a' : 'none', background: on ? '#1a6b3a' : '#fff', color: on ? '#fff' : '#1a6b3a', fontWeight: 700, fontSize: 'clamp(11px, 3.5vw, 14px)', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', whiteSpace: 'nowrap' }}
                 >
-                  {t.label}
+                  <span>{t.label}</span>
+                  {t.key === 'mine' && <span style={{ fontSize: 10, fontWeight: 400, marginTop: 1 }}>open in profile</span>}
                 </button>
               );
             })}
           </div>
-          <div style={{ fontSize: 12.5, color: '#666', margin: '5px 2px 0' }}>
-            {feedType === 'community'
-              ? 'Showing posts from all Friendlinq members. My Posts opens your profile, where your own posts are.'
-              : 'Showing posts only from people you are friends with. My Posts opens your profile, where your own posts are.'}
-          </div>
+          {/* Robert, November 12, 2026, 9:42 AM: the explanation line under the tabs was removed; My Posts says "open in profile". */}
         </div>
 
 
