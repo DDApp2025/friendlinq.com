@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import DatingHome from '../components/DatingHome';
 import { createPost, notifyFriends } from '../actions/post_actions';
 import { firstName } from '../utils/displayName';
+import { isAudioFile } from '../components/posts/MusicPost';
 
 const LIMIT = 20;
 
@@ -27,6 +28,11 @@ export default function Home() {
   const [privacyForPost, setPrivacyForPost] = useState('Public'); // 'Public' or 'Friend_Only'
   const [mediaFile, setMediaFile] = useState(null);
   const [mediaPreview, setMediaPreview] = useState(null);
+  // Music posts (Nov 12, 2026): the cover picture chosen for a music file.
+  const [coverFile, setCoverFile] = useState(null);
+  const [coverPreview, setCoverPreview] = useState(null);
+  const musicInputRef = useRef(null);
+  const coverInputRef = useRef(null);
   // Robert's addition (Nov 6, 2026): the Aa editor (text, captions, voice) for a video being posted.
   const [postOverlay, setPostOverlay] = useState(null);
   const [showEditor, setShowEditor] = useState(false);
@@ -231,6 +237,7 @@ export default function Home() {
   const handleMediaSelect = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    clearCover();
     setMediaFile(file);
     setMediaPreview(URL.createObjectURL(file));
     setPostOverlay(null);
@@ -257,12 +264,46 @@ export default function Home() {
     }
   };
 
+  const clearCover = () => {
+    if (coverPreview) URL.revokeObjectURL(coverPreview);
+    setCoverFile(null);
+    setCoverPreview(null);
+    if (coverInputRef.current) coverInputRef.current.value = '';
+  };
+
+  // Music posts (Nov 12, 2026, same as the app): pick a song or other sound file, then a cover picture if wanted.
+  const handleMusicSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!/\.(mp3|m4a|aac|wav|ogg)$/i.test(file.name || '') && !isAudioFile(file)) {
+      alert('Music can be an MP3, M4A, AAC, WAV or OGG file.');
+      return;
+    }
+    if (file.size > 45 * 1000000) {
+      alert('Music files can be up to 45 MB.');
+      return;
+    }
+    clearMedia();
+    setMediaFile(file);
+    setMediaPreview(URL.createObjectURL(file));
+  };
+
+  const handleCoverSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (coverPreview) URL.revokeObjectURL(coverPreview);
+    setCoverFile(file);
+    setCoverPreview(URL.createObjectURL(file));
+  };
+
   const clearMedia = () => {
+    clearCover();
     setMediaFile(null);
     setPostOverlay(null);
     if (mediaPreview) URL.revokeObjectURL(mediaPreview);
     setMediaPreview(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
+    if (musicInputRef.current) musicInputRef.current.value = '';
   };
 
   // ── Submit post ─────────────────────────────────────────
@@ -278,6 +319,7 @@ export default function Home() {
         postContent: postText.trim(),
         postType,
         mediaFile: mediaFile || null,
+        coverFile: isAudioFile(mediaFile) ? coverFile : null,
         isdating: userType === 'dating' ? '1' : '0',
         postOverlay: mediaFile?.type?.startsWith('video') ? overlayToString(postOverlay) : '',
       });
@@ -390,7 +432,27 @@ export default function Home() {
           {/* Media preview */}
           {mediaPreview && (
             <div style={styles.mediaPreviewWrap}>
-              {mediaFile?.type?.startsWith('video') ? (
+              {isAudioFile(mediaFile) ? (
+                <div style={{ background: '#2e7d32', color: '#fff', borderRadius: 10, padding: 12 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    {coverPreview ? (
+                      <img src={coverPreview} alt="Music cover preview" style={{ width: 72, height: 72, objectFit: 'cover', borderRadius: 8 }} />
+                    ) : (
+                      <div style={{ width: 72, height: 72, borderRadius: 8, background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 36 }} aria-hidden="true">♫</div>
+                    )}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{mediaFile.name}</div>
+                      <button
+                        onClick={() => coverInputRef.current && coverInputRef.current.click()}
+                        style={{ marginTop: 6, background: '#fff', color: '#2e7d32', border: 'none', borderRadius: 14, padding: '4px 12px', fontWeight: 700, cursor: 'pointer' }}
+                      >
+                        {coverPreview ? 'Change cover picture' : 'Add a cover picture'}
+                      </button>
+                    </div>
+                  </div>
+                  <audio src={mediaPreview} controls style={{ width: '100%', marginTop: 10 }} />
+                </div>
+              ) : mediaFile?.type?.startsWith('video') ? (
                 <>
                   <video src={mediaPreview} controls style={styles.mediaPreview} />
                   <button
@@ -428,6 +490,21 @@ export default function Home() {
             style={{ display: 'none' }}
           />
 
+          <input
+            type="file"
+            ref={musicInputRef}
+            accept="audio/*,.mp3,.m4a,.aac,.wav,.ogg"
+            onChange={handleMusicSelect}
+            style={{ display: 'none' }}
+          />
+          <input
+            type="file"
+            ref={coverInputRef}
+            accept="image/*"
+            onChange={handleCoverSelect}
+            style={{ display: 'none' }}
+          />
+
           {/* Photo / Video / See Friends Posts action bar */}
           <div style={styles.actionBar}>
             <div style={styles.actionBarLeft}>
@@ -438,6 +515,10 @@ export default function Home() {
               <button style={styles.mediaBtn} onClick={() => { fileInputRef.current.accept = 'video/*'; fileInputRef.current.click(); }}>
                 <AiOutlineVideoCamera size={18} color="#1a6b3a" />
                 <span style={{ marginLeft: 4 }}>Video</span>
+              </button>
+              <button style={styles.mediaBtn} onClick={() => musicInputRef.current && musicInputRef.current.click()}>
+                <span aria-hidden="true" style={{ color: '#1a6b3a', fontSize: 17 }}>♫</span>
+                <span style={{ marginLeft: 4 }}>Music</span>
               </button>
               {/* Go Live button — hidden for now, route still works at /live/:channelName?host=1 */}
             </div>

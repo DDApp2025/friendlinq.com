@@ -14,6 +14,7 @@ import { addComment } from '../../actions/post_actions';
 import normalizeImg from '../../utils/normalizeImg';
 import VideoTextEditor, { overlayToString } from './VideoTextEditor';
 import { firstName } from '../../utils/displayName';
+import MusicPost, { isAudioUrl, shareThumbOf } from './MusicPost';
 
 // Feed videos play by themselves (muted, looping) while at least half of the video is on screen,
 // and pause when scrolled away. Tap the video controls to turn the sound on.
@@ -250,7 +251,9 @@ export default function PostCard({ post, onUpdate, onDelete }) {
 
   const profileThumb = normalizeImg(author?.imageURL) || null;
   const postImage = normalizeImg(post?.imageURL) || null;
-  const postVideo = post?.videoURL ? normalizeImg(post.videoURL) : null;
+  // Music posts (Nov 12, 2026): a sound file in videoURL is shown as a music player, not a video.
+  const isMusic = isAudioUrl(post?.videoURL);
+  const postVideo = post?.videoURL && !isMusic ? normalizeImg(post.videoURL) : null;
   // The community feed comes from the .NET server, which returns new fields inside "ExtraElements".
   const postOverlay = parseOverlay(post?.postOverlay || post?.ExtraElements?.postOverlay);
 
@@ -423,7 +426,7 @@ export default function PostCard({ post, onUpdate, onDelete }) {
         imageUrl: post.imageURL?.original || null,
         imageThumbnail: null,
         videoUrl: post.videoURL || null,
-        videoThumbnail: post.videoThumbnailUrl?.original || null,
+        videoThumbnail: shareThumbOf(post),
         postTitle: shareText.trim() || (post.postTitle && post.postTitle !== '..' ? post.postTitle : null),
         postContent: shareText.trim() || (post.postContent && post.postContent !== '..' ? post.postContent : null),
         postType: useType,
@@ -564,7 +567,7 @@ export default function PostCard({ post, onUpdate, onDelete }) {
             rows={3}
           />
           <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 8 }}>
-            {post.videoURL && (
+            {postVideo && (
               <button style={{ ...styles.editCancelBtn, marginRight: 'auto' }} onClick={() => setShowTextEditor(true)} disabled={saving}>
                 Aa Text, captions and voice on video
               </button>
@@ -594,8 +597,11 @@ export default function PostCard({ post, onUpdate, onDelete }) {
         />
       )}
 
+      {/* Music post */}
+      {isMusic && <MusicPost post={post} />}
+
       {/* Post image */}
-      {postImage && !postVideo && (
+      {postImage && !postVideo && !isMusic && (
         <img
           src={postImage} alt="post" style={styles.postImage}
           onError={(e) => { e.target.style.display = 'none'; }}

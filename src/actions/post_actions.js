@@ -9,7 +9,7 @@ import {
 } from '../api/config';
 
 // ── Create post (FormData) ────────────────────────────────
-export const createPost = async ({ postTitle, postContent, postType, mediaFile, isdating, postOverlay }) => {
+export const createPost = async ({ postTitle, postContent, postType, mediaFile, isdating, postOverlay, coverFile }) => {
   try {
     const fd = new FormData();
     fd.append('postTitle', postTitle || '');
@@ -19,9 +19,13 @@ export const createPost = async ({ postTitle, postContent, postType, mediaFile, 
 
     if (mediaFile) {
       fd.append('isMediaFileUploaded', 'true');
-      const isVideo = mediaFile.type?.startsWith('video');
+      // Music posts (Nov 12, 2026): a sound file is sent the same way as a video, with its cover picture
+      // where a video's frame would go, so the server needs no change.
+      const isMusic = (mediaFile.type || '').startsWith('audio') || /\.(mp3|m4a|aac|wav|ogg)$/i.test(mediaFile.name || '');
+      const isVideo = mediaFile.type?.startsWith('video') || isMusic;
       fd.append('isMediaTypeVideo', isVideo ? 'true' : 'false');
       fd.append('mediaFile', mediaFile);
+      if (isMusic && coverFile) fd.append('videoThumbnail', coverFile);
     } else {
       fd.append('isMediaFileUploaded', 'false');
       fd.append('isMediaTypeVideo', 'false');
