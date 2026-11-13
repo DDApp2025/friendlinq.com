@@ -204,8 +204,9 @@ export default function DatingHome({ token, myProfile }) {
         ) : (
           <div style={{ textAlign: 'center', padding: '30px 24px', color: DARK }}>
             <div style={{ fontSize: 48, color: PINK }}>&#9825;</div>
-            <div style={{ fontWeight: 700, fontSize: 17 }}>You have seen everyone for now.</div>
-            <div style={{ color: '#7a5a6a', marginTop: 6 }}>New people join every day. Check back soon, and invite your single friends.</div>
+            <div style={{ fontWeight: 700, fontSize: 17 }}>You&apos;re one of the first!</div>
+            <div style={{ color: '#7a5a6a', marginTop: 6 }}>Dating on Friendlinq just launched, so it&apos;s still small. Check back soon to see who&apos;s new.</div>
+            <div style={{ color: '#7a5a6a', marginTop: 6 }}>In the meantime, invite your single friends. The more people join, the better it gets.</div>
             <button onClick={load} style={{ marginTop: 14, background: PINK, color: '#fff', border: 'none', borderRadius: 20, padding: '9px 20px', fontWeight: 700, cursor: 'pointer' }}>Refresh</button>
           </div>
         )
